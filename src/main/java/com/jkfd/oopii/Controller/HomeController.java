@@ -31,6 +31,7 @@ public class HomeController implements Initializable{
     public static void loadView(Stage stage) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(HomeController.class.getResource("/com/jkfd/oopii/home-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(HomeController.class.getResource("/com/jkfd/oopii/style.css").toExternalForm());
         stage.setTitle("Home");
         stage.setScene(scene);
         stage.show();
