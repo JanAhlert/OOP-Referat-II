@@ -3,6 +3,7 @@ module com.jkfd.oopii {
     requires javafx.fxml;
 
     requires org.controlsfx.controls;
+    requires java.sql;
 
     opens com.jkfd.oopii to javafx.fxml;
     exports com.jkfd.oopii;
