@@ -12,11 +12,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * Controler for the Home View
- * @Author: Fabian Klein
- * @Version: 0.1
- */
 public class HomeController implements Initializable{
     @FXML
     Label CurrentDate;
