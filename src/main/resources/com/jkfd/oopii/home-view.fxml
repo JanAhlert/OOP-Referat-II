@@ -17,13 +17,13 @@
         <FlowPane layoutX="11.0" layoutY="174.0" prefHeight="644.0" prefWidth="772.0" style="-fx-background-color: grey;" />
         <HBox alignment="CENTER" layoutX="39.0" layoutY="29.0" prefHeight="65.0" prefWidth="874.0">
             <children>
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Button" />
+                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="&lt;" />
             <Label fx:id="CurrentDate" text="##.##.####">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Button" />
+                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="&gt;" />
             </children>
         </HBox>
         <HBox alignment="CENTER" layoutX="-1.0" layoutY="79.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="104.0" prefWidth="796.0" spacing="90.0">
