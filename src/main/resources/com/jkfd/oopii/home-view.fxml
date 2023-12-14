@@ -1,96 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
+<?import com.calendarfx.view.page.MonthPage?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 
 <AnchorPane prefHeight="785.0" prefWidth="1148.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jkfd.oopii.Controller.HomeController">
-    <children>
-
-        <FlowPane layoutX="11.0" layoutY="174.0" prefHeight="644.0" prefWidth="772.0" style="-fx-background-color: grey;" />
-        <HBox alignment="CENTER" layoutX="39.0" layoutY="29.0" prefHeight="65.0" prefWidth="874.0">
-            <children>
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="&lt;" />
-            <Label fx:id="CurrentDate" text="##.##.####">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="&gt;" />
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="-1.0" layoutY="79.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="104.0" prefWidth="796.0" spacing="90.0">
-            <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mo" wrappingWidth="18.806640625" HBox.hgrow="ALWAYS" />
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tu" HBox.hgrow="ALWAYS" />
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="We" HBox.hgrow="ALWAYS" />
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Th" HBox.hgrow="ALWAYS" />
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fr" HBox.hgrow="ALWAYS" />
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sa" HBox.hgrow="ALWAYS" />
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Su" HBox.hgrow="ALWAYS" />
-            </children>
-            <cursor>
-                <Cursor fx:constant="DEFAULT" />
-            </cursor>
-            <opaqueInsets>
-                <Insets />
-            </opaqueInsets>
-        </HBox>
-        <VBox layoutX="862.0" layoutY="174.0" prefHeight="281.0" prefWidth="234.0">
-            <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Events">
-                    <font>
-                        <Font size="36.0" />
-                    </font>
-                </Text>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Event 1">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Text>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Event 2">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Text>
-            </children>
-        </VBox>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Event 3" />
-        <VBox layoutX="862.0" layoutY="455.0" prefHeight="333.0" prefWidth="234.0">
-            <children>
-                <HBox alignment="CENTER" prefHeight="53.0" prefWidth="220.0" spacing="20.0">
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ToDos">
-                            <font>
-                                <Font size="36.0" />
-                            </font>
-                        </Text>
-                        <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="57.0" text="Button" />
-                    </children>
-                </HBox>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ToDo 1">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Text>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ToDo 2">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Text>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ToDo 3">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Text>
-            </children>
-        </VBox>
-    </children>
+   <children>
+      <BorderPane layoutX="22.0" layoutY="20.0" prefHeight="745.0" prefWidth="1108.0">
+         <center>
+            <Pane prefHeight="745.0" prefWidth="1094.0" BorderPane.alignment="CENTER">
+               <children>
+                  <MonthPage prefHeight="636.0" prefWidth="951.0" />
+               </children>
+            </Pane>
+         </center>
+         <top>
+            <Pane prefHeight="111.0" prefWidth="949.0" BorderPane.alignment="CENTER">
+               <children>
+                <AnchorPane layoutX="-2.0" layoutY="-1.0" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="117.0">
+                     <children>
+                        <MenuButton layoutY="1.0" mnemonicParsing="false" prefHeight="109.0" prefWidth="117.0" text="MenuButton">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Action 1" />
+                            <MenuItem mnemonicParsing="false" text="Action 2" />
+                          </items>
+                        </MenuButton>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane layoutX="127.0" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="822.0">
+                     <children>
+                        <Label layoutY="-1.0" prefHeight="113.0" prefWidth="820.0" text="Label" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </Pane>
+         </top>
+         <right>
+            <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="339.0" prefWidth="158.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+              </items>
+            </SplitPane>
+         </right>
+      </BorderPane>
+   </children>
 </AnchorPane>
