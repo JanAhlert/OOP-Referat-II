@@ -8,6 +8,7 @@ import com.calendarfx.model.Calendar.Style;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.view.CalendarView;
 
+import com.calendarfx.view.MonthView;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -15,10 +16,8 @@ import javafx.stage.Stage;
 
 public class CalenderView {
 
-    CalendarView calendarView = new CalendarView(); // (1)
+    CalendarView cView = new CalendarView(); // (1)
 
-    Calendar birthdays = new Calendar("Birthdays"); // (2)
-    Calendar holidays = new Calendar("Holidays");
 
 
 
@@ -28,8 +27,8 @@ public class CalenderView {
         public void run() {
             while (true) {
                 Platform.runLater(() -> {
-                    calendarView.setToday(LocalDate.now());
-                    calendarView.setTime(LocalTime.now());
+                    cView.setToday(LocalDate.now());
+                    cView.setTime(LocalTime.now());
                 });
 
                 try {
