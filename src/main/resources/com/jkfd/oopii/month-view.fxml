@@ -62,6 +62,20 @@
                         </Pane>
                      </children>
                   </AnchorPane>
+                  <SplitPane dividerPositions="0.49387755102040815" layoutX="1565.0" prefHeight="112.0" prefWidth="302.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="99.0">
+                           <children>
+                              <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="136.0" text="&lt;- Previous Month" />
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <Button layoutX="3.0" layoutY="4.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="143.0" text="Next Month --&gt;" />
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
                </children>
             </Pane>
          </top>

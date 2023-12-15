@@ -63,6 +63,20 @@
                         </Pane>
                      </children>
                   </AnchorPane>
+                  <SplitPane dividerPositions="0.5016611295681063" layoutX="1565.0" layoutY="-1.0" prefHeight="113.0" prefWidth="302.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <Button layoutX="6.0" layoutY="7.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="136.0" text="&lt;-- Previous Week" />
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="138.0" text="Next Week--&gt;" />
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
                </children>
             </Pane>
          </top>
