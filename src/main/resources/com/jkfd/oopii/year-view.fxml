@@ -18,13 +18,13 @@
    <children>
       <TabPane layoutY="7.0" prefHeight="57.0" prefWidth="1920.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
-            <Tab text="Wochenansicht" />
-            <Tab text="Monatansicht">
+            <Tab onSelectionChanged="#WeekViewTab" text="Wochenansicht" />
+            <Tab onSelectionChanged="#MonthViewTab" text="Monatansicht">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
-            <Tab text="Jahresansicht" />
+            <Tab onSelectionChanged="#YearViewTab" text="Jahresansicht" />
          </tabs>
       </TabPane>
       <BorderPane layoutX="24.0" layoutY="86.0" prefHeight="906.0" prefWidth="1867.0">
