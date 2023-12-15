@@ -60,19 +60,12 @@ public class MonthViewController extends AbstractController {
 
     @FXML
     private void onSelectionMonthViewTab(Event event) {
-        try {
+
             MonthView monthView = new MonthView();
             monthView.setMinHeight(795);
             monthView.setMinWidth(1486);
             MonthViewPane.getChildren().clear();
             MonthViewPane.getChildren().add(monthView);
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Fehler");
-            alert.setHeaderText("Ein Fehler ist aufgetreten");
-            alert.setContentText("Es gab ein Problem beim Laden der Monatsansicht.");
-            alert.showAndWait();
-        }
     }
 
     @FXML

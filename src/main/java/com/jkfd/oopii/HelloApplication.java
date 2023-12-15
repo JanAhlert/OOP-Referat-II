@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-       YearViewController.loadView(stage);
+       MonthViewController.loadView(stage);
     }
 
     public static void main(String[] args) {
