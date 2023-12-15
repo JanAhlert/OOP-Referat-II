@@ -29,7 +29,7 @@
       </TabPane>
       <BorderPane layoutX="24.0" layoutY="86.0" prefHeight="962.0" prefWidth="1867.0">
          <center>
-            <Pane fx:id="WeekView" prefHeight="906.0" prefWidth="1446.0" BorderPane.alignment="CENTER" />
+            <Pane fx:id="WeekViewPane" prefHeight="906.0" prefWidth="1446.0" BorderPane.alignment="CENTER" />
          </center>
          <top>
             <Pane prefHeight="111.0" prefWidth="1560.0" BorderPane.alignment="CENTER">
