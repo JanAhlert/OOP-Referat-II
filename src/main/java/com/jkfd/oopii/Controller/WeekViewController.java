@@ -28,6 +28,7 @@ public class WeekViewController {
         stage.setTitle("Home");
         stage.setScene(scene);
         stage.show();
+
         //Erstellung der WeekView aus dem CalendarFX
         WeekPage weekPage = new WeekPage();
         weekPage.setMinHeight(795);

@@ -4,6 +4,8 @@ import com.calendarfx.view.MonthView;
 import com.calendarfx.view.YearView;
 import com.calendarfx.view.page.WeekPage;
 import javafx.event.Event;
+import com.jkfd.oopii.Abstract.AbstractController;
+import com.jkfd.oopii.Date;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,11 +15,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-
 /**
  * Controller for the month-view
  */
-public class MonthViewController  {
+public class MonthViewController extends AbstractController {
 
     @FXML
     Pane MonthViewPane;
@@ -28,6 +29,7 @@ public class MonthViewController  {
     @FXML
     Tab YearViewTab;
 
+    Date currentDate = new Date();
 
     /**
      * Initializes the month-view
