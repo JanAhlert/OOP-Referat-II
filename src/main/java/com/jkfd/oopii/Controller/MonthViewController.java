@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HomeController implements Initializable{
+public class MonthViewController implements Initializable{
 
     @FXML
     Pane MonthViewPane;
@@ -25,7 +25,7 @@ public class HomeController implements Initializable{
      * @throws IOException
      */
     public static void loadView(Stage stage) throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(HomeController.class.getResource("/com/jkfd/oopii/month-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MonthViewController.class.getResource("/com/jkfd/oopii/month-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Home");
         stage.setScene(scene);
@@ -33,10 +33,10 @@ public class HomeController implements Initializable{
 
         MonthView monthView = new MonthView();
         monthView.setMinHeight(795);
-        monthView.setMinWidth(1446);
+        monthView.setMinWidth(1486);
 
-        HomeController homeController = fxmlLoader.getController();
-        homeController.MonthViewPane.getChildren().add(monthView);
+        MonthViewController monthViewController = fxmlLoader.getController();
+        monthViewController.MonthViewPane.getChildren().add(monthView);
 
     }
 

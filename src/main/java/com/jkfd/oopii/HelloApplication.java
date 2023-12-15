@@ -2,8 +2,6 @@ package com.jkfd.oopii;
 
 
 
-import com.jkfd.oopii.CalenderView.CalenderView;
-import com.jkfd.oopii.Controller.HomeController;
 import com.jkfd.oopii.Controller.WeekViewController;
 import javafx.application.Application;
 import javafx.stage.Stage;

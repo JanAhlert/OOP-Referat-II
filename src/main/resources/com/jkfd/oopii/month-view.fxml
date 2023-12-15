@@ -14,17 +14,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="1012.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jkfd.oopii.Controller.HomeController">
+<Pane prefHeight="1012.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jkfd.oopii.Controller.MonthViewController">
    <children>
       <TabPane layoutY="7.0" prefHeight="57.0" prefWidth="1920.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Untitled Tab 1" />
-            <Tab text="Untitled Tab 2">
+          <Tab text="Wochenansicht" />
+            <Tab text="Monatsansicht">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-          <Tab text="Untitled Tab 3" />
+          <Tab text="Jahresansicht" />
         </tabs>
       </TabPane>
       <BorderPane layoutX="27.0" layoutY="64.0" prefHeight="921.0" prefWidth="1867.0">
