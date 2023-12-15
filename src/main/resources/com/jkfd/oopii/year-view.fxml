@@ -29,7 +29,7 @@
       </TabPane>
       <BorderPane layoutX="24.0" layoutY="86.0" prefHeight="906.0" prefWidth="1867.0">
          <center>
-            <Pane fx:id="WeekViewPane" prefHeight="906.0" prefWidth="1446.0" BorderPane.alignment="CENTER" />
+            <Pane fx:id="YearViewPane" prefHeight="906.0" prefWidth="1446.0" BorderPane.alignment="CENTER" />
          </center>
          <top>
             <Pane prefHeight="111.0" prefWidth="1560.0" BorderPane.alignment="CENTER">
@@ -67,12 +67,12 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <Button layoutX="6.0" layoutY="7.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="136.0" text="&lt;-- Previous Week" />
+                              <Button layoutX="6.0" layoutY="7.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="136.0" text="&lt;-- Previous Year" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="138.0" text="Next Week--&gt;" />
+                              <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="138.0" text="Next Year--&gt;" />
                            </children>
                         </AnchorPane>
                     </items>

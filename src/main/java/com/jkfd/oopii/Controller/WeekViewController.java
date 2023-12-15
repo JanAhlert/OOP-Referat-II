@@ -15,7 +15,7 @@ public class WeekViewController {
 
     public static void loadView(Stage stage) throws IOException
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(MonthViewController.class.getResource("/com/jkfd/oopii/week-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(WeekViewController.class.getResource("/com/jkfd/oopii/week-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Home");
         stage.setScene(scene);
@@ -26,6 +26,7 @@ public class WeekViewController {
         weekPage.setMinWidth(1540);
         weekPage.setShowNavigation(false);
         weekPage.setShowDate(false);
+
         WeekViewController weekViewController = fxmlLoader.getController();
         weekViewController.WeekViewPane.getChildren().add(weekPage);
 
