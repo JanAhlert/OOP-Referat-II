@@ -4,15 +4,15 @@ import com.calendarfx.view.MonthView;
 import com.jkfd.oopii.Date;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class MonthViewController implements Initializable{
+/**
+ * Controller for the month-view
+ */
+public class MonthViewController {
 
     @FXML
     Pane MonthViewPane;
@@ -30,23 +30,13 @@ public class MonthViewController implements Initializable{
         stage.setTitle("Home");
         stage.setScene(scene);
         stage.show();
-
+        //Erstellung der MonthView aus dem CalendarFX
         MonthView monthView = new MonthView();
         monthView.setMinHeight(795);
         monthView.setMinWidth(1486);
-
         MonthViewController monthViewController = fxmlLoader.getController();
         monthViewController.MonthViewPane.getChildren().add(monthView);
-
     }
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)
-    {
-
-    }
-
 
 }
 
