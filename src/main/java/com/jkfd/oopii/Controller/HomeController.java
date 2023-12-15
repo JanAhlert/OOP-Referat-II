@@ -32,7 +32,7 @@ public class HomeController implements Initializable{
         stage.show();
 
         MonthView monthView = new MonthView();
-        monthView.setMinHeight(800);             //ToDO Höhe anpassen bitte
+        monthView.setMinHeight(795);
         monthView.setMinWidth(1446);
 
         HomeController homeController = fxmlLoader.getController();

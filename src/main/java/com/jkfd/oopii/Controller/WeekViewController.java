@@ -22,7 +22,7 @@ public class WeekViewController {
         stage.show();
 
         WeekPage weekPage = new WeekPage();
-        weekPage.setMinHeight(800);             //ToDO Höhe anpassen bitte
+        weekPage.setMinHeight(795);
         weekPage.setMinWidth(1446);
         weekPage.setShowNavigation(false);
         weekPage.setShowDate(false);
