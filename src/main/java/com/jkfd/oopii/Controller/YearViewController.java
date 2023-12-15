@@ -9,12 +9,21 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
+/**
+ * Controller for the year-view
+ */
 public class YearViewController
 {
 
     @FXML
     Pane YearViewPane;
 
+    /**
+     * Initializes the year-view
+     * @param stage
+     * @throws IOException
+     */
     public static void loadView(Stage stage) throws IOException
     {
         FXMLLoader fxmlLoader = new FXMLLoader(YearViewController.class.getResource("/com/jkfd/oopii/year-view.fxml"));
@@ -22,14 +31,12 @@ public class YearViewController
         stage.setTitle("Home");
         stage.setScene(scene);
         stage.show();
-
+        //Erstellung der YearView aus dem CalendarFX
         YearView yearView = new YearView();
         yearView.setMinHeight(795);
         yearView.setMinWidth(1540);
-
         YearViewController yearViewController = fxmlLoader.getController();
         yearViewController.YearViewPane.getChildren().add(yearView);
-
     }
 
 }
