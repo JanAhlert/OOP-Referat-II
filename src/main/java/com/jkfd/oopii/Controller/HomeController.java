@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * @Author: Fabian Klein
  * @Version: 0.1
  */
-public class HomeController{
+public class HomeController implements Initializable{
 
     Date currentDate = new Date();
 
