@@ -19,13 +19,9 @@
    <children>
       <TabPane layoutY="7.0" prefHeight="57.0" prefWidth="1920.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Wochenansicht" />
-            <Tab text="Monatsansicht">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-          <Tab text="Jahresansicht" />
+            <Tab fx:id="MonthViewTab" onSelectionChanged="#onSelectionMonthViewTab" text="Monatsansicht" />
+          <Tab fx:id="WeekViewTab" onSelectionChanged="#onSelectionWeekViewTab" text="Wochenansicht" />
+          <Tab fx:id="YearViewTab" onSelectionChanged="#onSelectionYearViewTab" text="Jahresansicht" />
         </tabs>
       </TabPane>
       <BorderPane layoutX="27.0" layoutY="64.0" prefHeight="921.0" prefWidth="1867.0">
