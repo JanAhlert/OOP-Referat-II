@@ -17,7 +17,7 @@ public class YearViewController
 
     public static void loadView(Stage stage) throws IOException
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(YearViewController.class.getResource("/com/jkfd/oopii/week-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(YearViewController.class.getResource("/com/jkfd/oopii/year-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Home");
         stage.setScene(scene);
