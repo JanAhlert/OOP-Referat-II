@@ -54,7 +54,7 @@
                            </font></Label>
                         <Pane layoutX="829.0" layoutY="-7.0" prefHeight="125.0" prefWidth="598.0">
                            <children>
-                              <Label layoutX="7.0" layoutY="7.0" prefHeight="110.0" prefWidth="585.0" text="Label" textAlignment="CENTER">
+                              <Label layoutX="7.0" prefHeight="110.0" prefWidth="585.0" text="Label" textAlignment="CENTER">
                                  <font>
                                     <Font size="49.0" />
                                  </font>
@@ -67,12 +67,18 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="99.0">
                            <children>
-                              <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="136.0" text="&lt;- Previous Month" />
+                              <Button layoutX="14.0" layoutY="5.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="140.0" text="&lt;- Previous Month" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding></Button>
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <Button layoutX="3.0" layoutY="4.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="143.0" text="Next Month --&gt;" />
+                              <Button layoutX="3.0" layoutY="4.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="140.0" text="Next Month --&gt;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding></Button>
                            </children>
                         </AnchorPane>
                     </items>
