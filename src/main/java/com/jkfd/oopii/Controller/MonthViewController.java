@@ -1,6 +1,7 @@
 package com.jkfd.oopii.Controller;
 
 import com.calendarfx.view.MonthView;
+import com.jkfd.oopii.Abstract.AbstractController;
 import com.jkfd.oopii.Date;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,7 @@ import java.io.IOException;
 /**
  * Controller for the month-view
  */
-public class MonthViewController {
+public class MonthViewController extends AbstractController {
 
     @FXML
     Pane MonthViewPane;
