@@ -29,6 +29,7 @@ public class MonthViewController extends AbstractController {
     @FXML
     Tab YearViewTab;
 
+    private static boolean isInitialized = false;
     Date currentDate = new Date();
 
     /**
@@ -49,6 +50,7 @@ public class MonthViewController extends AbstractController {
         monthView.setMinWidth(1486);
         MonthViewController monthViewController = fxmlLoader.getController();
         monthViewController.MonthViewPane.getChildren().add(monthView);
+        isInitialized = true;
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -60,12 +62,22 @@ public class MonthViewController extends AbstractController {
 
     @FXML
     private void onSelectionMonthViewTab(Event event) {
+            if (isInitialized == true) {
+                try {
+                    MonthView monthView = new MonthView();
+                    monthView.setMinHeight(795);
+                    monthView.setMinWidth(1486);
+                    MonthViewPane.getChildren().clear();
+                    MonthViewPane.getChildren().add(monthView);
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Fehler");
+                    alert.setHeaderText("Ein Fehler ist aufgetreten");
+                    alert.setContentText("Es gab ein Problem beim Laden der Monatsansicht.");
+                    alert.showAndWait();
+                }
 
-            MonthView monthView = new MonthView();
-            monthView.setMinHeight(795);
-            monthView.setMinWidth(1486);
-            MonthViewPane.getChildren().clear();
-            MonthViewPane.getChildren().add(monthView);
+            }
     }
 
     @FXML
