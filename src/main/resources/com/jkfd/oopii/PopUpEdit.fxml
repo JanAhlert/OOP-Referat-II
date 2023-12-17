@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jkfd.oopii.PopUpEdit">
    <children>
       <TabPane layoutX="-2.0" prefHeight="500.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
@@ -37,7 +36,7 @@
                                              <children>
                                                 <Pane prefHeight="200.0" prefWidth="601.0">
                                                    <children>
-                                                      <Label prefHeight="34.0" prefWidth="606.0" text="Titel eingeben:" />
+                                                      <Label layoutX="-2.0" prefHeight="34.0" prefWidth="608.0" text="Titel eingeben:" underline="true" />
                                                    </children>
                                                 </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0">
@@ -55,7 +54,7 @@
                                              <children>
                                                 <Pane prefHeight="54.0" prefWidth="606.0">
                                                    <children>
-                                                      <Label layoutX="4.0" layoutY="1.0" prefHeight="45.0" prefWidth="603.0" text="Beschreibung eingeben:" />
+                                                      <Label layoutX="4.0" layoutY="1.0" prefHeight="45.0" prefWidth="603.0" text="Beschreibung eingeben:" underline="true" />
                                                    </children>
                                                 </Pane>
                                                 <Pane prefHeight="189.0" prefWidth="611.0">
@@ -83,12 +82,14 @@
                                                       <Insets bottom="5.0" right="2.5" top="5.0" />
                                                    </HBox.margin>
                                                    <children>
-                                                      <ChoiceBox layoutY="20.0" prefHeight="35.0" prefWidth="180.0" />
+                                                      <ChoiceBox layoutY="38.0" prefHeight="35.0" prefWidth="180.0" />
+                                                      <Label layoutY="14.0" text="Priorität wählen:" underline="true" />
                                                    </children>
                                                 </Pane>
                                                 <Pane prefHeight="75.0" prefWidth="343.0">
                                                    <children>
-                                                      <DatePicker layoutX="163.0" layoutY="20.0" prefHeight="35.0" prefWidth="144.0" />
+                                                      <DatePicker layoutX="164.0" layoutY="38.0" prefHeight="35.0" prefWidth="144.0" />
+                                                      <Label layoutX="164.0" layoutY="14.0" text="Fälligkeitsadtum:" underline="true" />
                                                    </children>
                                                    <HBox.margin>
                                                       <Insets bottom="5.0" left="5.0" top="5.0" />
@@ -103,7 +104,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" />
                                        </VBox.margin>
                                        <children>
-                                          <HBox layoutX="-1.0" prefHeight="42.0" prefWidth="606.0">
+                                          <HBox layoutX="1.0" prefHeight="42.0" prefWidth="604.0">
                                              <children>
                                                 <Pane prefHeight="32.0" prefWidth="304.0">
                                                    <HBox.margin>
@@ -119,7 +120,7 @@
                                                       <Insets bottom="5.0" left="2.5" top="5.0" />
                                                    </HBox.margin>
                                                    <children>
-                                                      <Button layoutX="201.0" layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Abbrechen" />
+                                                      <Button layoutX="200.0" layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="101.0" text="Abbrechen" />
                                                    </children>
                                                 </Pane>
                                              </children>
@@ -138,11 +139,11 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="572.0">
                      <children>
-                        <Pane layoutX="14.0" layoutY="14.0" prefHeight="445.0" prefWidth="627.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <Pane layoutX="12.0" layoutY="14.0" prefHeight="451.0" prefWidth="628.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                            <children>
                               <VBox layoutX="-1.0" layoutY="3.0" prefHeight="450.0" prefWidth="630.0">
                                  <children>
-                                    <Pane prefHeight="91.0" prefWidth="630.0">
+                                    <Pane prefHeight="91.0" prefWidth="620.0">
                                        <children>
                                           <VBox prefHeight="77.0" prefWidth="630.0">
                                              <children>
@@ -151,7 +152,7 @@
                                                       <Insets bottom="2.5" left="5.0" right="5.0" top="5.0" />
                                                    </VBox.margin>
                                                    <children>
-                                                      <Label layoutX="-2.0" prefHeight="33.0" prefWidth="620.0" text="Titel eingeben:" />
+                                                      <Label prefHeight="35.0" prefWidth="620.0" text="Titel eingeben:" underline="true" />
                                                    </children>
                                                 </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0">
@@ -159,30 +160,30 @@
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="2.5" />
                                                    </VBox.margin>
                                                    <children>
-                                                      <TextField prefHeight="31.0" prefWidth="620.0" />
+                                                      <TextField prefHeight="30.0" prefWidth="620.0" />
                                                    </children>
                                                 </Pane>
                                              </children>
                                           </VBox>
                                        </children>
                                     </Pane>
-                                    <Pane prefHeight="135.0" prefWidth="620.0">
+                                    <Pane prefHeight="97.0" prefWidth="620.0">
                                        <children>
-                                          <HBox prefHeight="135.0" prefWidth="626.0">
+                                          <HBox prefHeight="98.0" prefWidth="620.0">
                                              <children>
-                                                <Pane prefHeight="115.0" prefWidth="299.0">
+                                                <Pane prefHeight="88.0" prefWidth="284.0">
                                                    <HBox.margin>
-                                                      <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
+                                                      <Insets bottom="5.0" right="2.5" top="5.0" />
                                                    </HBox.margin>
                                                    <children>
-                                                      <VBox layoutX="1.0" layoutY="-2.0" prefHeight="126.0" prefWidth="297.0">
+                                                      <VBox layoutX="1.0" layoutY="-2.0" prefHeight="91.0" prefWidth="286.0">
                                                          <children>
-                                                            <Pane prefHeight="45.0" prefWidth="297.0">
+                                                            <Pane prefHeight="45.0" prefWidth="300.0">
                                                                <children>
-                                                                  <Label layoutX="-1.0" prefHeight="45.0" prefWidth="300.0" text="Datum auswählen:" />
+                                                                  <Label layoutY="-2.0" prefHeight="45.0" prefWidth="286.0" text="Datum auswählen:" underline="true" />
                                                                </children>
                                                             </Pane>
-                                                            <Pane prefHeight="89.0" prefWidth="297.0">
+                                                            <Pane prefHeight="45.0" prefWidth="297.0">
                                                                <children>
                                                                   <DatePicker layoutY="2.0" />
                                                                </children>
@@ -191,19 +192,19 @@
                                                       </VBox>
                                                    </children>
                                                 </Pane>
-                                                <Pane prefHeight="128.0" prefWidth="297.0">
+                                                <Pane prefHeight="88.0" prefWidth="334.0">
                                                    <HBox.margin>
                                                       <Insets bottom="5.0" left="2.5" right="5.0" top="5.0" />
                                                    </HBox.margin>
                                                    <children>
-                                                      <VBox layoutY="-3.0" prefHeight="128.0" prefWidth="312.0">
+                                                      <VBox layoutY="-1.0" prefHeight="89.0" prefWidth="327.0">
                                                          <children>
-                                                            <Pane prefHeight="124.0" prefWidth="312.0">
+                                                            <Pane prefHeight="45.0" prefWidth="319.0">
                                                                <children>
-                                                                  <Label layoutY="-1.0" prefHeight="45.0" prefWidth="300.0" text="Uhrzeit auswählen:" />
+                                                                  <Label layoutY="14.0" text="Uhrzeit auswählen:" underline="true" />
                                                                </children>
                                                             </Pane>
-                                                            <Pane prefHeight="170.0" prefWidth="308.0">
+                                                            <Pane prefHeight="45.0" prefWidth="327.0">
                                                                <children>
                                                                   <DatePicker layoutY="2.0" />
                                                                </children>
@@ -219,10 +220,18 @@
                                           <Insets bottom="2.5" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin>
                                     </Pane>
-                                    <Pane prefHeight="173.0" prefWidth="620.0">
+                                    <Pane prefHeight="134.0" prefWidth="620.0">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="2.5" />
                                        </VBox.margin>
+                                       <children>
+                                          <VBox layoutY="1.0" prefHeight="134.0" prefWidth="622.0">
+                                             <children>
+                                                <Pane prefHeight="110.0" prefWidth="622.0" />
+                                                <Pane prefHeight="200.0" prefWidth="200.0" />
+                                             </children>
+                                          </VBox>
+                                       </children>
                                     </Pane>
                                  </children>
                               </VBox>
