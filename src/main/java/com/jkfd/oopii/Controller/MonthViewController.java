@@ -8,17 +8,21 @@ import com.jkfd.oopii.Abstract.AbstractController;
 import com.jkfd.oopii.Date;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Controller for the month-view
  */
-public class MonthViewController extends AbstractController {
+public class MonthViewController extends AbstractController implements Initializable {
 
     @FXML
     Pane MonthViewPane;
@@ -28,6 +32,8 @@ public class MonthViewController extends AbstractController {
     Tab WeekViewTab;
     @FXML
     Tab YearViewTab;
+    @FXML
+    Label CurrentDateLabel;
 
     private static boolean isInitialized = false;
     Date currentDate = new Date();
@@ -60,6 +66,9 @@ public class MonthViewController extends AbstractController {
         }
     }
 
+    /**
+     * Sets the current date in the month-view
+     */
     @FXML
     private void onSelectionMonthViewTab(Event event) {
             if (isInitialized == true) {
@@ -80,6 +89,9 @@ public class MonthViewController extends AbstractController {
             }
     }
 
+    /**
+     * Sets the current date in the year-view
+     */
     @FXML
     private void onSelectionYearViewTab(Event event){
         try {
@@ -97,6 +109,9 @@ public class MonthViewController extends AbstractController {
         }
     }
 
+    /**
+     * Sets the current date in the week-view
+     */
     @FXML
     private void onSelectionWeekViewTab(Event event){
         try {
@@ -117,9 +132,23 @@ public class MonthViewController extends AbstractController {
         }
     }
 
+    /**
+     * Setter Methode for the current date in the home-views
+     */
+    @FXML
+    private void setCurrentDateLabel(){
+        CurrentDateLabel.setText(currentDate.getCurrentDate());
+    }
 
-
-
+    /**
+     * Method that is loaded when the view is initialized
+     * @param url
+     * @param resourceBundle
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setCurrentDateLabel();
+    }
 }
 
 
