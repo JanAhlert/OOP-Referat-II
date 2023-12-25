@@ -17,7 +17,7 @@
 
 <Pane prefHeight="1012.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jkfd.oopii.Controller.MonthViewController">
    <children>
-      <TabPane layoutY="7.0" prefHeight="57.0" prefWidth="1920.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="-6.0" prefHeight="57.0" prefWidth="1920.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab fx:id="MonthViewTab" onSelectionChanged="#onSelectionMonthViewTab" text="Monatsansicht" />
           <Tab fx:id="WeekViewTab" onSelectionChanged="#onSelectionWeekViewTab" text="Wochenansicht" />
@@ -48,7 +48,7 @@
                            <font>
                               <Font size="49.0" />
                            </font></Label>
-                        <Label fx:id="CurrentDateLabel" layoutX="614.0" layoutY="2.0" prefHeight="110.0" prefWidth="285.0" text="##.##.####" textAlignment="CENTER">
+                        <Label fx:id="CurrentDateLabel" alignment="CENTER" layoutX="614.0" layoutY="2.0" prefHeight="110.0" prefWidth="285.0" text="##.##.####" textAlignment="CENTER">
                            <font>
                               <Font size="49.0" />
                            </font>
@@ -56,28 +56,25 @@
                               <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
                            </padding>
                         </Label>
+                        <Button fx:id="PreviousMonth" layoutX="530.0" layoutY="12.0" mnemonicParsing="false" onAction="#setPreviousMonth" prefHeight="90.0" prefWidth="69.0" text="&lt;" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="530.0" AnchorPane.rightAnchor="839.0" AnchorPane.topAnchor="12.0">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                           <font>
+                              <Font size="64.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="NextMonth" layoutX="899.0" layoutY="10.0" mnemonicParsing="false" onAction="#setNextMonth" prefHeight="95.0" prefWidth="71.0" text="&gt;" textAlignment="CENTER" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="899.0" AnchorPane.rightAnchor="468.0" AnchorPane.topAnchor="10.0">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                           <font>
+                              <Font size="64.0" />
+                           </font>
+                        </Button>
+                      <AnchorPane layoutX="282.0" layoutY="-4.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
                      </children>
                   </AnchorPane>
-                  <SplitPane dividerPositions="0.49387755102040815" layoutX="1565.0" prefHeight="112.0" prefWidth="302.0">
-                    <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="99.0">
-                           <children>
-                              <Button layoutX="14.0" layoutY="5.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="140.0" text="&lt;- Previous Month" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding></Button>
-                           </children>
-                        </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                           <children>
-                              <Button layoutX="3.0" layoutY="4.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="140.0" text="Next Month --&gt;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding></Button>
-                           </children>
-                        </AnchorPane>
-                    </items>
-                  </SplitPane>
                </children>
             </Pane>
          </top>
