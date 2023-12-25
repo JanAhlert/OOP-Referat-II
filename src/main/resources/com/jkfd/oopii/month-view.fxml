@@ -48,7 +48,7 @@
                            <font>
                               <Font size="49.0" />
                            </font></Label>
-                        <Label fx:id="CurrentDateLabel" layoutX="614.0" layoutY="2.0" prefHeight="110.0" prefWidth="285.0" text="##.##.####" textAlignment="CENTER">
+                        <Label fx:id="CurrentDateLabel" alignment="CENTER" layoutX="614.0" layoutY="2.0" prefHeight="110.0" prefWidth="285.0" text="##.##.####" textAlignment="CENTER">
                            <font>
                               <Font size="49.0" />
                            </font>
@@ -56,7 +56,7 @@
                               <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
                            </padding>
                         </Label>
-                        <Button layoutX="530.0" layoutY="12.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="69.0" text="&lt;" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="530.0" AnchorPane.rightAnchor="839.0" AnchorPane.topAnchor="12.0">
+                        <Button fx:id="PreviousMonth" layoutX="530.0" layoutY="12.0" mnemonicParsing="false" onAction="#setPreviousMonth" prefHeight="90.0" prefWidth="69.0" text="&lt;" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="530.0" AnchorPane.rightAnchor="839.0" AnchorPane.topAnchor="12.0">
                            <padding>
                               <Insets left="5.0" right="5.0" />
                            </padding>
@@ -64,7 +64,7 @@
                               <Font size="64.0" />
                            </font>
                         </Button>
-                        <Button layoutX="899.0" layoutY="10.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="71.0" text="&gt;" textAlignment="CENTER" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="899.0" AnchorPane.rightAnchor="468.0" AnchorPane.topAnchor="10.0">
+                        <Button fx:id="NextMonth" layoutX="899.0" layoutY="10.0" mnemonicParsing="false" onAction="#setNextMonth" prefHeight="95.0" prefWidth="71.0" text="&gt;" textAlignment="CENTER" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="899.0" AnchorPane.rightAnchor="468.0" AnchorPane.topAnchor="10.0">
                            <padding>
                               <Insets left="5.0" right="5.0" />
                            </padding>
