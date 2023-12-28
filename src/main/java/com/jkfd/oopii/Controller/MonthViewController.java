@@ -2,6 +2,7 @@ package com.jkfd.oopii.Controller;
 
 import com.calendarfx.view.MonthView;
 import com.calendarfx.view.YearView;
+import com.calendarfx.view.page.MonthPage;
 import com.calendarfx.view.page.WeekPage;
 import javafx.event.Event;
 import com.jkfd.oopii.Abstract.AbstractController;
@@ -44,7 +45,7 @@ public class MonthViewController extends AbstractController implements Initializ
 
     private static boolean isInitialized = false; //Variable to check if the View is initialized
     Date currentDate = new Date(); //Variable for the Date
-    private static MonthView monthView; //Variable for the MonthView um die View zu ändern
+    private static MonthView monthView; //Variable for the MonthView um die View zu ändern TODO View kann zu einer Page gemacht werden wie bei der WeekPage, damit das PopUp fenster erscheint in das man Termin daten eintragen kann, anstatt die Fehlermeldung
     private static YearView yearView = new YearView(); //Variable for the YearView um die View zu ändern
     private static WeekPage weekPage = new WeekPage(); //Variable for the WeekView um die View zu ändern
 
