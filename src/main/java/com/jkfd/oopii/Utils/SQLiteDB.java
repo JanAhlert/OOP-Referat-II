@@ -2,6 +2,8 @@ package com.jkfd.oopii.Utils;
 
 
 
+import org.w3c.dom.Element;
+
 import java.io.File;
 import java.sql.*;
 
@@ -96,7 +98,8 @@ public class SQLiteDB {
                 Full_day boolean NOT NULL,
                 Start_date text, 
                 End_date text);
-                """;//Start_date is a text because SQLite safes Dates as String in de format YYYY-MM-DD
+                """;
+        //Start_date is a text because SQLite safes Dates as String in de format YYYY-MM-DD
 
         String TODOTableSQL = """
                 CREATE TABLE IF NOT EXISTS todos (

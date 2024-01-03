@@ -2,7 +2,6 @@ package com.jkfd.oopii.Controller;
 
 import com.calendarfx.view.MonthView;
 import com.calendarfx.view.YearView;
-import com.calendarfx.view.page.MonthPage;
 import com.calendarfx.view.page.WeekPage;
 import javafx.event.Event;
 import com.jkfd.oopii.Abstract.AbstractController;
@@ -11,10 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -43,6 +39,8 @@ public class MonthViewController extends AbstractController implements Initializ
     Button PreviousMonth;
 
 
+
+
     private static boolean isInitialized = false; //Variable to check if the View is initialized
     Date currentDate = new Date(); //Variable for the Date
     private static MonthView monthView; //Variable for the MonthView um die View zu ändern TODO View kann zu einer Page gemacht werden wie bei der WeekPage, damit das PopUp fenster erscheint in das man Termin daten eintragen kann, anstatt die Fehlermeldung
@@ -50,7 +48,7 @@ public class MonthViewController extends AbstractController implements Initializ
     private static WeekPage weekPage = new WeekPage(); //Variable for the WeekView um die View zu ändern
 
 
-    static FXMLLoader fxmlLoader = new FXMLLoader(MonthViewController.class.getResource("/com/jkfd/oopii/month-view.fxml"));    //FXMLLoader for the month-view
+   private static FXMLLoader fxmlLoader = new FXMLLoader(MonthViewController.class.getResource("/com/jkfd/oopii/month-view.fxml"));    //FXMLLoader for the month-view
 
     /**
      * Method to load the month-view file and set the scene in the stage
@@ -87,10 +85,14 @@ public class MonthViewController extends AbstractController implements Initializ
         monthViewController.MonthViewPane.getChildren().add(monthView);
         isInitialized = true;
 
+
+
         //Loads the YearView
         yearView = new YearView();
         yearView.setMinHeight(795);
         yearView.setMinWidth(1486);
+
+
 
         //Loads the WeekView
         weekPage = new WeekPage();
@@ -98,10 +100,20 @@ public class MonthViewController extends AbstractController implements Initializ
         weekPage.setMinWidth(1486);
         weekPage.setShowNavigation(false);
         weekPage.setShowDate(false);
+        weekPage.setEntryDetailsPopOverContentCallback(param -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jkfd/oopii/PopUpEdit.fxml"));
+                return loader.load(); // Gibt den geladenen Inhalt direkt zurück
+            } catch (IOException e) {
+                return new Label("Fehler beim Laden des Inhalts"); // Rückgabe eines Ersatz-Node bei Fehler
+            }
+        });
+
 
         //Sets the current date in the month-view
         setCurrentDateLabel(Date.MMYYYY);
     }
+
 
 //---------------------------------------------------Functions for Changing the View by selcting the Tab---------------------------------------------------//
 
@@ -110,7 +122,7 @@ public class MonthViewController extends AbstractController implements Initializ
      */
     @FXML
     private void onSelectionMonthViewTab(Event event) {
-            if (isInitialized == true) {
+            if (isInitialized) {
                 try {
                     MonthViewPane.getChildren().clear();
                     MonthViewPane.getChildren().add(monthView);
@@ -236,6 +248,10 @@ public class MonthViewController extends AbstractController implements Initializ
         CurrentDateLabel.setText(currentDate.getCurrentselectedDate(Date.YYYY));
         yearView.setDate(currentDate.getSelectedDate());
     }
+
+    //---------------------------------------------------Functions to get Data from the User---------------------------------------------------//
+
+
 
 }
 

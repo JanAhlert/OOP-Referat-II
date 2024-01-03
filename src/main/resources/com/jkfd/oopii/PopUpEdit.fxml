@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jkfd.oopii.PopUpEdit">
+<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jkfd.oopii.Controller.PopUpController">
    <children>
       <TabPane layoutX="-2.0" prefHeight="500.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -111,7 +100,7 @@
                                                       <Insets bottom="5.0" right="2.5" top="5.0" />
                                                    </HBox.margin>
                                                    <children>
-                                                      <Button layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Speichern" />
+                                                      <Button fx:id="safe" layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Speichern" />
                                                       <ProgressIndicator layoutX="136.0" layoutY="3.0" prefHeight="30.0" prefWidth="28.0" progress="0.0" />
                                                    </children>
                                                 </Pane>
