@@ -100,18 +100,17 @@ public class MonthViewController extends AbstractController implements Initializ
         weekPage.setMinWidth(1486);
         weekPage.setShowNavigation(false);
         weekPage.setShowDate(false);
+        setCurrentDateLabel(Date.MMYYYY);
+        //Replace the pop-up window
         weekPage.setEntryDetailsPopOverContentCallback(param -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jkfd/oopii/PopUpEdit.fxml"));
-                return loader.load(); // Gibt den geladenen Inhalt direkt zurück
+                return loader.load();
             } catch (IOException e) {
-                return new Label("Fehler beim Laden des Inhalts"); // Rückgabe eines Ersatz-Node bei Fehler
+                return new Label("Fehler beim Laden des Inhalts"); // Throws an Error Lable for the User
             }
         });
 
-
-        //Sets the current date in the month-view
-        setCurrentDateLabel(Date.MMYYYY);
     }
 
 
