@@ -64,7 +64,7 @@
                               <Font size="64.0" />
                            </font>
                         </Button>
-                        <Button fx:id="NextMonth" layoutX="899.0" layoutY="10.0" mnemonicParsing="false" onAction="#setNextMonth" prefHeight="95.0" prefWidth="71.0" text="&gt;" textAlignment="CENTER" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="899.0" AnchorPane.rightAnchor="468.0" AnchorPane.topAnchor="10.0">
+                        <Button fx:id="NextMonth" layoutX="899.0" layoutY="10.0" mnemonicParsing="false" onAction="#onAddToDo" prefHeight="95.0" prefWidth="71.0" text="&gt;" textAlignment="CENTER" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="899.0" AnchorPane.rightAnchor="468.0" AnchorPane.topAnchor="10.0">
                            <padding>
                               <Insets left="5.0" right="5.0" />
                            </padding>

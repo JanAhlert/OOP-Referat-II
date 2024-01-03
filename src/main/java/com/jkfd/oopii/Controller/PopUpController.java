@@ -18,11 +18,9 @@ public class PopUpController {
      * @throws IOException
      */
     public static void loadView(Stage stage) throws IOException {
-
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
             stage.show();
             stage.setTitle("Termin bearbeiten");
-
     }
 }

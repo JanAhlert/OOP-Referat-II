@@ -1,8 +1,8 @@
 package com.jkfd.oopii.Controller;
 
-import com.calendarfx.view.MonthView;
-import com.calendarfx.view.YearView;
+import com.calendarfx.view.page.MonthPage;
 import com.calendarfx.view.page.WeekPage;
+import com.calendarfx.view.page.YearPage;
 import javafx.event.Event;
 import com.jkfd.oopii.Abstract.AbstractController;
 import com.jkfd.oopii.Date;
@@ -39,12 +39,10 @@ public class MonthViewController extends AbstractController implements Initializ
     Button PreviousMonth;
 
 
-
-
     private static boolean isInitialized = false; //Variable to check if the View is initialized
     Date currentDate = new Date(); //Variable for the Date
-    private static MonthView monthView; //Variable for the MonthView um die View zu ändern TODO View kann zu einer Page gemacht werden wie bei der WeekPage, damit das PopUp fenster erscheint in das man Termin daten eintragen kann, anstatt die Fehlermeldung
-    private static YearView yearView = new YearView(); //Variable for the YearView um die View zu ändern
+    private static MonthPage monthPage; //Variable for the MonthView um die View zu ändern
+    private static YearPage yearPage = new YearPage(); //Variable for the YearView um die View zu ändern
     private static WeekPage weekPage = new WeekPage(); //Variable for the WeekView um die View zu ändern
 
 
@@ -78,20 +76,32 @@ public class MonthViewController extends AbstractController implements Initializ
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Loads the MonthView
-        monthView = new MonthView();
-        monthView.setMinHeight(795);
-        monthView.setMinWidth(1486);
+        monthPage = new MonthPage();
+        monthPage.setMinHeight(795);
+        monthPage.setMinWidth(1486);
+        monthPage.setShowNavigation(false);
+        monthPage.setShowDate(false);
         MonthViewController monthViewController = fxmlLoader.getController();
-        monthViewController.MonthViewPane.getChildren().add(monthView);
+        monthViewController.MonthViewPane.getChildren().add(monthPage);
+        //Sets the pop-up window
+        monthPage.setEntryDetailsPopOverContentCallback(param -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jkfd/oopii/PopUpEdit.fxml"));
+                return loader.load();
+            } catch (IOException e) {
+                return new Label("Fehler beim Laden des Inhalts"); // Throws an Error Lable for the User
+            }
+        });
         isInitialized = true;
 
 
-
         //Loads the YearView
-        yearView = new YearView();
-        yearView.setMinHeight(795);
-        yearView.setMinWidth(1486);
-
+        yearPage = new YearPage();
+        yearPage.setMinHeight(795);
+        yearPage.setMinWidth(1486);
+        yearPage.setShowNavigation(false);
+        yearPage.setShowDate(false);
+        //Sets the pop-up window ToDo man kann keine eintrage eintragen, gibt es die Funktion für die Jahres ansicht nicht oder kann mann dieses noch Implementieren? Per setPopUp setzt sich kein PopUp
 
 
         //Loads the WeekView
@@ -101,7 +111,7 @@ public class MonthViewController extends AbstractController implements Initializ
         weekPage.setShowNavigation(false);
         weekPage.setShowDate(false);
         setCurrentDateLabel(Date.MMYYYY);
-        //Replace the pop-up window
+        //Sets the pop-up window
         weekPage.setEntryDetailsPopOverContentCallback(param -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jkfd/oopii/PopUpEdit.fxml"));
@@ -120,11 +130,11 @@ public class MonthViewController extends AbstractController implements Initializ
      * Sets the current date in the month-view
      */
     @FXML
-    private void onSelectionMonthViewTab(Event event) {
+    private void onSelectionMonthViewTab() {
             if (isInitialized) {
                 try {
                     MonthViewPane.getChildren().clear();
-                    MonthViewPane.getChildren().add(monthView);
+                    MonthViewPane.getChildren().add(monthPage);
                     currentDate.resetSelectedDate();
                     setCurrentDateLabel(Date.MMYYYY);
                 } catch (Exception e) {
@@ -142,10 +152,10 @@ public class MonthViewController extends AbstractController implements Initializ
      * Sets the current date in the year-view
      */
     @FXML
-    private void onSelectionYearViewTab(Event event){
+    private void onSelectionYearViewTab(){
         try {
             MonthViewPane.getChildren().clear();
-            MonthViewPane.getChildren().add(yearView);
+            MonthViewPane.getChildren().add(yearPage);
             currentDate.resetSelectedDate();
             setCurrentDateLabel(Date.YYYY);
         } catch (Exception e) {
@@ -161,7 +171,7 @@ public class MonthViewController extends AbstractController implements Initializ
      * Sets the current date in the week-view
      */
     @FXML
-    private void onSelectionWeekViewTab(Event event){
+    private void onSelectionWeekViewTab(){
         try {
             MonthViewPane.getChildren().clear();
             MonthViewPane.getChildren().add(weekPage);
@@ -184,6 +194,7 @@ public class MonthViewController extends AbstractController implements Initializ
     {
         CurrentDateLabel.setText(currentDate.getCurrentselectedDate(Format));
     }
+
 
     //---------------------------------------------------Functions for Changing the Date over the Buttons---------------------------------------------------//
 
@@ -225,7 +236,7 @@ public class MonthViewController extends AbstractController implements Initializ
     private void changeMonth(int month) {
         currentDate.setPlusMonth(month);
         CurrentDateLabel.setText(currentDate.getCurrentselectedDate(Date.MMYYYY));
-        monthView.setDate(currentDate.getSelectedDate());
+        monthPage.setDate(currentDate.getSelectedDate());
     }
 
     /**
@@ -245,7 +256,7 @@ public class MonthViewController extends AbstractController implements Initializ
     private void changeYear(int year) {
         currentDate.setPlusYear(year);
         CurrentDateLabel.setText(currentDate.getCurrentselectedDate(Date.YYYY));
-        yearView.setDate(currentDate.getSelectedDate());
+        yearPage.setDate(currentDate.getSelectedDate());
     }
 
     //---------------------------------------------------Functions to get Data from the User---------------------------------------------------//
