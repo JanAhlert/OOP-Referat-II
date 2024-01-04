@@ -4,6 +4,7 @@ module com.jkfd.oopii {
 
     requires org.controlsfx.controls;
     requires java.sql;
+    requires com.calendarfx.view;
 
     opens com.jkfd.oopii to javafx.fxml;
     exports com.jkfd.oopii;
