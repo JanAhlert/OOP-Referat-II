@@ -44,7 +44,7 @@
                   </AnchorPane>
                 <AnchorPane layoutX="127.0" minHeight="0.0" minWidth="0.0" prefHeight="113.0" prefWidth="1438.0">
                      <children>
-                        <Label layoutX="5.0" layoutY="10.0" prefHeight="91.0" prefWidth="135.0" text="Label" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="682.0" AnchorPane.topAnchor="10.0">
+                        <Label layoutX="5.0" layoutY="10.0" prefHeight="91.0" prefWidth="135.0" text="Hallo Benutzer" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="682.0" AnchorPane.topAnchor="10.0">
                            <font>
                               <Font size="49.0" />
                            </font></Label>
