@@ -1,14 +1,16 @@
-package com.jkfd.oopii.Utils;
+package com.jkfd.oopii.Database.Repository;
 
 
 
-import org.w3c.dom.Element;
+import com.jkfd.oopii.Database.IDBRepository;
+import com.jkfd.oopii.Database.Models.Event;
+import com.jkfd.oopii.Database.Models.Todo;
 
 import java.io.File;
 import java.sql.*;
 
 
-public class SQLiteDB {
+public class SQLiteDB implements IDBRepository {
     /**
      * The constructor of the SQLiteDB class
      */
@@ -40,7 +42,10 @@ public class SQLiteDB {
      * Migrates the database if there is a newer schema version
      */
     private void migrate() {
-        String sql = "EXISTS(SELECT * FROM migrate)";
+        createTables();
+        insertTestData();
+
+        String sql = "SELECT EXISTS(SELECT * FROM migrate)";
 
         try (Connection conn = connect()) {
             Statement stmt = conn.createStatement();
@@ -55,6 +60,8 @@ public class SQLiteDB {
                     // TODO
                 }
             }
+
+            System.out.println("[sqlite] Migrated tables to newest version");
         } catch (SQLException e) {
             System.out.println("[sqlite] " + e.getMessage());
         }
@@ -121,40 +128,6 @@ public class SQLiteDB {
     }
 
     /**
-     * Retrieves and prints all elements from a selected table.
-     * @author ChatGPT
-     */
-    public void displayAllData() {
-        // SQL query to select all elements from the events table
-        String query = "SELECT * FROM events;";
-
-        try (Connection conn = connect(); Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            // Iterate through the result set and print each record
-            while (rs.next()) {
-                int id = rs.getInt("ID");
-                String title = rs.getString("Titel");
-                String description = rs.getString("Description");
-                boolean fullDay = rs.getBoolean("Full_day");
-                String startDate = rs.getString("Start_date");
-                String endDate = rs.getString("End_date");
-                String createdAt = rs.getString("Created_at");
-
-                // Printing the event details
-                System.out.println("ID: " + id + ", Title: " + title + ", Description: " + description +
-                        ", Full Day: " + fullDay + ", Start Date: " + startDate +
-                        ", End Date: " + endDate + ", Created At: " + createdAt);
-            }
-
-        } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving events: " + e.getMessage());
-        }
-    }
-
-
-
-    /**
      * Populates the events table with test data.
      * @author ChatGPT
      */
@@ -182,4 +155,116 @@ public class SQLiteDB {
     }
 
 
+    @Override
+    public void CreateEvent(Event event) {
+
+    }
+
+    @Override
+    public Event GetEvent(int id) {
+        // SQL query to select all elements from the events table
+        String query = "SELECT * FROM events WHERE id = ?";
+
+        // TODO: Using proper prepared statement
+        try (Connection conn = connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            // Iterate through the result set and print each record
+            while (rs.next()) {
+                int rowid = rs.getInt("ID");
+                String title = rs.getString("Titel");
+                String description = rs.getString("Description");
+                boolean fullDay = rs.getBoolean("Full_day");
+                String startDate = rs.getString("Start_date");
+                String endDate = rs.getString("End_date");
+                String createdAt = rs.getString("Created_at");
+
+                // Printing the event details
+                System.out.println("ID: " + rowid + ", Title: " + title + ", Description: " + description +
+                        ", Full Day: " + fullDay + ", Start Date: " + startDate +
+                        ", End Date: " + endDate + ", Created At: " + createdAt);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while retrieving events: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    @Override
+    public Event[] GetEvents() {
+        // SQL query to select all elements from the events table
+        String query = "SELECT * FROM events";
+
+        try (Connection conn = connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            // Iterate through the result set and print each record
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                String title = rs.getString("Titel");
+                String description = rs.getString("Description");
+                boolean fullDay = rs.getBoolean("Full_day");
+                String startDate = rs.getString("Start_date");
+                String endDate = rs.getString("End_date");
+                String createdAt = rs.getString("Created_at");
+
+                // Printing the event details
+                System.out.println("ID: " + id + ", Title: " + title + ", Description: " + description +
+                        ", Full Day: " + fullDay + ", Start Date: " + startDate +
+                        ", End Date: " + endDate + ", Created At: " + createdAt);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while retrieving events: " + e.getMessage());
+        }
+
+        return new Event[0]; // TODO: Actually return all events
+    }
+
+    @Override
+    public Event[] GetEvents(int range) {
+        return new Event[0];
+    }
+
+    @Override
+    public Event UpdateEvent(Event event) {
+        return null;
+    }
+
+    @Override
+    public void DeleteEvent(int id) {
+
+    }
+
+    @Override
+    public void CreateTodo(Todo todo) {
+
+    }
+
+    @Override
+    public Todo GetTodo(int id) {
+        return null;
+    }
+
+    @Override
+    public Todo[] GetTodos() {
+        return new Todo[0];
+    }
+
+    @Override
+    public Todo[] GetTodos(int range) {
+        return new Todo[0];
+    }
+
+    @Override
+    public Todo UpdateTodo(Todo todo) {
+        return null;
+    }
+
+    @Override
+    public void DeleteTodo(int id) {
+
+    }
 }
