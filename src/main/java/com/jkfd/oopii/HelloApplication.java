@@ -4,25 +4,24 @@ package com.jkfd.oopii;
 
 import com.jkfd.oopii.Controller.MonthViewController;
 
-import com.jkfd.oopii.Controller.PopUpController;
-import com.jkfd.oopii.Utils.SQLiteDB;
+import com.jkfd.oopii.Database.DatabaseManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import java.io.IOException;
 
 public class HelloApplication extends Application {
+    public static DatabaseManager databaseManager;
 
     @Override
     public void start(Stage stage) throws Exception {
 
         MonthViewController.loadView(stage);
-        SQLiteDB db = new SQLiteDB();
 
-        db.displayAllData();
+        databaseManager.GetEvents();
     }
 
     public static void main(String[] args) throws Exception {
-        launch();
+        databaseManager = new DatabaseManager("sqlite");
 
+        launch();
     }
 }

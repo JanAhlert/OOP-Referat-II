@@ -9,5 +9,8 @@ module com.jkfd.oopii {
     opens com.jkfd.oopii to javafx.fxml;
     exports com.jkfd.oopii;
     exports com.jkfd.oopii.Controller;
+    exports com.jkfd.oopii.Database;
+    exports com.jkfd.oopii.Database.Models;
+    exports com.jkfd.oopii.Database.Repository;
     opens com.jkfd.oopii.Controller to javafx.fxml;
 }
