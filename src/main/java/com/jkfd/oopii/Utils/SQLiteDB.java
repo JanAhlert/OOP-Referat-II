@@ -87,7 +87,7 @@ public class SQLiteDB {
 
 
     /**
-     * Creates the events table
+     * Creates the events table in the database if it doesn't exist yet.
      */
     public void createTables() { //TODO: [SQLITE_ERROR] SQL error or missing database (near "EXISTS": syntax error)
         String eventsTableSQL = """
@@ -96,7 +96,7 @@ public class SQLiteDB {
                 Titel text NOT NULL,
                 Description text,
                 Full_day boolean NOT NULL,
-                Start_date text, 
+                Start_date text,
                 End_date text);
                 """;
         //Start_date is a text because SQLite safes Dates as String in de format YYYY-MM-DD

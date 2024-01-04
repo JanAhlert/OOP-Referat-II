@@ -54,12 +54,19 @@ public class MonthViewController extends AbstractController implements Initializ
      * @throws IOException
      */
     public static void loadView(Stage stage) throws IOException{
+        try {
 
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Home");
         stage.setScene(scene);
         stage.show();
-
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Ein Fehler ist aufgetreten");
+            alert.setContentText("Es gab ein Problem beim Laden der Monatsansicht.");
+            alert.showAndWait();
+        }
     }
 
     /**
