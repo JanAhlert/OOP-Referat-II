@@ -4,11 +4,25 @@ import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
 import com.jkfd.oopii.Database.Repository.SQLiteDB;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class DatabaseManager implements IDBRepository {
+    /**
+     * The instance of the currently initialized database that the manager keeps track of to forward the functions to.
+     */
     private final IDBRepository Repository;
 
+    /**
+     * The database manager handles all the required handling and forwarding of all the functions to manipulate data in
+     * the database. When initializing a new manager (which only one should exist of at any given time), it is possible
+     * to pass a 'database type' to initialize.
+     * <br><br>
+     * Currently, these types are available:<br>
+     * - sqlite
+     * @param dbType the database kind to initialize (see list above)
+     * @throws Exception
+     */
     public DatabaseManager(String dbType) throws Exception {
         if (Objects.equals(dbType, "sqlite")) {
             Repository = new SQLiteDB();
@@ -29,12 +43,12 @@ public class DatabaseManager implements IDBRepository {
     }
 
     @Override
-    public Event[] GetEvents() {
+    public ArrayList<Event> GetEvents() {
         return Repository.GetEvents();
     }
 
     @Override
-    public Event[] GetEvents(int range) {
+    public ArrayList<Event> GetEvents(int range) {
         return Repository.GetEvents(range);
     }
 
@@ -59,12 +73,12 @@ public class DatabaseManager implements IDBRepository {
     }
 
     @Override
-    public Todo[] GetTodos() {
+    public ArrayList<Todo> GetTodos() {
         return Repository.GetTodos();
     }
 
     @Override
-    public Todo[] GetTodos(int range) {
+    public ArrayList<Todo> GetTodos(int range) {
         return Repository.GetTodos(range);
     }
 

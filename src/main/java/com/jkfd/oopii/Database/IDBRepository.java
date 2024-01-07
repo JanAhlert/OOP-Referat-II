@@ -3,6 +3,8 @@ package com.jkfd.oopii.Database;
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
 
+import java.util.ArrayList;
+
 public interface IDBRepository {
     /**
      * Creates (and persists) a new event row in the database from the supplied event object.
@@ -21,7 +23,7 @@ public interface IDBRepository {
      * Returns all events that are currently persisted in the database.
      * @return all events
      */
-    Event[] GetEvents();
+    ArrayList<Event> GetEvents();
 
     /**
      * This is similar to the GetEvents function (without any parameters). The only exception is the ability to supply
@@ -29,7 +31,7 @@ public interface IDBRepository {
      * @param range amount of events to fetch
      * @return all events in range
      */
-    Event[] GetEvents(int range);
+    ArrayList<Event> GetEvents(int range);
 
     /**
      *
@@ -61,14 +63,14 @@ public interface IDBRepository {
      *
      * @return
      */
-    Todo[] GetTodos();
+    ArrayList<Todo> GetTodos();
 
     /**
      *
      * @param range
      * @return
      */
-    Todo[] GetTodos(int range);
+    ArrayList<Todo> GetTodos(int range);
 
     /**
      *
