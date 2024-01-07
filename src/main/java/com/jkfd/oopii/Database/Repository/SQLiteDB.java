@@ -8,6 +8,7 @@ import com.jkfd.oopii.Database.Models.Todo;
 
 import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
 
 
 public class SQLiteDB implements IDBRepository {
@@ -35,7 +36,6 @@ public class SQLiteDB implements IDBRepository {
         }
         // Migrate the database schema
         migrate();
-
     }
 
     /**
@@ -68,7 +68,7 @@ public class SQLiteDB implements IDBRepository {
     }
 
     /**
-     * Establishes a new connection to the local sqlite database
+     * Establishes a new connection to the local sqlite database.
      * Database location: ./data/app.db
      * @return sqlite connection
      */
@@ -157,44 +157,51 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public void CreateEvent(Event event) {
+        String query = "INSERT INTO events(title,description,full_day) VALUES (?,?,?)";
 
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, event.title);
+            pstmt.setString(2, event.description);
+            pstmt.setBoolean(3, event.fullDay);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while creating event: " + e.getMessage());
+        }
     }
 
     @Override
     public Event GetEvent(int id) {
-        // SQL query to select all elements from the events table
+        Event result = new Event();
         String query = "SELECT * FROM events WHERE id = ?";
 
-        // TODO: Using proper prepared statement
-        try (Connection conn = connect(); Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, id);
 
-            // Iterate through the result set and print each record
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                int rowid = rs.getInt("ID");
-                String title = rs.getString("Titel");
-                String description = rs.getString("Description");
-                boolean fullDay = rs.getBoolean("Full_day");
-                String startDate = rs.getString("Start_date");
-                String endDate = rs.getString("End_date");
-                String createdAt = rs.getString("Created_at");
-
-                // Printing the event details
-                System.out.println("ID: " + rowid + ", Title: " + title + ", Description: " + description +
-                        ", Full Day: " + fullDay + ", Start Date: " + startDate +
-                        ", End Date: " + endDate + ", Created At: " + createdAt);
+                result.SetID(rs.getInt("id"));
+                result.title = rs.getString("title");
+                result.description = rs.getString("description");
+                result.fullDay = rs.getBoolean("full_day");
             }
 
         } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving events: " + e.getMessage());
+            System.out.println("[sqlite] Error while retrieving event: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
-        return null;
+        if (result.GetID() == 0) {
+            System.err.println("[sqlite] Warning, no event with id '" + id + "' found");
+        }
+
+        return result;
     }
 
     @Override
-    public Event[] GetEvents() {
-        // SQL query to select all elements from the events table
+    public ArrayList<Event> GetEvents() {
+        ArrayList<Event> result = new ArrayList<>();
         String query = "SELECT * FROM events";
 
         try (Connection conn = connect(); Statement stmt = conn.createStatement();
@@ -202,30 +209,27 @@ public class SQLiteDB implements IDBRepository {
 
             // Iterate through the result set and print each record
             while (rs.next()) {
-                int id = rs.getInt("ID");
-                String title = rs.getString("Titel");
-                String description = rs.getString("Description");
-                boolean fullDay = rs.getBoolean("Full_day");
-                String startDate = rs.getString("Start_date");
-                String endDate = rs.getString("End_date");
-                String createdAt = rs.getString("Created_at");
+                Event tmp = new Event();
+                tmp.SetID(rs.getInt("id"));
+                tmp.title = rs.getString("title");
+                tmp.description = rs.getString("description");
+                tmp.fullDay = rs.getBoolean("full_day");
 
-                // Printing the event details
-                System.out.println("ID: " + id + ", Title: " + title + ", Description: " + description +
-                        ", Full Day: " + fullDay + ", Start Date: " + startDate +
-                        ", End Date: " + endDate + ", Created At: " + createdAt);
+                result.add(tmp);
             }
 
         } catch (SQLException e) {
             System.out.println("[sqlite] Error while retrieving events: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
-        return new Event[0]; // TODO: Actually return all events
+        return result;
     }
 
     @Override
-    public Event[] GetEvents(int range) {
-        return new Event[0];
+    public ArrayList<Event> GetEvents(int range) {
+        return new ArrayList<>();
     }
 
     @Override
@@ -235,27 +239,89 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public void DeleteEvent(int id) {
+        String query = "DELETE FROM events WHERE id = ?";
 
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, id);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while deleting event: " + e.getMessage());
+        }
     }
 
     @Override
     public void CreateTodo(Todo todo) {
+        String query = "INSERT INTO todos(title,description) VALUES (?,?)";
 
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, todo.title);
+            pstmt.setString(2, todo.description);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while creating todo: " + e.getMessage());
+        }
     }
 
     @Override
     public Todo GetTodo(int id) {
-        return null;
+        Todo result = new Todo();
+        String query = "SELECT * FROM todos WHERE id = ?";
+
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, id);
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                result.SetID(rs.getInt("id"));
+                result.title = rs.getString("title");
+                result.description = rs.getString("description");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while retrieving todo: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if (result.GetID() == 0) {
+            System.err.println("[sqlite] Warning, no todo with id '" + id + "' found");
+        }
+
+        return result;
     }
 
     @Override
-    public Todo[] GetTodos() {
-        return new Todo[0];
+    public ArrayList<Todo> GetTodos() {
+        ArrayList<Todo> result = new ArrayList<>();
+        String query = "SELECT * FROM events";
+
+        try (Connection conn = connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            // Iterate through the result set and print each record
+            while (rs.next()) {
+                Todo tmp = new Todo();
+                tmp.SetID(rs.getInt("id"));
+                tmp.title = rs.getString("title");
+                tmp.description = rs.getString("description");
+
+                result.add(tmp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while retrieving events: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
     }
 
     @Override
-    public Todo[] GetTodos(int range) {
-        return new Todo[0];
+    public ArrayList<Todo> GetTodos(int range) {
+        return new ArrayList<>();
     }
 
     @Override
@@ -265,6 +331,14 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public void DeleteTodo(int id) {
+        String query = "DELETE FROM todos WHERE id = ?";
 
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, id);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while deleting todo: " + e.getMessage());
+        }
     }
 }
