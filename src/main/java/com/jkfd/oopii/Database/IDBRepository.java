@@ -53,35 +53,36 @@ public interface IDBRepository {
     void CreateTodo(Todo todo);
 
     /**
-     *
-     * @param id
-     * @return
+     * This function fetches a specific event from the database and returns its object instance.
+     * @param id todo id to fetch
+     * @return todo object of supplied id
      */
     Todo GetTodo(int id);
 
     /**
-     *
-     * @return
+     * Returns all todos that are currently persisted in the database.
+     * @return all todos
      */
     ArrayList<Todo> GetTodos();
 
     /**
-     *
-     * @param range
-     * @return
+     * This is similar to the GetTodos function (without any parameters). The only exception is the ability to supply
+     * a so-called 'range'. This will then fetch all todos from newest to n (range).
+     * @param range amount of todos to fetch
+     * @return all todos in range
      */
     ArrayList<Todo> GetTodos(int range);
 
     /**
-     *
-     * @param todo
-     * @return
+     * Updates the todo with the supplied object in the database and returns the updated todo back.
+     * @param todo new data of the todo
+     * @return object of the updated todo
      */
     Todo UpdateTodo(Todo todo);
 
     /**
-     *
-     * @param id
+     * Deletes an todo from the database.
+     * @param id todo to delete
      */
     void DeleteTodo(int id);
 }
