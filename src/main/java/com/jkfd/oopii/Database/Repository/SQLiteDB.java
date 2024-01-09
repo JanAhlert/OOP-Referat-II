@@ -201,7 +201,31 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public ArrayList<Event> GetEvents(int range) {
-        return new ArrayList<>();
+        ArrayList<Event> result = new ArrayList<>();
+        String query = "SELECT * FROM events LIMIT ?";
+
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, range);
+            ResultSet rs = pstmt.executeQuery();
+
+            // Iterate through the result set and print each record
+            while (rs.next()) {
+                Event tmp = new Event();
+                tmp.SetID(rs.getInt("id"));
+                tmp.title = rs.getString("title");
+                tmp.description = rs.getString("description");
+                tmp.fullDay = rs.getBoolean("full_day");
+
+                result.add(tmp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while retrieving events: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
     }
 
     @Override
@@ -267,7 +291,7 @@ public class SQLiteDB implements IDBRepository {
     @Override
     public ArrayList<Todo> GetTodos() {
         ArrayList<Todo> result = new ArrayList<>();
-        String query = "SELECT * FROM events";
+        String query = "SELECT * FROM todos";
 
         try (Connection conn = connect(); Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
@@ -283,7 +307,7 @@ public class SQLiteDB implements IDBRepository {
             }
 
         } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving events: " + e.getMessage());
+            System.out.println("[sqlite] Error while retrieving todos: " + e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -293,7 +317,30 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public ArrayList<Todo> GetTodos(int range) {
-        return new ArrayList<>();
+        ArrayList<Todo> result = new ArrayList<>();
+        String query = "SELECT * FROM todos LIMIT ?";
+
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)){
+            pstmt.setInt(1, range);
+            ResultSet rs = pstmt.executeQuery(query);
+
+            // Iterate through the result set and print each record
+            while (rs.next()) {
+                Todo tmp = new Todo();
+                tmp.SetID(rs.getInt("id"));
+                tmp.title = rs.getString("title");
+                tmp.description = rs.getString("description");
+
+                result.add(tmp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while retrieving todos: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
     }
 
     @Override

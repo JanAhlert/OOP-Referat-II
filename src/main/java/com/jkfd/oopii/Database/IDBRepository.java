@@ -34,9 +34,9 @@ public interface IDBRepository {
     ArrayList<Event> GetEvents(int range);
 
     /**
-     *
-     * @param event
-     * @return
+     * Updates the event with the supplied object in the database and returns the updated event back.
+     * @param event new data of the event
+     * @return object of the updated event
      */
     Event UpdateEvent(Event event);
 
