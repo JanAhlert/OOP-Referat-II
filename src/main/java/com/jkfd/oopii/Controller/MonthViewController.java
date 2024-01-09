@@ -3,8 +3,9 @@ package com.jkfd.oopii.Controller;
 import com.calendarfx.view.page.MonthPage;
 import com.calendarfx.view.page.WeekPage;
 import com.calendarfx.view.page.YearPage;
-import javafx.event.Event;
 import com.jkfd.oopii.Abstract.AbstractController;
+import com.jkfd.oopii.Database.Models.Event;
+import com.jkfd.oopii.Database.Models.Todo;
 import com.jkfd.oopii.Date;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,11 +13,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import static com.jkfd.oopii.HelloApplication.databaseManager;
 
 /**
  * Controller for the month-view
@@ -37,6 +42,10 @@ public class MonthViewController extends AbstractController implements Initializ
     Button NextMonth;
     @FXML
     Button PreviousMonth;
+    @FXML
+    VBox EventsVBox;
+    @FXML
+    VBox TodosVBox;
 
 
     private static boolean isInitialized = false; //Variable to check if the View is initialized
@@ -122,6 +131,27 @@ public class MonthViewController extends AbstractController implements Initializ
             }
         });
 
+
+        // Load the right sidebar
+        monthViewController.EventsVBox.getChildren().clear();
+        monthViewController.TodosVBox.getChildren().clear();
+
+        ArrayList<Event> events = databaseManager.GetEvents(3);
+        ArrayList<Todo> todos = databaseManager.GetTodos(3);
+
+        for (Event tmp : events) {
+            CheckBox tmpCheckbox = new CheckBox();
+            tmpCheckbox.setText(tmp.title);
+
+            monthViewController.EventsVBox.getChildren().add(tmpCheckbox);
+        }
+
+        for (Todo tmp : todos) {
+            CheckBox tmpCheckbox = new CheckBox();
+            tmpCheckbox.setText(tmp.title);
+
+            monthViewController.TodosVBox.getChildren().add(tmpCheckbox);
+        }
     }
 
 

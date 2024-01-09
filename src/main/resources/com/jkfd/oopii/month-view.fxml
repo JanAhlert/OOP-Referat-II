@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane prefHeight="1012.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jkfd.oopii.Controller.MonthViewController">
+<Pane prefHeight="1012.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jkfd.oopii.Controller.MonthViewController">
    <children>
       <TabPane layoutX="-6.0" prefHeight="57.0" prefWidth="1920.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -95,36 +85,43 @@
                                  <font>
                                     <Font size="35.0" />
                                  </font></Label>
-                              <CheckBox mnemonicParsing="false" prefHeight="41.0" prefWidth="280.0" text="CheckBox">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="10.0" right="10.0" />
-                                 </VBox.margin>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font></CheckBox>
-                              <CheckBox mnemonicParsing="false" text="CheckBox">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="10.0" right="10.0" />
-                                 </VBox.margin>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font></CheckBox>
-                              <CheckBox mnemonicParsing="false" text="CheckBox">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="10.0" right="10.0" />
-                                 </VBox.margin>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font></CheckBox>
+                              <VBox fx:id="TodosVBox" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <CheckBox mnemonicParsing="false" prefHeight="41.0" prefWidth="280.0" text="CheckBox">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="10.0" right="10.0" />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox mnemonicParsing="false" text="CheckBox">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="10.0" right="10.0" />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox mnemonicParsing="false" text="CheckBox">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="10.0" right="10.0" />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </CheckBox>
+                                 </children>
+                              </VBox>
                               <Pane prefHeight="70.0" prefWidth="300.0">
                                  <children>
                                     <Button layoutX="14.0" layoutY="12.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="52.0" text="+">
@@ -157,36 +154,43 @@
                                  <padding>
                                     <Insets left="5.0" />
                                  </padding></Label>
-                              <CheckBox mnemonicParsing="false" text="CheckBox">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="10.0" right="10.0" />
-                                 </VBox.margin>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font></CheckBox>
-                              <CheckBox mnemonicParsing="false" text="CheckBox">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="10.0" right="10.0" />
-                                 </VBox.margin>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font></CheckBox>
-                              <CheckBox mnemonicParsing="false" text="CheckBox">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="10.0" right="10.0" />
-                                 </VBox.margin>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font></CheckBox>
+                              <VBox fx:id="EventsVBox" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <CheckBox mnemonicParsing="false" text="CheckBox">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="10.0" right="10.0" />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox mnemonicParsing="false" text="CheckBox">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="10.0" right="10.0" />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <CheckBox mnemonicParsing="false" text="CheckBox">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="10.0" right="10.0" />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </CheckBox>
+                                 </children>
+                              </VBox>
                               <Pane prefHeight="70.0" prefWidth="300.0">
                                  <children>
                                     <Button layoutX="14.0" layoutY="12.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="52.0" text="+">
