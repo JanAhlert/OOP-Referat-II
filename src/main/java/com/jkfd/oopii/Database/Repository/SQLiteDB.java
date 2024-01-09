@@ -7,8 +7,16 @@ import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class SQLiteDB implements IDBRepository {
@@ -42,28 +50,55 @@ public class SQLiteDB implements IDBRepository {
      * Migrates the database if there is a newer schema version
      */
     private void migrate() {
-        createTables();
-        insertTestData();
-
-        String sql = "SELECT EXISTS(SELECT * FROM migrate)";
+        String sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='migrations'";
+        int currentMigrateVersion = -1;
+        boolean didMigrate = false;
 
         try (Connection conn = connect()) {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             // Check if migration table exists and migrate everything as a result
-            if (rs.wasNull()) {
-                // TODO
-            } else {
-                while (rs.next()) {
-                    System.out.println(rs.getInt("version"));
-                    // TODO
+            while(rs.next()) {
+                sql = "SELECT version FROM migrations";
+                rs = stmt.executeQuery(sql);
+
+                while(rs.next()) {
+                    currentMigrateVersion = rs.getInt("version");
                 }
             }
 
-            System.out.println("[sqlite] Migrated tables to newest version");
+            System.out.println("[sqlite] Migrate version: " + currentMigrateVersion);
+
+            ClassLoader classLoader = getClass().getClassLoader();
+            URL resource = classLoader.getResource("sql");
+
+            assert resource != null;
+            List<File> result = Files.walk(Paths.get(resource.toURI())).filter(Files::isRegularFile).map(Path::toFile).toList();
+            int migrateTarget = (result.size() - 1);
+
+            while (currentMigrateVersion < migrateTarget) {
+                try {
+                    sql = Files.readString(result.get(currentMigrateVersion + 1).toPath());
+
+                    stmt.executeLargeUpdate(sql);
+
+                    currentMigrateVersion++;
+                    System.out.println("[sqlite] Migrated sql file version " + currentMigrateVersion);
+                } catch (Exception e) {
+                    System.out.println("[sqlite] Error while migrating sql file version " + (currentMigrateVersion + 1) + ": " + e.getMessage());
+                }
+
+                didMigrate = true;
+            }
+
+            if (didMigrate) {
+                System.out.println(MessageFormat.format("[sqlite] Migrated tables to newest version ({0})", migrateTarget));
+            }
         } catch (SQLException e) {
             System.out.println("[sqlite] " + e.getMessage());
+        } catch (IOException | URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -91,69 +126,6 @@ public class SQLiteDB implements IDBRepository {
 
         return null;
     }
-
-
-    /**
-     * Creates the events table in the database if it doesn't exist yet.
-     */
-    public void createTables() { //TODO: [SQLITE_ERROR] SQL error or missing database (near "EXISTS": syntax error)
-        String eventsTableSQL = """
-                CREATE TABLE IF NOT EXISTS events (
-                ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-                Titel text NOT NULL,
-                Description text,
-                Full_day boolean NOT NULL,
-                Start_date text,
-                End_date text);
-                """;
-        //Start_date is a text because SQLite safes Dates as String in de format YYYY-MM-DD
-
-        String TODOTableSQL = """
-                CREATE TABLE IF NOT EXISTS todos (
-                ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-                Titel text NOT NULL,
-                Description text,
-                List integer,
-                CompletedDate text,
-                TimeRequired text);
-                """;
-
-        try {Connection conn = connect();Statement stmt = conn.createStatement();
-            stmt.execute(eventsTableSQL);
-            stmt.execute(TODOTableSQL);
-            System.out.println("[sqlite] Events table created.");
-        } catch (SQLException e) {
-            System.out.println("[sqlite] " + e.getMessage());
-        }
-    }
-
-    /**
-     * Populates the events table with test data.
-     * @author ChatGPT
-     */
-    public void insertTestData() {
-        String[] testData = {
-                "INSERT INTO events (Titel, Description, Full_day, Start_date, End_date, Created_at) VALUES ('Meeting', 'Project meeting with team', 0, '2023-01-15', '2023-01-15', '2023-01-01')",
-                "INSERT INTO events (Titel, Description, Full_day, Start_date, End_date, Created_at) VALUES ('Conference', 'Annual tech conference', 1, '2023-03-20', '2023-03-22', '2023-02-15')",
-                "INSERT INTO events (Titel, Description, Full_day, Start_date, End_date, Created_at) VALUES ('Workshop', 'Workshop on Java Programming', 0, '2023-05-05', '2023-05-05', '2023-04-10')"
-                // Weitere Testdaten können hier hinzugefügt werden
-        };
-
-        try (Connection conn = this.connect();
-             Statement stmt = conn.createStatement()) {
-
-            // Durchlaufen jedes Testdatensatzes und Ausführen der Insert-Anweisungen
-            for (String sql : testData) {
-                stmt.executeUpdate(sql);
-            }
-
-            System.out.println("[sqlite] Test data inserted into the database.");
-
-        } catch (SQLException e) {
-            System.out.println("[sqlite] Error while inserting test data: " + e.getMessage());
-        }
-    }
-
 
     @Override
     public void CreateEvent(Event event) {

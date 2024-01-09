@@ -5,7 +5,7 @@
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\gonef\OneDrive - IU International University of Applied Sciences\Studium\3. Semester\OOP 2 DATENSTRUKTUREN UND JAVA-KLASSENBIBLIOTHEK\OOP 2 Referat\data\app.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:./data/app.db</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
       </jdbc-additional-properties>
