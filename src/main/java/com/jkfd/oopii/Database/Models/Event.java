@@ -1,6 +1,6 @@
 package com.jkfd.oopii.Database.Models;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Event extends Element {
     /**

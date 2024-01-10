@@ -3,6 +3,7 @@ package com.jkfd.oopii.Database.Repository;
 
 
 import com.jkfd.oopii.Database.IDBRepository;
+import com.jkfd.oopii.Database.Models.Element;
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
 
@@ -133,14 +134,15 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public void CreateEvent(Event event) {
-        String query = "INSERT INTO events(title,description,full_day,start_date,end_date) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO events(title,description,priority,full_day,start_date,end_date) VALUES (?,?,?,?,?,?)";
 
         try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setString(1, event.title);
             pstmt.setString(2, event.description);
-            pstmt.setBoolean(3, event.fullDay);
-            pstmt.setDate(4, new java.sql.Date(event.GetStartDate().getTime()));
-            pstmt.setDate(5, new java.sql.Date(event.GetEndDate().getTime()));
+            pstmt.setInt(3, event.priority.ordinal());
+            pstmt.setBoolean(4, event.fullDay);
+            pstmt.setDate(5, new java.sql.Date(event.GetStartDate().getTime()));
+            pstmt.setDate(6, new java.sql.Date(event.GetEndDate().getTime()));
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -161,6 +163,7 @@ public class SQLiteDB implements IDBRepository {
                 result.SetID(rs.getInt("id"));
                 result.title = rs.getString("title");
                 result.description = rs.getString("description");
+                result.priority = Element.Priority.values()[rs.getInt("priority")];
                 result.fullDay = rs.getBoolean("full_day");
                 result.SetDateRange(rs.getDate("start_date"), rs.getDate("end_date"));
             }
@@ -192,6 +195,7 @@ public class SQLiteDB implements IDBRepository {
                 tmp.SetID(rs.getInt("id"));
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
+                tmp.priority = Element.Priority.values()[rs.getInt("priority")];
                 tmp.fullDay = rs.getBoolean("full_day");
                 tmp.SetDateRange(rs.getDate("start_date"), rs.getDate("end_date"));
 
@@ -222,6 +226,7 @@ public class SQLiteDB implements IDBRepository {
                 tmp.SetID(rs.getInt("id"));
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
+                tmp.priority = Element.Priority.values()[rs.getInt("priority")];
                 tmp.fullDay = rs.getBoolean("full_day");
                 tmp.SetDateRange(rs.getDate("start_date"), rs.getDate("end_date"));
 
@@ -239,15 +244,16 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public Event UpdateEvent(Event event) {
-        String query = "UPDATE events SET title = ?, description = ?, full_day = ?, start_date = ?, end_date = ? WHERE id = ?";
+        String query = "UPDATE events SET title = ?, description = ?, priority = ?, full_day = ?, start_date = ?, end_date = ? WHERE id = ?";
 
         try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setString(1, event.title);
             pstmt.setString(2, event.description);
             pstmt.setBoolean(3, event.fullDay);
-            pstmt.setDate(4, new java.sql.Date(event.GetStartDate().getTime()));
-            pstmt.setDate(5, new java.sql.Date(event.GetEndDate().getTime()));
-            pstmt.setInt(6, event.GetID());
+            pstmt.setInt(4, event.priority.ordinal());
+            pstmt.setDate(5, new java.sql.Date(event.GetStartDate().getTime()));
+            pstmt.setDate(6, new java.sql.Date(event.GetEndDate().getTime()));
+            pstmt.setInt(7, event.GetID());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -272,11 +278,12 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public void CreateTodo(Todo todo) {
-        String query = "INSERT INTO todos(title,description) VALUES (?,?)";
+        String query = "INSERT INTO todos(title,description,priority) VALUES (?,?,?)";
 
         try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setString(1, todo.title);
             pstmt.setString(2, todo.description);
+            pstmt.setInt(3, todo.priority.ordinal());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -297,6 +304,7 @@ public class SQLiteDB implements IDBRepository {
                 result.SetID(rs.getInt("id"));
                 result.title = rs.getString("title");
                 result.description = rs.getString("description");
+                result.priority = Element.Priority.values()[rs.getInt("priority")];
             }
 
         } catch (SQLException e) {
@@ -326,6 +334,7 @@ public class SQLiteDB implements IDBRepository {
                 tmp.SetID(rs.getInt("id"));
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
+                tmp.priority = Element.Priority.values()[rs.getInt("priority")];
 
                 result.add(tmp);
             }
@@ -354,6 +363,7 @@ public class SQLiteDB implements IDBRepository {
                 tmp.SetID(rs.getInt("id"));
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
+                tmp.priority = Element.Priority.values()[rs.getInt("priority")];
 
                 result.add(tmp);
             }
@@ -369,12 +379,13 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public Todo UpdateTodo(Todo todo) {
-        String query = "UPDATE todos SET title = ?, description = ? WHERE id = ?";
+        String query = "UPDATE todos SET title = ?, description = ?, priority = ? WHERE id = ?";
 
         try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setString(1, todo.title);
             pstmt.setString(2, todo.description);
-            pstmt.setInt(3, todo.GetID());
+            pstmt.setInt(3, todo.priority.ordinal());
+            pstmt.setInt(4, todo.GetID());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

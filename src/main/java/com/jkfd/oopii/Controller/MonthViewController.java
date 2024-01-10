@@ -17,8 +17,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import static com.jkfd.oopii.HelloApplication.databaseManager;
@@ -73,7 +75,7 @@ public class MonthViewController extends AbstractController implements Initializ
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Ein Fehler ist aufgetreten");
-            alert.setContentText("Es gab ein Problem beim Laden der Monatsansicht.");
+            alert.setContentText("Es gab ein Problem beim Laden der Monatsansicht:\n" + e.getLocalizedMessage() + "\n" + Arrays.toString(e.getStackTrace()));
             alert.showAndWait();
         }
     }
@@ -144,6 +146,8 @@ public class MonthViewController extends AbstractController implements Initializ
             tmpCheckbox.setText(tmp.title);
 
             monthViewController.EventsVBox.getChildren().add(tmpCheckbox);
+
+            monthPage.createEntryAt(tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()));
         }
 
         for (Todo tmp : todos) {
