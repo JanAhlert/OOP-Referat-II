@@ -230,7 +230,20 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public Event UpdateEvent(Event event) {
-        return null;
+        String query = "UPDATE events SET title = ?, description = ?, full_day = ? WHERE id = ?";
+
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, event.title);
+            pstmt.setString(2, event.description);
+            pstmt.setBoolean(3, event.fullDay);
+            pstmt.setInt(4, event.GetID());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while updating event: " + e.getMessage());
+        }
+
+        return event;
     }
 
     @Override
@@ -345,7 +358,19 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public Todo UpdateTodo(Todo todo) {
-        return null;
+        String query = "UPDATE todos SET title = ?, description = ? WHERE id = ?";
+
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, todo.title);
+            pstmt.setString(2, todo.description);
+            pstmt.setInt(3, todo.GetID());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while updating todo: " + e.getMessage());
+        }
+
+        return todo;
     }
 
     @Override
