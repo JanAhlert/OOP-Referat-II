@@ -129,12 +129,14 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public void CreateEvent(Event event) {
-        String query = "INSERT INTO events(title,description,full_day) VALUES (?,?,?)";
+        String query = "INSERT INTO events(title,description,full_day,start_date,end_date) VALUES (?,?,?,?,?)";
 
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, event.title);
             pstmt.setString(2, event.description);
             pstmt.setBoolean(3, event.fullDay);
+            pstmt.setDate(4, new java.sql.Date(event.GetStartDate().getTime()));
+            pstmt.setDate(5, new java.sql.Date(event.GetEndDate().getTime()));
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -156,6 +158,7 @@ public class SQLiteDB implements IDBRepository {
                 result.title = rs.getString("title");
                 result.description = rs.getString("description");
                 result.fullDay = rs.getBoolean("full_day");
+                result.SetDateRange(rs.getDate("start_date"), rs.getDate("end_date"));
             }
 
         } catch (SQLException e) {
@@ -186,6 +189,7 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.fullDay = rs.getBoolean("full_day");
+                tmp.SetDateRange(rs.getDate("start_date"), rs.getDate("end_date"));
 
                 result.add(tmp);
             }
@@ -215,6 +219,7 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.fullDay = rs.getBoolean("full_day");
+                tmp.SetDateRange(rs.getDate("start_date"), rs.getDate("end_date"));
 
                 result.add(tmp);
             }
@@ -230,13 +235,15 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public Event UpdateEvent(Event event) {
-        String query = "UPDATE events SET title = ?, description = ?, full_day = ? WHERE id = ?";
+        String query = "UPDATE events SET title = ?, description = ?, full_day = ?, start_date = ?, end_date = ? WHERE id = ?";
 
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, event.title);
             pstmt.setString(2, event.description);
             pstmt.setBoolean(3, event.fullDay);
-            pstmt.setInt(4, event.GetID());
+            pstmt.setDate(4, new java.sql.Date(event.GetStartDate().getTime()));
+            pstmt.setDate(5, new java.sql.Date(event.GetEndDate().getTime()));
+            pstmt.setInt(6, event.GetID());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
