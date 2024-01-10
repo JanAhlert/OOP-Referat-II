@@ -129,12 +129,14 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public void CreateEvent(Event event) {
-        String query = "INSERT INTO events(title,description,full_day) VALUES (?,?,?)";
+        String query = "INSERT INTO events(title,description,full_day,start_date,end_date) VALUES (?,?,?,?,?)";
 
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, event.title);
             pstmt.setString(2, event.description);
             pstmt.setBoolean(3, event.fullDay);
+            pstmt.setDate(4, new java.sql.Date(event.GetStartDate().getTime()));
+            pstmt.setDate(5, new java.sql.Date(event.GetEndDate().getTime()));
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -156,6 +158,7 @@ public class SQLiteDB implements IDBRepository {
                 result.title = rs.getString("title");
                 result.description = rs.getString("description");
                 result.fullDay = rs.getBoolean("full_day");
+                result.SetDateRange(rs.getDate("start_date"), rs.getDate("end_date"));
             }
 
         } catch (SQLException e) {
@@ -186,12 +189,13 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.fullDay = rs.getBoolean("full_day");
+                tmp.SetDateRange(rs.getDate("start_date"), rs.getDate("end_date"));
 
                 result.add(tmp);
             }
 
         } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving events: " + e.getMessage());
+            System.out.println("[sqlite] Error while retrieving events (all): " + e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -215,12 +219,13 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.fullDay = rs.getBoolean("full_day");
+                tmp.SetDateRange(rs.getDate("start_date"), rs.getDate("end_date"));
 
                 result.add(tmp);
             }
 
         } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving events: " + e.getMessage());
+            System.out.println("[sqlite] Error while retrieving events (ranged): " + e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -230,7 +235,22 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public Event UpdateEvent(Event event) {
-        return null;
+        String query = "UPDATE events SET title = ?, description = ?, full_day = ?, start_date = ?, end_date = ? WHERE id = ?";
+
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, event.title);
+            pstmt.setString(2, event.description);
+            pstmt.setBoolean(3, event.fullDay);
+            pstmt.setDate(4, new java.sql.Date(event.GetStartDate().getTime()));
+            pstmt.setDate(5, new java.sql.Date(event.GetEndDate().getTime()));
+            pstmt.setInt(6, event.GetID());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while updating event: " + e.getMessage());
+        }
+
+        return event;
     }
 
     @Override
@@ -307,7 +327,7 @@ public class SQLiteDB implements IDBRepository {
             }
 
         } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving todos: " + e.getMessage());
+            System.out.println("[sqlite] Error while retrieving todos (all): " + e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -322,7 +342,7 @@ public class SQLiteDB implements IDBRepository {
 
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)){
             pstmt.setInt(1, range);
-            ResultSet rs = pstmt.executeQuery(query);
+            ResultSet rs = pstmt.executeQuery();
 
             // Iterate through the result set and print each record
             while (rs.next()) {
@@ -335,7 +355,7 @@ public class SQLiteDB implements IDBRepository {
             }
 
         } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving todos: " + e.getMessage());
+            System.out.println("[sqlite] Error while retrieving todos (ranged): " + e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -345,7 +365,19 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public Todo UpdateTodo(Todo todo) {
-        return null;
+        String query = "UPDATE todos SET title = ?, description = ? WHERE id = ?";
+
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, todo.title);
+            pstmt.setString(2, todo.description);
+            pstmt.setInt(3, todo.GetID());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while updating todo: " + e.getMessage());
+        }
+
+        return todo;
     }
 
     @Override

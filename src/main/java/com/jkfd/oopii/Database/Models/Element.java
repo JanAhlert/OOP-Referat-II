@@ -2,11 +2,18 @@ package com.jkfd.oopii.Database.Models;
 
 public abstract class Element {
     /**
-     * The ID is the individual identifier of each element.
+     * The ID is the individual identifier of the specific element.
      */
     private int id = 0;
 
+    /**
+     * The title of the specific element. This will be displayed in many places.
+     */
     public String title;
+
+    /**
+     * The description of the specific element. This will most likely be displayed in detail views.
+     */
     public String description;
 
     /**
