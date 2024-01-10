@@ -251,8 +251,8 @@ public class SQLiteDB implements IDBRepository {
         String query = "INSERT INTO todos(title,description) VALUES (?,?)";
 
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, todo.title);
-            pstmt.setString(2, todo.description);
+            pstmt.setString(1, todo.getTitle()); // Verwende den Getter für title
+            pstmt.setString(2, todo.getDescription()); // Verwende den Getter für description
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -260,7 +260,6 @@ public class SQLiteDB implements IDBRepository {
         }
     }
 
-    @Override
     public Todo GetTodo(int id) {
         Todo result = new Todo();
         String query = "SELECT * FROM todos WHERE id = ?";
@@ -271,8 +270,8 @@ public class SQLiteDB implements IDBRepository {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 result.SetID(rs.getInt("id"));
-                result.title = rs.getString("title");
-                result.description = rs.getString("description");
+                result.setTitle(rs.getString("title")); // Verwende den Setter für title
+                result.setDescription(rs.getString("description")); // Verwende den Setter für description
             }
 
         } catch (SQLException e) {
@@ -300,8 +299,8 @@ public class SQLiteDB implements IDBRepository {
             while (rs.next()) {
                 Todo tmp = new Todo();
                 tmp.SetID(rs.getInt("id"));
-                tmp.title = rs.getString("title");
-                tmp.description = rs.getString("description");
+                tmp.setTitle(rs.getString("title")); // Verwende den Setter für title
+                tmp.setDescription(rs.getString("description")); // Verwende den Setter für description
 
                 result.add(tmp);
             }
@@ -328,8 +327,8 @@ public class SQLiteDB implements IDBRepository {
             while (rs.next()) {
                 Todo tmp = new Todo();
                 tmp.SetID(rs.getInt("id"));
-                tmp.title = rs.getString("title");
-                tmp.description = rs.getString("description");
+                tmp.setTitle(rs.getString("title")); // Verwenden Sie den Setter für title
+                tmp.setDescription(rs.getString("description")); // Verwenden Sie den Setter für description
 
                 result.add(tmp);
             }

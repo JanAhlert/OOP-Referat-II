@@ -48,6 +48,7 @@ public class MonthViewController extends AbstractController implements Initializ
     VBox TodosVBox;
 
 
+
     private static boolean isInitialized = false; //Variable to check if the View is initialized
     Date currentDate = new Date(); //Variable for the Date
     private static MonthPage monthPage; //Variable for the MonthView um die View zu ändern
@@ -148,7 +149,7 @@ public class MonthViewController extends AbstractController implements Initializ
 
         for (Todo tmp : todos) {
             CheckBox tmpCheckbox = new CheckBox();
-            tmpCheckbox.setText(tmp.title);
+            tmpCheckbox.setText(tmp.getTitle());
 
             monthViewController.TodosVBox.getChildren().add(tmpCheckbox);
         }
@@ -291,6 +292,7 @@ public class MonthViewController extends AbstractController implements Initializ
     }
 
     //---------------------------------------------------Functions to get Data from the User---------------------------------------------------//
+
 
 
 
