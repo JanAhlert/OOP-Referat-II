@@ -195,7 +195,7 @@ public class SQLiteDB implements IDBRepository {
             }
 
         } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving events: " + e.getMessage());
+            System.out.println("[sqlite] Error while retrieving events (all): " + e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -225,7 +225,7 @@ public class SQLiteDB implements IDBRepository {
             }
 
         } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving events: " + e.getMessage());
+            System.out.println("[sqlite] Error while retrieving events (ranged): " + e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -327,7 +327,7 @@ public class SQLiteDB implements IDBRepository {
             }
 
         } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving todos: " + e.getMessage());
+            System.out.println("[sqlite] Error while retrieving todos (all): " + e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -342,7 +342,7 @@ public class SQLiteDB implements IDBRepository {
 
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)){
             pstmt.setInt(1, range);
-            ResultSet rs = pstmt.executeQuery(query);
+            ResultSet rs = pstmt.executeQuery();
 
             // Iterate through the result set and print each record
             while (rs.next()) {
@@ -355,7 +355,7 @@ public class SQLiteDB implements IDBRepository {
             }
 
         } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving todos: " + e.getMessage());
+            System.out.println("[sqlite] Error while retrieving todos (ranged): " + e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
