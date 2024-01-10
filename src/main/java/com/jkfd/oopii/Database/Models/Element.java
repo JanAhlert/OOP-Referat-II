@@ -2,6 +2,15 @@ package com.jkfd.oopii.Database.Models;
 
 public abstract class Element {
     /**
+     * The enum containing the possible priorities an element might have.
+     */
+    public enum Priority {
+        LOW,
+        NORMAL,
+        HIGH
+    }
+
+    /**
      * The ID is the individual identifier of the specific element.
      */
     private int id = 0;
@@ -15,6 +24,11 @@ public abstract class Element {
      * The description of the specific element. This will most likely be displayed in detail views.
      */
     public String description;
+
+    /**
+     * The current priority of the event.
+     */
+    public Priority priority;
 
     /**
      * Sets the unique identifier of the element.
