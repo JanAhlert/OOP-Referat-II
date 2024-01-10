@@ -17,6 +17,7 @@ import java.sql.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class SQLiteDB implements IDBRepository {
@@ -27,7 +28,10 @@ public class SQLiteDB implements IDBRepository {
         // Create the data directory if it doesn't exist
         File directory = new File("./data");
         if (!directory.exists()) {
-            directory.mkdirs();
+            boolean result = directory.mkdirs();
+            if (!result) {
+                throw new Exception("[sqlite] data directory could not be created.");
+            }
         }
         // Check if the database exists and create it when it doesn't
         File f = new File("./data/app.db");
@@ -55,7 +59,7 @@ public class SQLiteDB implements IDBRepository {
         boolean didMigrate = false;
 
         try (Connection conn = connect()) {
-            Statement stmt = conn.createStatement();
+            Statement stmt = Objects.requireNonNull(conn, "SQLite connection must not be null").createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             // Check if migration table exists and migrate everything as a result
@@ -108,7 +112,7 @@ public class SQLiteDB implements IDBRepository {
      * @return sqlite connection
      */
     private Connection connect() {
-        Connection conn = null;
+        Connection conn;
 
         try {
             String url = "jdbc:sqlite:./data/app.db";
@@ -131,7 +135,7 @@ public class SQLiteDB implements IDBRepository {
     public void CreateEvent(Event event) {
         String query = "INSERT INTO events(title,description,full_day,start_date,end_date) VALUES (?,?,?,?,?)";
 
-        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setString(1, event.title);
             pstmt.setString(2, event.description);
             pstmt.setBoolean(3, event.fullDay);
@@ -149,7 +153,7 @@ public class SQLiteDB implements IDBRepository {
         Event result = new Event();
         String query = "SELECT * FROM events WHERE id = ?";
 
-        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setInt(1, id);
 
             ResultSet rs = pstmt.executeQuery();
@@ -179,7 +183,7 @@ public class SQLiteDB implements IDBRepository {
         ArrayList<Event> result = new ArrayList<>();
         String query = "SELECT * FROM events";
 
-        try (Connection conn = connect(); Statement stmt = conn.createStatement();
+        try (Connection conn = connect(); Statement stmt = Objects.requireNonNull(conn, "SQLite connection must not be null").createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
             // Iterate through the result set and print each record
@@ -208,7 +212,7 @@ public class SQLiteDB implements IDBRepository {
         ArrayList<Event> result = new ArrayList<>();
         String query = "SELECT * FROM events LIMIT ?";
 
-        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setInt(1, range);
             ResultSet rs = pstmt.executeQuery();
 
@@ -237,7 +241,7 @@ public class SQLiteDB implements IDBRepository {
     public Event UpdateEvent(Event event) {
         String query = "UPDATE events SET title = ?, description = ?, full_day = ?, start_date = ?, end_date = ? WHERE id = ?";
 
-        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setString(1, event.title);
             pstmt.setString(2, event.description);
             pstmt.setBoolean(3, event.fullDay);
@@ -257,7 +261,7 @@ public class SQLiteDB implements IDBRepository {
     public void DeleteEvent(int id) {
         String query = "DELETE FROM events WHERE id = ?";
 
-        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setInt(1, id);
 
             pstmt.executeUpdate();
@@ -270,7 +274,7 @@ public class SQLiteDB implements IDBRepository {
     public void CreateTodo(Todo todo) {
         String query = "INSERT INTO todos(title,description) VALUES (?,?)";
 
-        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setString(1, todo.title);
             pstmt.setString(2, todo.description);
 
@@ -285,7 +289,7 @@ public class SQLiteDB implements IDBRepository {
         Todo result = new Todo();
         String query = "SELECT * FROM todos WHERE id = ?";
 
-        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setInt(1, id);
 
             ResultSet rs = pstmt.executeQuery();
@@ -313,7 +317,7 @@ public class SQLiteDB implements IDBRepository {
         ArrayList<Todo> result = new ArrayList<>();
         String query = "SELECT * FROM todos";
 
-        try (Connection conn = connect(); Statement stmt = conn.createStatement();
+        try (Connection conn = connect(); Statement stmt = Objects.requireNonNull(conn, "SQLite connection must not be null").createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
             // Iterate through the result set and print each record
@@ -340,7 +344,7 @@ public class SQLiteDB implements IDBRepository {
         ArrayList<Todo> result = new ArrayList<>();
         String query = "SELECT * FROM todos LIMIT ?";
 
-        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)){
+        try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)){
             pstmt.setInt(1, range);
             ResultSet rs = pstmt.executeQuery();
 
@@ -367,7 +371,7 @@ public class SQLiteDB implements IDBRepository {
     public Todo UpdateTodo(Todo todo) {
         String query = "UPDATE todos SET title = ?, description = ? WHERE id = ?";
 
-        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setString(1, todo.title);
             pstmt.setString(2, todo.description);
             pstmt.setInt(3, todo.GetID());
@@ -384,7 +388,7 @@ public class SQLiteDB implements IDBRepository {
     public void DeleteTodo(int id) {
         String query = "DELETE FROM todos WHERE id = ?";
 
-        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setInt(1, id);
 
             pstmt.executeUpdate();
