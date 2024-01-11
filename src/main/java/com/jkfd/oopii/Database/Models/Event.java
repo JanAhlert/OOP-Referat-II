@@ -9,7 +9,7 @@ public class Event extends Element {
     public boolean fullDay;
 
     /**
-     * The date(time) when then event starts.
+     * The date(time) when the event starts.
      */
     private Date startDate;
 

@@ -305,6 +305,7 @@ public class SQLiteDB implements IDBRepository {
                 result.title = rs.getString("title");
                 result.description = rs.getString("description");
                 result.priority = Element.Priority.values()[rs.getInt("priority")];
+                result.SetCompletedDate(rs.getDate("completed_date"));
             }
 
         } catch (SQLException e) {
@@ -335,6 +336,7 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.priority = Element.Priority.values()[rs.getInt("priority")];
+                tmp.SetCompletedDate(rs.getDate("completed_date"));
 
                 result.add(tmp);
             }
@@ -364,6 +366,66 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.priority = Element.Priority.values()[rs.getInt("priority")];
+                tmp.SetCompletedDate(rs.getDate("completed_date"));
+
+                result.add(tmp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while retrieving todos (ranged): " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public ArrayList<Todo> GetUnfinishedTodos() {
+        ArrayList<Todo> result = new ArrayList<>();
+        String query = "SELECT * FROM todos WHERE completed_date IS NULL";
+
+        try (Connection conn = connect(); Statement stmt = Objects.requireNonNull(conn, "SQLite connection must not be null").createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            // Iterate through the result set and print each record
+            while (rs.next()) {
+                Todo tmp = new Todo();
+                tmp.SetID(rs.getInt("id"));
+                tmp.title = rs.getString("title");
+                tmp.description = rs.getString("description");
+                tmp.priority = Element.Priority.values()[rs.getInt("priority")];
+                tmp.SetCompletedDate(rs.getDate("completed_date"));
+
+                result.add(tmp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("[sqlite] Error while retrieving todos (all): " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public ArrayList<Todo> GetUnfinishedTodos(int range) {
+        ArrayList<Todo> result = new ArrayList<>();
+        String query = "SELECT * FROM todos WHERE completed_date IS NULL LIMIT ?";
+
+        try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)){
+            pstmt.setInt(1, range);
+            ResultSet rs = pstmt.executeQuery();
+
+            // Iterate through the result set and print each record
+            while (rs.next()) {
+                Todo tmp = new Todo();
+                tmp.SetID(rs.getInt("id"));
+                tmp.title = rs.getString("title");
+                tmp.description = rs.getString("description");
+                tmp.priority = Element.Priority.values()[rs.getInt("priority")];
+                tmp.SetCompletedDate(rs.getDate("completed_date"));
 
                 result.add(tmp);
             }
@@ -379,13 +441,14 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public Todo UpdateTodo(Todo todo) {
-        String query = "UPDATE todos SET title = ?, description = ?, priority = ? WHERE id = ?";
+        String query = "UPDATE todos SET title = ?, description = ?, priority = ?, completed_date = ? WHERE id = ?";
 
         try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setString(1, todo.title);
             pstmt.setString(2, todo.description);
             pstmt.setInt(3, todo.priority.ordinal());
             pstmt.setInt(4, todo.GetID());
+            pstmt.setDate(5, new java.sql.Date(todo.GetCompletedDate().getTime()));
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

@@ -83,6 +83,16 @@ public class DatabaseManager implements IDBRepository {
     }
 
     @Override
+    public ArrayList<Todo> GetUnfinishedTodos() {
+        return Repository.GetUnfinishedTodos();
+    }
+
+    @Override
+    public ArrayList<Todo> GetUnfinishedTodos(int range) {
+        return Repository.GetUnfinishedTodos(range);
+    }
+
+    @Override
     public Todo UpdateTodo(Todo todo) {
         return Repository.UpdateTodo(todo);
     }

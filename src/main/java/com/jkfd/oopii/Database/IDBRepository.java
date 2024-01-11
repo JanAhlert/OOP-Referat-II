@@ -74,6 +74,20 @@ public interface IDBRepository {
     ArrayList<Todo> GetTodos(int range);
 
     /**
+     * Returns all unfinished todos that are currently persisted in the database.
+     * @return all unfinished todos
+     */
+    ArrayList<Todo> GetUnfinishedTodos();
+
+    /**
+     * This is similar to the GetUnfinishedTodos function (without any parameters). The only exception is the ability to
+     * supply a so-called 'range'. This will then fetch all todos from newest to n (range).
+     * @param range amount of unfinished todos to fetch
+     * @return all unfinished todos in range
+     */
+    ArrayList<Todo> GetUnfinishedTodos(int range);
+
+    /**
      * Updates the todo with the supplied object in the database and returns the updated todo back.
      * @param todo new data of the todo
      * @return object of the updated todo
