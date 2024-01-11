@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Subsystems are used to run specific logic & code at specific intervals (asynchronously) from everything else.
+ * Subsystems are used to run specific logic/code at specific intervals (asynchronously) from everything else.
  * Examples include looking up if any events are upcoming, fetching/updating iCal files, etc.
  */
 public class SubsystemManager {
