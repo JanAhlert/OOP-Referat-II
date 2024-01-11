@@ -4,8 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,6 +24,32 @@ public class PopUpController {
      * @param stage
      * @throws IOException
      */
+
+    @FXML
+
+    //Elements from the File PopUpEdit.fxml --> These Elements are from the Tab ToDo
+
+    private TextField PopUpEdit_ToDo_TextField;
+    private TextArea PopUpEdit_ToDo_TextArea;
+    private ChoiceBox PopUpEdit_ToDo_PriorityChoiceBox;
+    private DatePicker PopUpEdit_ToDo_DatePicker;
+    private Button PopUpEdit_ToDo_SaveButton;
+    private Button PopUpEdit_ToDo_CancelButton;
+    private Button PopUpEdit_ToDo_CloseButton;
+
+    //Elements from tge File PopUpEdit.fxml --> These Elements are from the Tab Events
+
+    private TextField PopUpEdit_Event_TextField;
+    private DatePicker PopUpEdit_Event_DatePicker;
+    private DatePicker PopUpEdit_Event_TimePicker;
+    private TextArea PopUpEdit_Event_TextArea;
+
+    private ChoiceBox PopUpEdit_Event_PriorityChoiceBox;
+    private Button PopUpEdit_Event_SaveButton;
+    private Button PopUpEdit_Event_CancelButton;
+    private Button PopUpEdit_Event_CloseButton;
+
+    //
 
 
     public static void loadView(Stage stage) throws IOException {

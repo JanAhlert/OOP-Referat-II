@@ -134,7 +134,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Event Event hinzufügen">
+          <Tab text="Event hinzufügen">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="572.0">
                      <children>
