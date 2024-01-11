@@ -70,7 +70,7 @@
                                                             <Insets top="2.5" />
                                                          </VBox.margin>
                                                          <children>
-                                                            <Button id="PopUpCheck_ActiveEventsToDos_activToD_editButton" fx:id="PopUpCheck_ActiveEventsToDos_activToD_editButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Bearbeiten" />
+                                                            <Button id="PopUpCheck_activToD_editButton" fx:id="PopUpCheck_activToD_editButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Bearbeiten" />
                                                             <Button id="PopUpCheck_ActiveEventsToDos_activToD_deleteButton" fx:id="PopUpCheck_ActiveEventsToDos_activToD_deleteButton" layoutX="205.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Löschen" />
                                                          </children>
                                                       </Pane>

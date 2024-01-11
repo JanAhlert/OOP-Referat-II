@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-import static com.jkfd.oopii.Abstract.HelloApplication.databaseManager;
+import static com.jkfd.oopii.HelloApplication.databaseManager;
 
 /**
  * Controller for the month-view

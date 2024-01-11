@@ -16,8 +16,7 @@ import java.util.Arrays;
 
 public class HelloApplication extends Application {
     public static DatabaseManager databaseManager;
-
-    @Override
+   @Override
     public void start(Stage stage) throws Exception {
 
         MonthViewController.loadView(stage);
