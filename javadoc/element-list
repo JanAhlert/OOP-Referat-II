@@ -4,3 +4,5 @@ com.jkfd.oopii.Controller
 com.jkfd.oopii.Database
 com.jkfd.oopii.Database.Models
 com.jkfd.oopii.Database.Repository
+com.jkfd.oopii.Subsystem
+com.jkfd.oopii.Subsystem.Subsystems
