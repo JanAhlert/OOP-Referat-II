@@ -27,7 +27,7 @@ import static com.jkfd.oopii.Abstract.HelloApplication.databaseManager;
 /**
  * Controller for the month-view
  */
-public class MonthViewController extends AbstractController implements Initializable {
+public class MonthViewController implements Initializable {
 
     @FXML
     Pane MonthViewPane;
