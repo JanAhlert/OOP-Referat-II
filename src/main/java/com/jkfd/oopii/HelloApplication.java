@@ -16,7 +16,6 @@ import java.util.Arrays;
 
 public class HelloApplication extends Application {
     public static DatabaseManager databaseManager;
-    private static SubsystemManager subsystemManager;
 
     static final Logger logger = LoggerFactory.getLogger(HelloApplication.class);
 
@@ -36,7 +35,7 @@ public class HelloApplication extends Application {
         }
 
         databaseManager = new DatabaseManager("sqlite");
-        subsystemManager = new SubsystemManager();
+        SubsystemManager subsystemManager = new SubsystemManager();
 
         launch();
 

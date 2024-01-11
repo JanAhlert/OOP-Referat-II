@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import static com.jkfd.oopii.HelloApplication.databaseManager;
 
+/**
+ * The event reminder subsystem periodically checks if there is an upcoming event, and notifies the user accordingly.
+ */
 public class EventReminderSubsystem extends Subsystem {
     public EventReminderSubsystem() {
         this.name = "event-reminders";
