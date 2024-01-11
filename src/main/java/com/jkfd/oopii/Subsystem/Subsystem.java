@@ -1,44 +1,46 @@
 package com.jkfd.oopii.Subsystem;
 
-
-
-import com.jkfd.oopii.Controller.MonthViewController;
-
-import com.jkfd.oopii.Database.DatabaseManager;
-import com.jkfd.oopii.Subsystem.SubsystemManager;
-import javafx.application.Application;
-import javafx.stage.Stage;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.util.Arrays;
+import java.util.Timer;
 
-public class HelloApplication extends Application {
-    public static DatabaseManager databaseManager;
+/**
+ * Base subsystem class all subsystems are built upon.
+ */
+public abstract class Subsystem {
+    public String name = "unnamed-subsystem";
+    public boolean suspended = false;
+    public int fireTime = 300000; // 5 Minutes
 
-    static final Logger logger = LoggerFactory.getLogger(HelloApplication.class);
+    /**
+     * Timer variable for reference on shutdown of the application.
+     */
+    public Timer timer;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        MonthViewController.loadView(stage);
+    /**
+     * Bookkeeping variable to keep track how often the subsystem failed.
+     */
+    private int failCount = 0;
+
+    /**
+     * The fire function will be called every time the fire time has been reached.
+     */
+    public void Fire() {
+
     }
 
-    public static void main(String[] args) throws Exception {
-        // Delete the data directory for development purposes
-        if (Arrays.stream(args).toList().contains("deletedb")) {
-            File db = new File("./data/app.db");
-            boolean deleted = db.delete();
-            if (!deleted) {
-                logger.warn("Debug warning: Database was not deleted even though 'deletedb' was supplied");
-            }
+    /**
+     * Exception handling.
+     * Subsystems should utilize "super.HandleException(exceptionVar);".
+     * @param e exception to handle
+     */
+    public void HandleException(Exception e) {
+        LoggerFactory.getLogger(Subsystem.class).error("Subsystem error (" + name + "): " + e.getMessage());
+
+        failCount++;
+
+        if (failCount >= 5) {
+            suspended = true;
         }
-
-        databaseManager = new DatabaseManager("sqlite");
-        SubsystemManager subsystemManager = new SubsystemManager();
-
-        launch();
-
-        subsystemManager.Shutdown();
     }
 }
