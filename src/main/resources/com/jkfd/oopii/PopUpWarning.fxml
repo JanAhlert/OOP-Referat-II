@@ -8,18 +8,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="124.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jkfd.oopii.PopUpWarning">
    <children>
-      <TitledPane animated="false" layoutX="10.0" layoutY="7.0" prefHeight="111.0" prefWidth="405.0" text="Hinweis !">
+      <TitledPane animated="false" layoutX="10.0" layoutY="7.0" prefHeight="111.0" prefWidth="405.0" text="Hinweis ! [1]">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="63.0" prefWidth="403.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="63.0" prefWidth="405.0">
                <children>
-                  <VBox layoutX="-1.0" prefHeight="89.0" prefWidth="405.0">
+                  <VBox layoutX="-1.0" prefHeight="85.0" prefWidth="405.0">
                      <children>
-                        <Pane prefHeight="108.0" prefWidth="405.0">
+                        <Pane prefHeight="110.0" prefWidth="405.0">
                            <children>
-                              <Label layoutX="1.0" layoutY="6.0" prefHeight="38.0" prefWidth="404.0" text="Sind Sie sicher, dass Sie ohne zu speichern schließen wollen ?">
+                              <Label layoutX="1.0" layoutY="6.0" prefHeight="40.0" prefWidth="404.0" text="Sind Sie sicher, dass Sie ohne zu speichern schließen wollen ?">
                                  <font>
                                     <Font size="15.0" />
                                  </font>

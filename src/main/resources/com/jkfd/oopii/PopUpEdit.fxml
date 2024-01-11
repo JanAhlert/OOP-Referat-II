@@ -5,7 +5,6 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
@@ -41,7 +40,7 @@
                                                 </Pane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0">
                                                    <children>
-                                                      <TextField layoutX="-2.0" layoutY="4.0" prefHeight="25.0" prefWidth="606.0" />
+                                                      <TextField id="PopUpEdit_ToDo_TextField" layoutX="-2.0" layoutY="4.0" prefHeight="25.0" prefWidth="606.0" />
                                                    </children>
                                                 </Pane>
                                              </children>
@@ -59,7 +58,7 @@
                                                 </Pane>
                                                 <Pane prefHeight="189.0" prefWidth="611.0">
                                                    <children>
-                                                      <TextArea layoutX="4.0" prefHeight="180.0" prefWidth="606.0">
+                                                      <TextArea id="PopUpEdit_ToDo_TextArea" layoutX="4.0" prefHeight="180.0" prefWidth="606.0">
                                                          <padding>
                                                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                          </padding>
@@ -82,13 +81,13 @@
                                                       <Insets bottom="5.0" right="2.5" top="5.0" />
                                                    </HBox.margin>
                                                    <children>
-                                                      <ChoiceBox layoutY="38.0" prefHeight="35.0" prefWidth="180.0" />
+                                                      <ChoiceBox id="PopUpEdit_ToDo_PriorityChoiceBox" layoutY="38.0" prefHeight="35.0" prefWidth="180.0" />
                                                       <Label layoutY="14.0" text="Priorität wählen:" underline="true" />
                                                    </children>
                                                 </Pane>
                                                 <Pane prefHeight="75.0" prefWidth="343.0">
                                                    <children>
-                                                      <DatePicker layoutX="164.0" layoutY="38.0" prefHeight="35.0" prefWidth="144.0" />
+                                                      <DatePicker id="PopUpEdit_ToDo_DatePicker" layoutX="164.0" layoutY="38.0" prefHeight="35.0" prefWidth="144.0" />
                                                       <Label layoutX="164.0" layoutY="14.0" text="Fälligkeitsadtum:" underline="true" />
                                                    </children>
                                                    <HBox.margin>
@@ -111,8 +110,7 @@
                                                       <Insets bottom="5.0" right="2.5" top="5.0" />
                                                    </HBox.margin>
                                                    <children>
-                                                      <Button fx:id="safe" layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Speichern" />
-                                                      <ProgressIndicator layoutX="136.0" layoutY="3.0" prefHeight="30.0" prefWidth="28.0" progress="0.0" />
+                                                      <Button id="PopUpEdit_ToDo_SaveButton" fx:id="safe" layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Speichern" />
                                                    </children>
                                                 </Pane>
                                                 <Pane prefHeight="32.0" prefWidth="305.0">
@@ -120,8 +118,8 @@
                                                       <Insets bottom="5.0" left="2.5" top="5.0" />
                                                    </HBox.margin>
                                                    <children>
-                                                      <Button layoutX="200.0" layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Schließen" />
-                                                      <Button layoutX="91.0" layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Abbrechen" />
+                                                      <Button id="PopUpEdit_ToDo_CloseButton" layoutX="201.0" layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Schließen" />
+                                                      <Button id="PopUpEdit_ToDo_CancelButton" layoutX="91.0" layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Abbrechen" />
                                                    </children>
                                                 </Pane>
                                              </children>
@@ -164,7 +162,7 @@
                                                       <Insets bottom="5.0" left="5.0" top="2.5" />
                                                    </VBox.margin>
                                                    <children>
-                                                      <TextField prefHeight="30.0" prefWidth="626.0" />
+                                                      <TextField id="PopUpEdit_Event_TextField" prefHeight="30.0" prefWidth="626.0" />
                                                    </children>
                                                 </Pane>
                                              </children>
@@ -192,7 +190,7 @@
                                                             </Pane>
                                                             <Pane prefHeight="45.0" prefWidth="297.0">
                                                                <children>
-                                                                  <DatePicker layoutY="2.0" />
+                                                                  <DatePicker id="PopUpEdit_Event_DatePicker" layoutY="2.0" />
                                                                </children>
                                                                <VBox.margin>
                                                                   <Insets left="5.0" />
@@ -216,7 +214,7 @@
                                                             </Pane>
                                                             <Pane prefHeight="45.0" prefWidth="327.0">
                                                                <children>
-                                                                  <DatePicker />
+                                                                  <DatePicker id="PopUpEdit_Event_TimePicker" />
                                                                </children>
                                                             </Pane>
                                                          </children>
@@ -246,7 +244,7 @@
                                                    </VBox.margin></Pane>
                                                 <Pane prefHeight="198.0" prefWidth="625.0">
                                                    <children>
-                                                      <TextArea layoutY="9.0" prefHeight="104.0" prefWidth="626.0">
+                                                      <TextArea id="PopUpEdit_Event_TextArea" layoutY="9.0" prefHeight="104.0" prefWidth="626.0">
                                                          <padding>
                                                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                          </padding>
@@ -279,7 +277,7 @@
                                                                </VBox.margin>
                                                                <children>
                                                                   <Label layoutX="-1.0" layoutY="14.0" prefHeight="17.0" prefWidth="87.0" text="Priorität wählen:" underline="true" />
-                                                                  <ChoiceBox layoutX="-2.0" layoutY="42.0" prefHeight="35.0" prefWidth="180.0" />
+                                                                  <ChoiceBox id="PopUpEdit_Event_PriorityChoiceBox" layoutX="-2.0" layoutY="42.0" prefHeight="35.0" prefWidth="180.0" />
                                                                </children>
                                                             </Pane>
                                                             <Pane prefHeight="200.0" prefWidth="200.0">
@@ -287,7 +285,7 @@
                                                                   <Insets bottom="5.0" right="2.5" top="2.5" />
                                                                </VBox.margin>
                                                                <children>
-                                                                  <Button layoutX="-2.0" layoutY="9.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Speichern" />
+                                                                  <Button id="PopUpEdit_Event_SaveButton" layoutX="-2.0" layoutY="9.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Speichern" />
                                                                </children>
                                                             </Pane>
                                                          </children>
@@ -314,7 +312,8 @@
                                                                   <Insets bottom="5.0" left="2.5" top="2.5" />
                                                                </VBox.margin>
                                                                <children>
-                                                                  <Button layoutX="203.0" layoutY="9.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Abbrechen" />
+                                                                  <Button id="PopUpEdit_Event_CancelButton" layoutX="92.0" layoutY="6.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Abbrechen" />
+                                                                  <Button id="PopUpEdit_Event_CloseButton" layoutX="205.0" layoutY="6.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Schließen" />
                                                                </children>
                                                             </Pane>
                                                          </children>
