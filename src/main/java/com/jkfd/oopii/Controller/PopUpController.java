@@ -68,11 +68,11 @@ public class PopUpController {
     @FXML
     Button PopUpCheck_activToD_editButton;
     @FXML
-    Button PopUpCheck_ActiveEventsToDos_activToD_deleteButton;
+    Button PopUpCheck_activToD_deleteButton;
     @FXML
-    Button PopUpCheck_ActiveEventsToDos_activEvent_editButton;
+    Button PopUpCheck_activEvent_editButton;
     @FXML
-    Button PopUpCheck_ActiveEventsToDos_activEvent_deleteButton;
+    Button PopUpCheck_activEvent_deleteButton;
     @FXML
     Label  PopUpCheck_ActiveEventsToDos_LabelMessage;
     @FXML
@@ -85,21 +85,21 @@ public class PopUpController {
     //The Elements are from the File PopUpCheck --> The following Elements are from the Tab "Erledigte Aufgaben und Events".
 
     @FXML
-    Button PopUpCheck_finishedEventsToDos_delTodos_RecoveryButton;
+    Button PopUpCheck_finished_delTodos_RecoveryButton;
     @FXML
-    Button PopUpCheck_finishedEventsToDos_delTodos_FinallydelButton;
+    Button PopUpCheck_finished_delTodos_FinallydelButton;
     @FXML
-    Button PopUpCheck_finishedEventsToDos_delEvents_RecoveryButton;
+    Button PopUpCheck_finished_delEvents_RecoveryButton;
     @FXML
-    Button PopUpCheck_finishedEventsToDos_delEvents_FinallyButton;
+    Button PopUpCheck_finished_delEvents_FinallydelButton;
     @FXML
-    Label PopUpCheck_finishedEventsToDos_delEvents_LabelMessage;
+    Label PopUpCheck_finished_delEvents_LabelMessage;
     @FXML
-    Button PopUpCheck_finishedEventsToDos_SaveButton;
+    Button PopUpCheck_finished_SaveButton;
     @FXML
-    Button PopUpCheck_finishedEventsToDos_CancelButton;
+    Button PopUpCheck_finished_CancelButton;
     @FXML
-    Button PopUpCheck_finishedEventsToDos_CloseButton;
+    Button PopUpCheck_finished_CloseButton;
 
     public static void loadView(Stage stage) throws IOException {
             Scene scene = new Scene(fxmlLoader_edit.load());
