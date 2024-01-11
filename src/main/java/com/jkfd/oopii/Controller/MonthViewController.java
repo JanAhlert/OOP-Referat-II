@@ -3,7 +3,6 @@ package com.jkfd.oopii.Controller;
 import com.calendarfx.view.page.MonthPage;
 import com.calendarfx.view.page.WeekPage;
 import com.calendarfx.view.page.YearPage;
-import com.jkfd.oopii.Abstract.AbstractController;
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
 import com.jkfd.oopii.Date;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-import static com.jkfd.oopii.HelloApplication.databaseManager;
+import static com.jkfd.oopii.Abstract.HelloApplication.databaseManager;
 
 /**
  * Controller for the month-view
