@@ -383,7 +383,7 @@ public class SQLiteDB implements IDBRepository {
     @Override
     public ArrayList<Todo> GetUnfinishedTodos() {
         ArrayList<Todo> result = new ArrayList<>();
-        String query = "SELECT * FROM todos WHERE completed_date = NULL";
+        String query = "SELECT * FROM todos WHERE completed_date IS NULL";
 
         try (Connection conn = connect(); Statement stmt = Objects.requireNonNull(conn, "SQLite connection must not be null").createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
@@ -412,7 +412,7 @@ public class SQLiteDB implements IDBRepository {
     @Override
     public ArrayList<Todo> GetUnfinishedTodos(int range) {
         ArrayList<Todo> result = new ArrayList<>();
-        String query = "SELECT * FROM todos WHERE completed_date = NULL LIMIT ?";
+        String query = "SELECT * FROM todos WHERE completed_date IS NULL LIMIT ?";
 
         try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)){
             pstmt.setInt(1, range);
