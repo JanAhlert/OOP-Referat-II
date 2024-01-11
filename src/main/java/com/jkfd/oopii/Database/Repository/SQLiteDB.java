@@ -6,6 +6,8 @@ import com.jkfd.oopii.Database.IDBRepository;
 import com.jkfd.oopii.Database.Models.Element;
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +24,8 @@ import java.util.Objects;
 
 
 public class SQLiteDB implements IDBRepository {
+    final Logger logger = LoggerFactory.getLogger(SQLiteDB.class);
+
     /**
      * The constructor of the SQLiteDB class
      */
@@ -40,8 +44,9 @@ public class SQLiteDB implements IDBRepository {
             try (Connection conn = connect()) {
                 if (conn != null) {
                     DatabaseMetaData meta = conn.getMetaData();
-                    System.out.println("[sqlite] The driver name is " + meta.getDriverName());
-                    System.out.println("[sqlite] Database created.");
+
+                    logger.info("[sqlite] The driver name is " + meta.getDriverName());
+                    logger.info("[sqlite] Database created.");
                 } else {
                     throw new Exception("[sqlite] conn has returned null in constructor.");
                 }
@@ -73,7 +78,7 @@ public class SQLiteDB implements IDBRepository {
                 }
             }
 
-            System.out.println("[sqlite] Migrate version: " + currentMigrateVersion);
+            logger.atInfo().setMessage("[sqlite] Migrate version: {}").addArgument(currentMigrateVersion).log();
 
             ClassLoader classLoader = getClass().getClassLoader();
             URL resource = classLoader.getResource("sql");
@@ -89,19 +94,22 @@ public class SQLiteDB implements IDBRepository {
                     stmt.executeLargeUpdate(sql);
 
                     currentMigrateVersion++;
-                    System.out.println("[sqlite] Migrated sql file version " + currentMigrateVersion);
+                    logger.atInfo().setMessage("[sqlite] Migrated sql file version: {}").addArgument(currentMigrateVersion).log();
                 } catch (Exception e) {
-                    System.out.println("[sqlite] Error while migrating sql file version " + (currentMigrateVersion + 1) + ": " + e.getMessage());
+                    logger.atInfo().setMessage("[sqlite] Error while migrating sql file version {}: {}")
+                            .addArgument(currentMigrateVersion + 1)
+                            .addArgument(e.getMessage())
+                            .log();
                 }
 
                 didMigrate = true;
             }
 
             if (didMigrate) {
-                System.out.println(MessageFormat.format("[sqlite] Migrated tables to newest version ({0})", migrateTarget));
+                logger.atInfo().setMessage("[sqlite] Migrated tables to newest version: {}").addArgument(migrateTarget).log();
             }
         } catch (SQLException e) {
-            System.out.println("[sqlite] " + e.getMessage());
+            logger.atError().setMessage("[sqlite] {}").addArgument(e.getMessage()).log();
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -120,13 +128,13 @@ public class SQLiteDB implements IDBRepository {
 
             conn = DriverManager.getConnection(url);
 
-            System.out.println("[sqlite] Connection established");
+            logger.debug("[sqlite] Connection established");
 
             if (conn != null) {
                 return conn;
             }
         } catch (SQLException e) {
-            System.out.println("[sqlite] " + e.getMessage());
+            logger.atError().setMessage("[sqlite] {}").addArgument(e.getMessage()).log();
         }
 
         return null;
