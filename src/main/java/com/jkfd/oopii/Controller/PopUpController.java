@@ -27,7 +27,7 @@ public class PopUpController {
 
     @FXML
 
-    //Elements from the File PopUpEdit.fxml --> These Elements are from the Tab ToDo
+    //The Elements are from the File PopUpEdit.fxml --> The following Elements are from the Tab ToDo
 
     private TextField PopUpEdit_ToDo_TextField;
     private TextArea PopUpEdit_ToDo_TextArea;
@@ -37,7 +37,7 @@ public class PopUpController {
     private Button PopUpEdit_ToDo_CancelButton;
     private Button PopUpEdit_ToDo_CloseButton;
 
-    //Elements from tge File PopUpEdit.fxml --> These Elements are from the Tab Events
+    //The Elements are from the File PopUpEdit.fxml --> The following Elements are from the Tab Events
 
     private TextField PopUpEdit_Event_TextField;
     private DatePicker PopUpEdit_Event_DatePicker;
@@ -49,7 +49,28 @@ public class PopUpController {
     private Button PopUpEdit_Event_CancelButton;
     private Button PopUpEdit_Event_CloseButton;
 
-    //
+    //The Elements are from the File PopUpCheck --> The following Elements are from the Tab "Aktuelle Aufgaben und Events".
+
+    private Button PopUpCheck_ActiveEventsToDos_activToD_editButton;
+    private Button PopUpCheck_ActiveEventsToDos_activToD_deleteButton;
+    private Button PopUpCheck_ActiveEventsToDos_activEvent_editButton;
+    private Button PopUpCheck_ActiveEventsToDos_activEvent_deleteButton;
+    private Label  PopUpCheck_ActiveEventsToDos_LabelMessage;
+    private Button PopUpCheck_ActiveEventsToDos_SaveButton;
+    private Button PopUpCheck_ActiveEventsToDos_CancelButton;
+    private Button PopUpCheck_ActiveEventsToDos_CloseButton;
+
+    //The Elements are from the File PopUpCheck --> The following Elements are from the Tab "Erledigte Aufgaben und Events".
+
+    private Button PopUpCheck_finishedEventsToDos_delTodos_RecoveryButton;
+    private Button PopUpCheck_finishedEventsToDos_delTodos_FinallydelButton;
+    private Button PopUpCheck_finishedEventsToDos_delEvents_RecoveryButton;
+    private Button PopUpCheck_finishedEventsToDos_delEvents_FinallyButton;
+
+    private Label PopUpCheck_finishedEventsToDos_delEvents_LabelMessage;
+    private Button PopUpCheck_finishedEventsToDos_SaveButton;
+    private Button PopUpCheck_finishedEventsToDos_CancelButton;
+    private Button PopUpCheck_finishedEventsToDos_CloseButton;
 
 
     public static void loadView(Stage stage) throws IOException {
