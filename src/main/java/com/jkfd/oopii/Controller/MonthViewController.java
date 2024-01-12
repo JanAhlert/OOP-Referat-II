@@ -5,6 +5,7 @@ import com.calendarfx.view.page.WeekPage;
 import com.calendarfx.view.page.YearPage;
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
+import com.jkfd.oopii.Database.Repository.SQLiteDB;
 import com.jkfd.oopii.Date;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.ZoneId;
@@ -28,6 +32,7 @@ import static com.jkfd.oopii.HelloApplication.databaseManager;
  * Controller for the month-view
  */
 public class MonthViewController implements Initializable {
+    final Logger logger = LoggerFactory.getLogger(MonthViewController.class);
 
     @FXML
     Pane MonthViewPane;
@@ -100,6 +105,7 @@ public class MonthViewController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jkfd/oopii/PopUpEdit.fxml"));
                 return loader.load();
             } catch (IOException e) {
+                logger.atError().setMessage("Error while loading PopUpEdit content: {}").addArgument(e.getMessage()).log();
                 return new Label("Fehler beim Laden des Inhalts"); // Throws an Error Lable for the User
             }
         });
@@ -128,6 +134,7 @@ public class MonthViewController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jkfd/oopii/PopUpEdit.fxml"));
                 return loader.load();
             } catch (IOException e) {
+                logger.atError().setMessage("Error while loading PopUpEdit content: {}").addArgument(e.getMessage()).log();
                 return new Label("Fehler beim Laden des Inhalts"); // Throws an Error Lable for the User
             }
         });
@@ -172,6 +179,8 @@ public class MonthViewController implements Initializable {
                     currentDate.resetSelectedDate();
                     setCurrentDateLabel(Date.MMYYYY);
                 } catch (Exception e) {
+                    logger.atError().setMessage("onSelectionMonthViewTab error: {}").addArgument(e.getMessage()).log();
+
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Fehler");
                     alert.setHeaderText("Ein Fehler ist aufgetreten");
@@ -193,6 +202,8 @@ public class MonthViewController implements Initializable {
             currentDate.resetSelectedDate();
             setCurrentDateLabel(Date.YYYY);
         } catch (Exception e) {
+            logger.atError().setMessage("onSelectionYearViewTab error: {}").addArgument(e.getMessage()).log();
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Ein Fehler ist aufgetreten");
@@ -212,6 +223,8 @@ public class MonthViewController implements Initializable {
             currentDate.resetSelectedDate();
             setCurrentDateLabel(Date.DDMMYYYY);
         } catch (Exception e) {
+            logger.atError().setMessage("onSelectionWeekViewTab error: {}").addArgument(e.getMessage()).log();
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Ein Fehler ist aufgetreten");
