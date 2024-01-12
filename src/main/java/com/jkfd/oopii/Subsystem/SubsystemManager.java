@@ -1,10 +1,13 @@
 package com.jkfd.oopii.Subsystem;
 
+import com.jkfd.oopii.Subsystem.Subsystems.BackupSubsystem;
 import com.jkfd.oopii.Subsystem.Subsystems.EventReminderSubsystem;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 /**
  * Subsystems are used to run specific logic/code at specific intervals (asynchronously) from everything else.
@@ -22,6 +25,7 @@ public class SubsystemManager {
      */
     public SubsystemManager() {
         // Register Subsystems
+        RegisterSubsystem(new BackupSubsystem());
         RegisterSubsystem(new EventReminderSubsystem());
     }
 
@@ -29,6 +33,8 @@ public class SubsystemManager {
      * The shutdown function will stop all running timers.
      */
     public void Shutdown() {
+        LoggerFactory.getLogger(SubsystemManager.class).info("Shutting down subsystems");
+
         for (Subsystem subsystem : subsystems) {
             subsystem.timer.cancel();
         }
@@ -60,5 +66,7 @@ public class SubsystemManager {
 
         // Finally give the subsystem a reference to the timer
         subsystem.timer = timer;
+
+        LoggerFactory.getLogger(SubsystemManager.class).info("Subsystem registered: " + subsystem.name);
     }
 }

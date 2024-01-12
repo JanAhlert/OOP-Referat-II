@@ -1,16 +1,31 @@
 package com.jkfd.oopii.Subsystem;
 
+import com.jkfd.oopii.Subsystem.Subsystems.EventReminderSubsystem;
 import org.slf4j.LoggerFactory;
 
 import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Base subsystem class all subsystems are built upon.
  */
 public abstract class Subsystem {
+    /**
+     * The name of the subsystem.
+     */
     public String name = "unnamed-subsystem";
+
+    /**
+     * Variable that is set if the subsystem is suspended.
+     * Suspended subsystems will not fire when their timer ticks.
+     */
     public boolean suspended = false;
-    public int fireTime = 300000; // 5 Minutes
+
+    /**
+     * The fireTime sets how often/quick the subsystem should be fired.
+     * Currently, the default is every 5 Minutes (300000 ms).
+     */
+    public long fireTime = TimeUnit.MINUTES.toMillis(5);
 
     /**
      * Timer variable for reference on shutdown of the application.
@@ -24,9 +39,10 @@ public abstract class Subsystem {
 
     /**
      * The fire function will be called every time the fire time has been reached.
+     * The default Fire() action is just logging that the subsystem has fired.
      */
     public void Fire() {
-
+        LoggerFactory.getLogger(EventReminderSubsystem.class).info(this.name + " subsystem fired.");
     }
 
     /**
@@ -41,6 +57,7 @@ public abstract class Subsystem {
 
         if (failCount >= 5) {
             suspended = true;
+            LoggerFactory.getLogger(Subsystem.class).error("Subsystem suspended (" + name + ") for throwing too many errors.");
         }
     }
 }
