@@ -1,11 +1,11 @@
 package com.jkfd.oopii.Controller;
 
+import com.calendarfx.model.Entry;
 import com.calendarfx.view.page.MonthPage;
 import com.calendarfx.view.page.WeekPage;
 import com.calendarfx.view.page.YearPage;
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
-import com.jkfd.oopii.Database.Repository.SQLiteDB;
 import com.jkfd.oopii.Date;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -153,7 +154,16 @@ public class MonthViewController implements Initializable {
 
             monthViewController.EventsVBox.getChildren().add(tmpCheckbox);
 
-            monthPage.createEntryAt(tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()));
+            Entry<?> tmpEntry = monthPage.createEntryAt(tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()));
+            tmpEntry.setTitle(tmp.title);
+
+            tmpEntry.changeStartDate(tmp.GetStartDate().toLocalDate());
+            tmpEntry.changeEndDate(tmp.GetEndDate().toLocalDate());
+
+            tmpEntry.changeStartTime(tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
+            tmpEntry.changeEndTime(tmp.GetEndDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
+
+            tmpEntry.setFullDay(tmp.fullDay);
         }
 
         for (Todo tmp : todos) {
