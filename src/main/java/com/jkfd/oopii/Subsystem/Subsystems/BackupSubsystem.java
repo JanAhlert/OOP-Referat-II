@@ -12,7 +12,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.concurrent.TimeUnit;
 
 /**
- * The event reminder subsystem periodically checks if there is an upcoming event, and notifies the user accordingly.
+ * The backup subsystem runs every 15 minutes, copying the database to ./data/backup/app.db.bak.
  */
 public class BackupSubsystem extends Subsystem {
     public BackupSubsystem() {
@@ -23,6 +23,7 @@ public class BackupSubsystem extends Subsystem {
     @Override
     public void Fire() {
         try {
+            // Make sure backup directory exists.
             File directory = new File("./data/backup");
             if (!directory.exists()) {
                 boolean result = directory.mkdirs();
@@ -31,15 +32,19 @@ public class BackupSubsystem extends Subsystem {
                 }
             }
 
+            // Make sure that the application database was already created.
+            // Ignore the current fire if it wasn't.
             File f = new File("./data/app.db");
             if(!f.exists()) {
                 LoggerFactory.getLogger(EventReminderSubsystem.class).info("Database does not exist yet, skipping backup.");
                 return;
             }
 
+            // Get the source and target path for the backup operation.
             Path target = Paths.get("./data/backup/app.db.bak");
             Path source = Paths.get("./data/app.db");
 
+            // Copy and basically "back-up" the database in the backup directory.
             Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
             File bak = new File("./data/backup/app.db.bak");
             if(!bak.exists()) {
