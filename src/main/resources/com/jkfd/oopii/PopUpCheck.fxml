@@ -70,8 +70,8 @@
                                                             <Insets top="2.5" />
                                                          </VBox.margin>
                                                          <children>
-                                                            <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Bearbeiten" />
-                                                            <Button layoutX="205.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Löschen" />
+                                                            <Button id="PopUpCheck_activToD_editButton" fx:id="PopUpCheck_activToD_editButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Bearbeiten" />
+                                                            <Button id="PopUpCheck_activToD_deleteButton" fx:id="PopUpCheck_activToD_deleteButton" layoutX="205.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Löschen" />
                                                          </children>
                                                       </Pane>
                                                    </children>
@@ -122,8 +122,8 @@
                                                             <Insets top="2.5" />
                                                          </VBox.margin>
                                                          <children>
-                                                            <Button layoutX="21.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Bearbeiten" />
-                                                            <Button layoutX="205.0" layoutY="7.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Löschen" />
+                                                            <Button id="PopUpCheck_activEvent_editButton" fx:id="PopUpCheck_activEvent_editButton" layoutX="21.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Bearbeiten" />
+                                                            <Button id="PopUpCheck_ActiveEventsToDos_activEvent_deleteButton" fx:id="PopUpCheck_ActiveEventsToDos_activEvent_deleteButton" layoutX="205.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Löschen" />
                                                          </children>
                                                       </Pane>
                                                    </children>
@@ -141,7 +141,7 @@
                                                       <Insets left="5.0" right="5.0" />
                                                    </VBox.margin>
                                                    <children>
-                                                      <Label layoutX="14.0" layoutY="13.0" text="Sie haben keine Auswahl getroffen! Bitte wählen Sie aus!">
+                                                      <Label id="PopUpCheck_ActiveEventsToDos_LabelMessage" fx:id="PopUpCheck_ActiveEventsToDos_LabelMessage" layoutX="14.0" layoutY="10.0" text="Sie haben keine Auswahl getroffen! Bitte wählen Sie aus!">
                                                          <font>
                                                             <Font size="16.0" />
                                                          </font>
@@ -157,13 +157,13 @@
                                                          <children>
                                                             <Pane prefHeight="55.0" prefWidth="320.0">
                                                                <children>
-                                                                  <Button layoutX="14.0" layoutY="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Speichern" />
+                                                                  <Button id="PopUpCheck_ActiveEventsToDos_SaveButton" fx:id="PopUpCheck_ActiveEventsToDos_SaveButton" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Speichern" />
                                                                </children>
                                                             </Pane>
                                                             <Pane prefHeight="55.0" prefWidth="328.0">
                                                                <children>
-                                                                  <Button layoutX="211.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Schließen" />
-                                                                  <Button layoutX="97.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Abbrechen" />
+                                                                  <Button id="PopUpCheck_ActiveEventsToDos_CloseButton" fx:id="PopUpCheck_ActiveEventsToDos_CloseButton" layoutX="211.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Schließen" />
+                                                                  <Button id="PopUpCheck_ActiveEventsToDos_CancelButton" fx:id="PopUpCheck_ActiveEventsToDos_CancelButton" layoutX="97.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Abbrechen" />
                                                                </children>
                                                             </Pane>
                                                          </children>
@@ -235,8 +235,8 @@
                                                             <Insets top="2.5" />
                                                          </VBox.margin>
                                                          <children>
-                                                            <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Wiederherstellen" />
-                                                            <Button layoutX="187.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Endgültig löschen" />
+                                                            <Button id="PopUpCheck_finished_delTodos_RecoveryButton" fx:id="PopUpCheck_finished_delTodos_RecoveryButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Wiederherstellen" />
+                                                            <Button id="PopUpCheck_finished_delTodos_FinallydelButton" fx:id="PopUpCheck_finished_delTodos_FinallydelButton" layoutX="187.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Endgültig löschen" />
                                                          </children>
                                                       </Pane>
                                                    </children>
@@ -287,8 +287,8 @@
                                                             <Insets top="2.5" />
                                                          </VBox.margin>
                                                          <children>
-                                                            <Button layoutX="21.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Wiederherstellen" />
-                                                            <Button layoutX="185.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Endgültig löschen" />
+                                                            <Button id="PopUpCheck_finished_delEvents_RecoveryButton" fx:id="PopUpCheck_finished_delEvents_RecoveryButton" layoutX="21.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Wiederherstellen" />
+                                                            <Button id="PopUpCheck_finished_delEvents_FinallydelButton" fx:id="PopUpCheck_finished_delEvents_FinallydelButton" layoutX="185.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Endgültig löschen" />
                                                          </children>
                                                       </Pane>
                                                    </children>
@@ -306,7 +306,7 @@
                                                       <Insets left="5.0" right="5.0" />
                                                    </VBox.margin>
                                                    <children>
-                                                      <Label layoutX="14.0" layoutY="13.0" text="Sie haben keine Auswahl getroffen! Bitte wählen Sie aus!">
+                                                      <Label id="PopUpCheck_finished_delEvents_LabelMessage" fx:id="PopUpCheck_finished_delEvents_LabelMessage" layoutX="14.0" layoutY="13.0" text="Sie haben keine Auswahl getroffen! Bitte wählen Sie aus!">
                                                          <font>
                                                             <Font size="16.0" />
                                                          </font>
@@ -322,13 +322,13 @@
                                                          <children>
                                                             <Pane prefHeight="55.0" prefWidth="320.0">
                                                                <children>
-                                                                  <Button layoutX="14.0" layoutY="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Speichern" />
+                                                                  <Button id="PopUpCheck_finished_SaveButton" fx:id="PopUpCheck_finished_SaveButton" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Speichern" />
                                                                </children>
                                                             </Pane>
                                                             <Pane prefHeight="55.0" prefWidth="328.0">
                                                                <children>
-                                                                  <Button layoutX="210.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Schließen" />
-                                                                  <Button layoutX="97.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Abbrechen" />
+                                                                  <Button id="PopUpCheck_finished_CloseButton" fx:id="PopUpCheck_finished_CloseButton" layoutX="210.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Schließen" />
+                                                                  <Button id="PopUpCheck_finished_CancelButton" fx:id="PopUpCheck_finished_CancelButton" layoutX="97.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Abbrechen" />
                                                                </children>
                                                             </Pane>
                                                          </children>

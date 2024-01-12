@@ -3,7 +3,6 @@ package com.jkfd.oopii.Controller;
 import com.calendarfx.view.page.MonthPage;
 import com.calendarfx.view.page.WeekPage;
 import com.calendarfx.view.page.YearPage;
-import com.jkfd.oopii.Abstract.AbstractController;
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
 import com.jkfd.oopii.Date;
@@ -28,7 +27,7 @@ import static com.jkfd.oopii.HelloApplication.databaseManager;
 /**
  * Controller for the month-view
  */
-public class MonthViewController extends AbstractController implements Initializable {
+public class MonthViewController implements Initializable {
 
     @FXML
     Pane MonthViewPane;

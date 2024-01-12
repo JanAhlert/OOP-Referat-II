@@ -1,17 +1,14 @@
 package com.jkfd.oopii.Abstract;
 
-import java.util.ArrayList;
+public class AbstractController {
 
-public abstract class AbstractController {
-
-
-
-
-    public void load(int vController)
-    {
+        public void load(int vController)
+        {
 
 
 
 
-    }
+        }
+
+
 }
