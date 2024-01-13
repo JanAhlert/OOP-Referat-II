@@ -15,13 +15,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -76,15 +74,13 @@ public class MonthViewController implements Initializable {
     /**
      * Method to load the month-view file and set the scene in the stage
      * @param stage
-     * @throws IOException
      */
-    public static void loadView(Stage stage) throws IOException{
+    public static void loadView(Stage stage) {
         try {
-
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Home");
-        stage.setScene(scene);
-        stage.show();
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setTitle("Home");
+            stage.setScene(scene);
+            stage.show();
         } catch (Exception e) {
             logger.atError().setMessage("There was an error while loading the monthview: {}").addArgument(e.getMessage()).log();
 
