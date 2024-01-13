@@ -5,6 +5,7 @@ package com.jkfd.oopii;
 import com.jkfd.oopii.Controller.MonthViewController;
 
 import com.jkfd.oopii.Database.DatabaseManager;
+import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Subsystem.SubsystemManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class HelloApplication extends Application {

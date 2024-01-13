@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +35,14 @@ import static com.jkfd.oopii.HelloApplication.databaseManager;
  * Controller for the month-view
  */
 public class MonthViewController implements Initializable {
-    final Logger logger = LoggerFactory.getLogger(MonthViewController.class);
+    static final Logger logger = LoggerFactory.getLogger(MonthViewController.class);
+
+    public static Event observedEvent = null;
+    /**
+     * 0 - New
+     * 1 - Edit
+     */
+    public static int observedEventAction = 0;
 
     @FXML
     Pane MonthViewPane;
@@ -77,6 +86,8 @@ public class MonthViewController implements Initializable {
         stage.setScene(scene);
         stage.show();
         } catch (Exception e) {
+            logger.atError().setMessage("There was an error while loading the monthview: {}").addArgument(e.getMessage()).log();
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Ein Fehler ist aufgetreten");
@@ -104,6 +115,16 @@ public class MonthViewController implements Initializable {
         monthPage.setEntryDetailsPopOverContentCallback(param -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jkfd/oopii/PopUpEdit.fxml"));
+
+                String id = param.getEntry().getId();
+                try {
+                    observedEvent = databaseManager.GetEvent(Integer.parseInt(id));
+                    observedEventAction = 1;
+                } catch (NumberFormatException e) {
+                    logger.atInfo().setMessage("Event ID invalid ({}); might have been a newly created event.").addArgument(id).log();
+                    observedEventAction = 0;
+                }
+
                 return loader.load();
             } catch (IOException e) {
                 logger.atError().setMessage("Error while loading PopUpEdit content: {}").addArgument(e.getMessage()).log();
@@ -153,17 +174,6 @@ public class MonthViewController implements Initializable {
             tmpCheckbox.setText(tmp.title);
 
             monthViewController.EventsVBox.getChildren().add(tmpCheckbox);
-
-            Entry<?> tmpEntry = monthPage.createEntryAt(tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()));
-            tmpEntry.setTitle(tmp.title);
-
-            tmpEntry.changeStartDate(tmp.GetStartDate().toLocalDate());
-            tmpEntry.changeEndDate(tmp.GetEndDate().toLocalDate());
-
-            tmpEntry.changeStartTime(tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
-            tmpEntry.changeEndTime(tmp.GetEndDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
-
-            tmpEntry.setFullDay(tmp.fullDay);
         }
 
         for (Todo tmp : todos) {
@@ -172,6 +182,58 @@ public class MonthViewController implements Initializable {
 
             monthViewController.TodosVBox.getChildren().add(tmpCheckbox);
         }
+
+        // Load the Calendar itself
+        events = databaseManager.GetEvents();
+        for (Event tmp : events) {
+            ZonedDateTime tmpTime = tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault());
+
+            // Create entries
+            Entry<?> tmpEntryMonth = monthPage.createEntryAt(tmpTime);
+            Entry<?> tmpEntryWeek = weekPage.createEntryAt(tmpTime);
+            Entry<?> tmpEntryYear = yearPage.createEntryAt(tmpTime);
+
+            // Set ID
+            tmpEntryMonth.setId(Integer.toString(tmp.GetID()));
+            tmpEntryWeek.setId(Integer.toString(tmp.GetID()));
+            tmpEntryYear.setId(Integer.toString(tmp.GetID()));
+
+            // Set title
+            tmpEntryMonth.setTitle(tmp.title);
+            tmpEntryWeek.setTitle(tmp.title);
+            tmpEntryYear.setTitle(tmp.title);
+
+            // Set date
+            tmpEntryMonth.changeStartDate(tmp.GetStartDate().toLocalDate());
+            tmpEntryMonth.changeEndDate(tmp.GetEndDate().toLocalDate());
+            tmpEntryWeek.changeStartDate(tmp.GetStartDate().toLocalDate());
+            tmpEntryWeek.changeEndDate(tmp.GetEndDate().toLocalDate());
+            tmpEntryYear.changeStartDate(tmp.GetStartDate().toLocalDate());
+            tmpEntryYear.changeEndDate(tmp.GetEndDate().toLocalDate());
+
+            // Set time
+            tmpEntryMonth.changeStartTime(tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
+            tmpEntryMonth.changeEndTime(tmp.GetEndDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
+            tmpEntryWeek.changeStartTime(tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
+            tmpEntryWeek.changeEndTime(tmp.GetEndDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
+            tmpEntryYear.changeStartTime(tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
+            tmpEntryYear.changeEndTime(tmp.GetEndDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
+
+            // Set full day
+            tmpEntryMonth.setFullDay(tmp.fullDay);
+            tmpEntryWeek.setFullDay(tmp.fullDay);
+            tmpEntryYear.setFullDay(tmp.fullDay);
+        }
+    }
+
+    @FXML
+    private void onCreateTodoButtonPressed() {
+
+    }
+
+    @FXML
+    private void onCreateEventButtonPressed() {
+
     }
 
 
@@ -317,9 +379,4 @@ public class MonthViewController implements Initializable {
     }
 
     //---------------------------------------------------Functions to get Data from the User---------------------------------------------------//
-
-
-
 }
-
-
