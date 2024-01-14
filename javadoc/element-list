@@ -1,6 +1,5 @@
 module:com.jkfd.oopii
 com.jkfd.oopii
-com.jkfd.oopii.Abstract
 com.jkfd.oopii.Controller
 com.jkfd.oopii.Database
 com.jkfd.oopii.Database.Models
