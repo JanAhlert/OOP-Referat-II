@@ -83,6 +83,7 @@ public abstract class Subsystem {
 
     /**
      * Sets the timer reference for the subsystem for later use (e.g.: shutdown operations).
+     * The call to set the timer should usually only be made from the {@link com.jkfd.oopii.Subsystem.SubsystemManager}.
      * @param timer timer reference
      */
     public void SetTimer(Timer timer)

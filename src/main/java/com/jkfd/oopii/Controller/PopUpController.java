@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static com.jkfd.oopii.Controller.MonthViewController.*;
 import static com.jkfd.oopii.HelloApplication.databaseManager;
@@ -44,7 +46,13 @@ public class PopUpController {
     @FXML
     DatePicker PopUpEdit_Event_StartDatePicker;
     @FXML
+    TextField PopUpEdit_Event_StartTimeField;
+    @FXML
     DatePicker PopUpEdit_Event_EndDatePicker;
+    @FXML
+    TextField PopUpEdit_Event_EndTimeField;
+    @FXML
+    CheckBox PopUpEdit_Event_FullDayCheckbox;
     @FXML
     TextArea PopUpEdit_Event_DescriptionTextArea;
     @FXML
@@ -106,14 +114,29 @@ public class PopUpController {
      */
     public void initialize()
     {
+        PopUpEdit_Event_StartTimeField.setEditable(true);
+        PopUpEdit_Event_EndTimeField.setEditable(true);
+
+        PopUpEdit_Event_FullDayCheckbox.setSelected(false);
+
         // Fill the priority choice box with all priority possibilities.
         PopUpEdit_Event_PriorityChoiceBox.getItems().setAll(Element.Priority.values());
 
         if (observedEvent != null) {
+            if (observedEvent.fullDay)
+            {
+                PopUpEdit_Event_StartTimeField.setEditable(false);
+                PopUpEdit_Event_EndTimeField.setEditable(false);
+            }
+
+            PopUpEdit_Event_FullDayCheckbox.setSelected(observedEvent.fullDay);
+
             PopUpEdit_Event_TitleTextField.setText(observedEvent.title);
             PopUpEdit_Event_DescriptionTextArea.setText(observedEvent.description);
             PopUpEdit_Event_StartDatePicker.setValue(observedEvent.GetStartDate().toLocalDate());
             PopUpEdit_Event_EndDatePicker.setValue(observedEvent.GetEndDate().toLocalDate());
+            PopUpEdit_Event_StartTimeField.setText(observedEvent.GetStartDate().toLocalTime().toString());
+            PopUpEdit_Event_EndTimeField.setText(observedEvent.GetEndDate().toLocalTime().toString());
 
             PopUpEdit_Event_PriorityChoiceBox.setValue(observedEvent.priority);
         } else {
@@ -164,12 +187,24 @@ public class PopUpController {
     @FXML
     private void onPopUpEditEventSaveClicked(){
         try {
+            // Create new event instance and parse basic information
             Event tmp = new Event();
             tmp.title = PopUpEdit_Event_TitleTextField.getText();
             tmp.description = PopUpEdit_Event_DescriptionTextArea.getText();
             tmp.priority = (Element.Priority) PopUpEdit_Event_PriorityChoiceBox.getValue();
-            tmp.SetDateRange(PopUpEdit_Event_StartDatePicker.getValue().atStartOfDay(), PopUpEdit_Event_EndDatePicker.getValue().atStartOfDay()); // TODO: Time is always currently 00:00:00
 
+            // Time & Date of the event
+            LocalTime tmpStartTime = LocalTime.parse(PopUpEdit_Event_StartTimeField.getText());
+            LocalDateTime tmpStartDateTime = PopUpEdit_Event_StartDatePicker.getValue().atStartOfDay().withHour(tmpStartTime.getHour()).withMinute(tmpStartTime.getMinute()).withSecond(tmpStartTime.getSecond());
+
+            LocalTime tmpEndTime = LocalTime.parse(PopUpEdit_Event_EndTimeField.getText());
+            LocalDateTime tmpEndDateTime = PopUpEdit_Event_EndDatePicker.getValue().atStartOfDay().withHour(tmpEndTime.getHour()).withMinute(tmpEndTime.getMinute()).withSecond(tmpEndTime.getSecond());
+
+            tmp.SetDateRange(tmpStartDateTime, tmpEndDateTime);
+
+            tmp.fullDay = PopUpEdit_Event_FullDayCheckbox.isSelected();
+
+            // Logic to determine if event is new or edited
             if (observedEventAction == 0) {
                 databaseManager.CreateEvent(tmp);
             } else if (observedEventAction == 1) {
@@ -184,8 +219,10 @@ public class PopUpController {
                 alert.showAndWait();
             }
 
+            // Update view
             UpdateEntries();
 
+            // Notify user
             Alert info = new Alert(Alert.AlertType.INFORMATION);
             info.setTitle("");
             info.setHeaderText("Hinweis!");

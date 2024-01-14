@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jkfd.oopii.Controller.PopUpController">
    <children>
-      <TabPane layoutX="-2.0" prefHeight="500.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="-2.0" prefHeight="523.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Event hinzufügen">
             <content>
@@ -89,6 +89,86 @@
                                                             <Pane prefHeight="45.0" prefWidth="327.0">
                                                                <children>
                                                                   <DatePicker id="PopUpEdit_Event_TimePicker" fx:id="PopUpEdit_Event_EndDatePicker" />
+                                                               </children>
+                                                            </Pane>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </Pane>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="2.5" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Pane>
+                                    <Pane prefHeight="97.0" prefWidth="620.0">
+                                       <children>
+                                          <HBox prefHeight="98.0" prefWidth="620.0">
+                                             <children>
+                                                <Pane prefHeight="88.0" prefWidth="284.0">
+                                                   <HBox.margin>
+                                                      <Insets bottom="5.0" right="2.5" top="5.0" />
+                                                   </HBox.margin>
+                                                   <children>
+                                                      <VBox layoutX="1.0" layoutY="-2.0" prefHeight="91.0" prefWidth="286.0">
+                                                         <children>
+                                                            <Pane prefHeight="45.0" prefWidth="300.0">
+                                                               <children>
+                                                                  <Label layoutY="-2.0" prefHeight="45.0" prefWidth="286.0" text="Startzeit:" underline="true">
+                                                                     <padding>
+                                                                        <Insets left="5.0" />
+                                                                     </padding></Label>
+                                                               </children>
+                                                            </Pane>
+                                                            <Pane prefHeight="45.0" prefWidth="297.0">
+                                                               <children>
+                                                                  <TextField fx:id="PopUpEdit_Event_StartTimeField" layoutY="2.0" />
+                                                               </children>
+                                                               <VBox.margin>
+                                                                  <Insets left="5.0" />
+                                                               </VBox.margin>
+                                                            </Pane>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </Pane>
+                                                <Pane prefHeight="88.0" prefWidth="334.0">
+                                                   <HBox.margin>
+                                                      <Insets bottom="5.0" left="2.5" right="5.0" top="5.0" />
+                                                   </HBox.margin>
+                                                   <children>
+                                                      <VBox layoutY="-1.0" prefHeight="89.0" prefWidth="327.0">
+                                                         <children>
+                                                            <Pane prefHeight="45.0" prefWidth="319.0">
+                                                               <children>
+                                                                  <Label layoutY="14.0" text="Endzeit:" underline="true" />
+                                                               </children>
+                                                            </Pane>
+                                                            <Pane prefHeight="45.0" prefWidth="327.0">
+                                                               <children>
+                                                                  <TextField fx:id="PopUpEdit_Event_EndTimeField" />
+                                                               </children>
+                                                            </Pane>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </Pane>
+                                                <Pane prefHeight="88.0" prefWidth="334.0">
+                                                   <HBox.margin>
+                                                      <Insets bottom="5.0" left="2.5" right="5.0" top="5.0" />
+                                                   </HBox.margin>
+                                                   <children>
+                                                      <VBox layoutY="-1.0" prefHeight="89.0" prefWidth="327.0">
+                                                         <children>
+                                                            <Pane prefHeight="45.0" prefWidth="319.0">
+                                                               <children>
+                                                                  <Label layoutY="14.0" text="Ganzer tag?" underline="true" />
+                                                               </children>
+                                                            </Pane>
+                                                            <Pane prefHeight="45.0" prefWidth="327.0">
+                                                               <children>
+                                                                  <CheckBox fx:id="PopUpEdit_Event_FullDayCheckbox" />
                                                                </children>
                                                             </Pane>
                                                          </children>
