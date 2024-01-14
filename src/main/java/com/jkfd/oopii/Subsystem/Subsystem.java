@@ -33,9 +33,15 @@ public abstract class Subsystem {
     public long fireTime = TimeUnit.MINUTES.toMillis(5);
 
     /**
+     * The amount of times a subsystem is allowed to error before getting suspended.
+     * Default: 5 times.
+     */
+    public int maxFailCount = 5;
+
+    /**
      * Timer variable for reference on shutdown of the application.
      */
-    public Timer timer;
+    private Timer timer;
 
     /**
      * Bookkeeping variable to keep track how often the subsystem failed.
@@ -60,7 +66,7 @@ public abstract class Subsystem {
 
         failCount++;
 
-        if (failCount >= 5) {
+        if (failCount >= maxFailCount) {
             suspended = true;
             logger.atError().setMessage("Subsystem suspended ({}) for throwing too many errors.").addArgument(name).log();
         }
@@ -73,5 +79,26 @@ public abstract class Subsystem {
      */
     public void Shutdown() {
         logger.atInfo().setMessage("{} subsystem shutdown").addArgument(this.name).log();
+    }
+
+    /**
+     * Sets the timer reference for the subsystem for later use (e.g.: shutdown operations).
+     * @param timer timer reference
+     */
+    public void SetTimer(Timer timer)
+    {
+        if (this.timer == null) {
+            this.timer = timer;
+        } else {
+            logger.atError().setMessage("Tried to set timer for {} even though timer was already set").addArgument(this.name).log();
+        }
+    }
+
+    /**
+     * Returns the timer reference firing this subsystem.
+     * @return timer reference
+     */
+    public Timer GetTimer() {
+        return this.timer;
     }
 }

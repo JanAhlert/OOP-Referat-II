@@ -44,7 +44,7 @@ public class SubsystemManager {
 
         for (Subsystem subsystem : subsystems) {
             subsystem.Shutdown();
-            subsystem.timer.cancel();
+            subsystem.GetTimer().cancel();
         }
 
         logger.atInfo().setMessage("Subsystems shutdown complete").log();
@@ -75,7 +75,7 @@ public class SubsystemManager {
         timer.scheduleAtFixedRate(timerTask, 30, subsystem.fireTime);
 
         // Finally give the subsystem a reference to the timer
-        subsystem.timer = timer;
+        subsystem.SetTimer(timer);
 
         logger.atInfo().setMessage("Subsystem registered: " + subsystem.name).log();
     }
