@@ -20,7 +20,7 @@ public class HelloApplication extends Application {
     static final Logger logger = LoggerFactory.getLogger(HelloApplication.class);
  
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         MonthViewController.loadView(stage);
     }
 

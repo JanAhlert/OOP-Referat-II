@@ -12,11 +12,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -252,7 +255,10 @@ public class MonthViewController implements Initializable {
 
     @FXML
     private void onCreateEventButtonPressed() {
-        UpdateEntries();
+        observedEvent = null;
+        observedEventAction = 0;
+
+        // TODO: Actually show new event dialog
     }
 
 
