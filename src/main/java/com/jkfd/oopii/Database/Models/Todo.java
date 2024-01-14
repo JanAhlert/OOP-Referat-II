@@ -18,6 +18,10 @@ public class Todo extends Element {
         this.completedDate = date;
     }
 
+    /**
+     * Returns a date if the todo was completed. It will return null otherwise.
+     * @return completion date
+     */
     public Date GetCompletedDate()
     {
         return this.completedDate;
