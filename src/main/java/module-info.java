@@ -17,6 +17,4 @@ module com.jkfd.oopii {
     exports com.jkfd.oopii.Subsystem;
     exports com.jkfd.oopii.Subsystem.Subsystems;
     opens com.jkfd.oopii.Controller to javafx.fxml;
-    exports com.jkfd.oopii.Abstract;
-    opens com.jkfd.oopii.Abstract to javafx.fxml;
 }

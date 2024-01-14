@@ -239,12 +239,12 @@ public class MonthViewController implements Initializable {
             tmpEntryYear.changeEndDate(tmp.GetEndDate().toLocalDate());
 
             // Set time
-            tmpEntryMonth.changeStartTime(tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
-            tmpEntryMonth.changeEndTime(tmp.GetEndDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
-            tmpEntryWeek.changeStartTime(tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
-            tmpEntryWeek.changeEndTime(tmp.GetEndDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
-            tmpEntryYear.changeStartTime(tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
-            tmpEntryYear.changeEndTime(tmp.GetEndDate().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toLocalTime());
+            tmpEntryMonth.changeStartTime(tmp.GetStartDate().toLocalTime());
+            tmpEntryMonth.changeEndTime(tmp.GetEndDate().toLocalTime());
+            tmpEntryWeek.changeStartTime(tmp.GetStartDate().toLocalTime());
+            tmpEntryWeek.changeEndTime(tmp.GetEndDate().toLocalTime());
+            tmpEntryYear.changeStartTime(tmp.GetStartDate().toLocalTime());
+            tmpEntryYear.changeEndTime(tmp.GetEndDate().toLocalTime());
 
             // Set full day
             tmpEntryMonth.setFullDay(tmp.fullDay);
