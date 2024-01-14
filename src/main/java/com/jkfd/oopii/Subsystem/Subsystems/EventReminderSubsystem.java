@@ -2,9 +2,10 @@ package com.jkfd.oopii.Subsystem.Subsystems;
 
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Subsystem.Subsystem;
-import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static com.jkfd.oopii.HelloApplication.databaseManager;
 
@@ -12,6 +13,8 @@ import static com.jkfd.oopii.HelloApplication.databaseManager;
  * The event reminder subsystem periodically checks if there is an upcoming event, and notifies the user accordingly.
  */
 public class EventReminderSubsystem extends Subsystem {
+    private final HashSet<Event> notified = new HashSet<>();
+
     public EventReminderSubsystem() {
         this.name = "event-reminders";
     }
@@ -19,11 +22,17 @@ public class EventReminderSubsystem extends Subsystem {
     @Override
     public void Fire() {
         try {
+            LocalDate now = LocalDate.now();
             ArrayList<Event> events = databaseManager.GetEvents();
 
-            // TODO: Check if event is happening soon
-
-            LoggerFactory.getLogger(EventReminderSubsystem.class).info(this.name + " subsystem fired.");
+            for (Event event : events)
+            {
+                if (event.GetStartDate().toLocalDate().isEqual(now) && !notified.contains(event)) {
+                    // TODO: Implement actual visuals for user
+                    logger.atInfo().setMessage("Event notification: {}").addArgument(event.title).log();
+                    notified.add(event);
+                }
+            }
         } catch(Exception e) {
             super.HandleException(e);
         }

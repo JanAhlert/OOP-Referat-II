@@ -2,18 +2,23 @@ package com.jkfd.oopii.Subsystem;
 
 import com.jkfd.oopii.Subsystem.Subsystems.BackupSubsystem;
 import com.jkfd.oopii.Subsystem.Subsystems.EventReminderSubsystem;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
 
 /**
  * Subsystems are used to run specific logic/code at specific intervals (asynchronously) from everything else.
  * Examples include looking up if any events are upcoming, fetching/updating iCal files, etc.
  */
 public class SubsystemManager {
+    /**
+     * Logger instance of the subsystem manager.
+     */
+    protected final Logger logger = LoggerFactory.getLogger(SubsystemManager.class);
+
     /**
      * Variable to keep track of currently registered subsystems.
      */
@@ -24,7 +29,7 @@ public class SubsystemManager {
      * Subsystems get registered here.
      */
     public SubsystemManager() {
-        LoggerFactory.getLogger(SubsystemManager.class).info("Initializing subsystems");
+        logger.atInfo().setMessage("Initializing subsystems").log();
 
         // Register Subsystems
         RegisterSubsystem(new BackupSubsystem());
@@ -35,14 +40,14 @@ public class SubsystemManager {
      * The shutdown function will stop all running timers.
      */
     public void Shutdown() {
-        LoggerFactory.getLogger(SubsystemManager.class).info("Shutting down subsystems");
+        logger.atInfo().setMessage("Shutting down subsystems").log();
 
         for (Subsystem subsystem : subsystems) {
             subsystem.Shutdown();
             subsystem.timer.cancel();
         }
 
-        LoggerFactory.getLogger(SubsystemManager.class).info("Subsystems shutdown complete");
+        logger.atInfo().setMessage("Subsystems shutdown complete").log();
     }
 
     /**
@@ -72,6 +77,6 @@ public class SubsystemManager {
         // Finally give the subsystem a reference to the timer
         subsystem.timer = timer;
 
-        LoggerFactory.getLogger(SubsystemManager.class).info("Subsystem registered: " + subsystem.name);
+        logger.atInfo().setMessage("Subsystem registered: " + subsystem.name).log();
     }
 }

@@ -1,7 +1,6 @@
 package com.jkfd.oopii.Subsystem.Subsystems;
 
 import com.jkfd.oopii.Subsystem.Subsystem;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,7 +35,7 @@ public class BackupSubsystem extends Subsystem {
             // Ignore the current fire if it wasn't.
             File f = new File("./data/app.db");
             if(!f.exists()) {
-                LoggerFactory.getLogger(EventReminderSubsystem.class).info("Database does not exist yet, skipping backup.");
+                logger.atInfo().setMessage("Database does not exist yet, skipping backup.").log();
                 return;
             }
 
@@ -44,14 +43,14 @@ public class BackupSubsystem extends Subsystem {
             Path target = Paths.get("./data/backup/app.db.bak");
             Path source = Paths.get("./data/app.db");
 
-            // Copy and basically "back-up" the database in the backup directory.
+            // Copy and basically "backup" the database in the backup directory.
             Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
             File bak = new File("./data/backup/app.db.bak");
             if(!bak.exists()) {
                 throw new FileNotFoundException("backup was not created properly");
             }
 
-            LoggerFactory.getLogger(EventReminderSubsystem.class).info("Database backed up.");
+            logger.atInfo().setMessage("Database backed up.").log();
         } catch(Exception e) {
             super.HandleException(e);
         }

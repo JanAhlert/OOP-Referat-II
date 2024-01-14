@@ -169,7 +169,7 @@ public class PopUpController {
             tmp.title = PopUpEdit_Event_TitleTextField.getText();
             tmp.description = PopUpEdit_Event_DescriptionTextArea.getText();
             tmp.priority = (Element.Priority) PopUpEdit_Event_PriorityChoiceBox.getValue();
-            tmp.SetDateRange(java.sql.Date.valueOf(PopUpEdit_Event_StartDatePicker.getValue()), java.sql.Date.valueOf(PopUpEdit_Event_EndDatePicker.getValue()));
+            tmp.SetDateRange(PopUpEdit_Event_StartDatePicker.getValue().atStartOfDay(), PopUpEdit_Event_EndDatePicker.getValue().atStartOfDay()); // TODO: Time is always currently 00:00:00
 
             if (observedEventAction == 0) {
                 databaseManager.CreateEvent(tmp);

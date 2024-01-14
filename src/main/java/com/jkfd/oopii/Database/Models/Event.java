@@ -1,6 +1,6 @@
 package com.jkfd.oopii.Database.Models;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class Event extends Element {
     /**
@@ -11,18 +11,18 @@ public class Event extends Element {
     /**
      * The date(time) when the event starts.
      */
-    private Date startDate;
+    private LocalDateTime startDate;
 
     /**
      * The date(time) when the event stops.
      */
-    private Date endDate;
+    private LocalDateTime endDate;
 
     /**
      * Returns the start date of the event.
      * @return starting date
      */
-    public Date GetStartDate()
+    public LocalDateTime GetStartDate()
     {
         return this.startDate;
     }
@@ -31,7 +31,7 @@ public class Event extends Element {
      * Returns the end date of the event.
      * @return ending date
      */
-    public Date GetEndDate()
+    public LocalDateTime GetEndDate()
     {
         return this.endDate;
     }
@@ -41,7 +41,7 @@ public class Event extends Element {
      * @param start starting date
      * @param end ending date
      */
-    public void SetDateRange(Date start, Date end)
+    public void SetDateRange(LocalDateTime start, LocalDateTime end)
     {
         this.startDate = start;
         this.endDate = end;

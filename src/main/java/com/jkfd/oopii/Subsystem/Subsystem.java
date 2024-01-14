@@ -1,5 +1,6 @@
 package com.jkfd.oopii.Subsystem;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Timer;
@@ -9,6 +10,11 @@ import java.util.concurrent.TimeUnit;
  * Base subsystem class all subsystems are built upon.
  */
 public abstract class Subsystem {
+    /**
+     * Logger instance of the subsystem.
+     */
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     /**
      * The name of the subsystem.
      */
@@ -50,13 +56,13 @@ public abstract class Subsystem {
      * @param e exception to handle
      */
     public void HandleException(Exception e) {
-        LoggerFactory.getLogger(this.getClass()).error("Subsystem error (" + name + "): " + e.getMessage());
+        logger.atError().setMessage("Subsystem error ({}): {}").addArgument(name).addArgument(e.getMessage()).log();
 
         failCount++;
 
         if (failCount >= 5) {
             suspended = true;
-            LoggerFactory.getLogger(this.getClass()).error("Subsystem suspended (" + name + ") for throwing too many errors.");
+            logger.atError().setMessage("Subsystem suspended ({}) for throwing too many errors.").addArgument(name).log();
         }
     }
 
@@ -66,6 +72,6 @@ public abstract class Subsystem {
      * Subsystems should utilize "super.Shutdown();" when using custom shutdown logic.
      */
     public void Shutdown() {
-        LoggerFactory.getLogger(this.getClass()).info(this.name + " subsystem shutdown");
+        logger.atInfo().setMessage("{} subsystem shutdown").addArgument(this.name).log();
     }
 }
