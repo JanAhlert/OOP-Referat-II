@@ -165,6 +165,9 @@ public class MonthViewController implements Initializable {
         UpdateEntries();
     }
 
+    /**
+     * Updates the entries in the calendar and sidebar.
+     */
     public static void UpdateEntries() {
         List entries = monthPage.getMonthView().getCalendarSources().get(0).getCalendars().get(0).findEntries("");
         monthPage.getMonthView().getCalendarSources().get(0).getCalendars().get(0).removeEntries(entries);
