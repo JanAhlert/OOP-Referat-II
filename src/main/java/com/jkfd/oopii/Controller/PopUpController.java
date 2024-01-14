@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-import static com.jkfd.oopii.Controller.MonthViewController.observedEvent;
-import static com.jkfd.oopii.Controller.MonthViewController.observedEventAction;
+import static com.jkfd.oopii.Controller.MonthViewController.*;
 import static com.jkfd.oopii.HelloApplication.databaseManager;
 
 public class PopUpController {
@@ -184,6 +183,8 @@ public class PopUpController {
                 alert.setContentText("Wert von observedEventAction unbekannt: " + observedEventAction);
                 alert.showAndWait();
             }
+
+            UpdateEntries();
 
             Alert info = new Alert(Alert.AlertType.INFORMATION);
             info.setTitle("");

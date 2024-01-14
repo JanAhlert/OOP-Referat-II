@@ -28,6 +28,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.jkfd.oopii.HelloApplication.databaseManager;
@@ -68,6 +69,7 @@ public class MonthViewController implements Initializable {
     private static boolean isInitialized = false; //Variable to check if the View is initialized
     Date currentDate = new Date(); //Variable for the Date
     private static MonthPage monthPage; //Variable for the MonthView um die View zu ändern
+    private static MonthViewController monthViewController;
     private static YearPage yearPage = new YearPage(); //Variable for the YearView um die View zu ändern
     private static WeekPage weekPage = new WeekPage(); //Variable for the WeekView um die View zu ändern
 
@@ -108,7 +110,7 @@ public class MonthViewController implements Initializable {
         monthPage.setMinWidth(1486);
         monthPage.setShowNavigation(false);
         monthPage.setShowDate(false);
-        MonthViewController monthViewController = fxmlLoader.getController();
+        monthViewController = fxmlLoader.getController();
         monthViewController.MonthViewPane.getChildren().add(monthPage);
         //Sets the pop-up window
         monthPage.setEntryDetailsPopOverContentCallback(param -> {
@@ -159,6 +161,13 @@ public class MonthViewController implements Initializable {
                 return new Label("Fehler beim Laden des Inhalts"); // Throws an Error Lable for the User
             }
         });
+
+        UpdateEntries();
+    }
+
+    public static void UpdateEntries() {
+        List entries = monthPage.getMonthView().getCalendarSources().get(0).getCalendars().get(0).findEntries("");
+        monthPage.getMonthView().getCalendarSources().get(0).getCalendars().get(0).removeEntries(entries);
 
         // Load the right sidebar
         monthViewController.EventsVBox.getChildren().clear();
@@ -230,7 +239,7 @@ public class MonthViewController implements Initializable {
             tmpEntryMonth.setFullDay(tmp.fullDay);
             tmpEntryWeek.setFullDay(tmp.fullDay);
             tmpEntryYear.setFullDay(tmp.fullDay);
-       }
+        }
     }
 
     @FXML
@@ -240,7 +249,7 @@ public class MonthViewController implements Initializable {
 
     @FXML
     private void onCreateEventButtonPressed() {
-
+        UpdateEntries();
     }
 
 
