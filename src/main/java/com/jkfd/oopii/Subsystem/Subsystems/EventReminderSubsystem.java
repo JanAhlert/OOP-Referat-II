@@ -46,6 +46,8 @@ public class EventReminderSubsystem extends Subsystem {
 
                             for (Event event : tmp) {
                                 sb.append("\t- ").append(event.title).append("\n");
+
+                                logger.atInfo().setMessage("Bundling event notification for event '{}'").addArgument(event.title).log();
                             }
 
                             Alert notification = new Alert(Alert.AlertType.INFORMATION);
@@ -53,10 +55,10 @@ public class EventReminderSubsystem extends Subsystem {
                             notification.setHeaderText("Event Erinnerung");
                             notification.setContentText(sb.toString());
                             notification.showAndWait();
+
+                            logger.atInfo().setMessage("Successfully notified user").log();
                         }
                     });
-
-                    logger.atInfo().setMessage("Event notification: {}").addArgument(event.title).log();
                 }
             }
         } catch(Exception e) {
