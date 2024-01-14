@@ -1,6 +1,5 @@
 package com.jkfd.oopii.Subsystem;
 
-import com.jkfd.oopii.Subsystem.Subsystems.EventReminderSubsystem;
 import org.slf4j.LoggerFactory;
 
 import java.util.Timer;
@@ -42,7 +41,7 @@ public abstract class Subsystem {
      * The default Fire() action is just logging that the subsystem has fired.
      */
     public void Fire() {
-        LoggerFactory.getLogger(EventReminderSubsystem.class).info(this.name + " subsystem fired.");
+        LoggerFactory.getLogger(this.getClass()).info(this.name + " subsystem fired.");
     }
 
     /**
@@ -51,13 +50,22 @@ public abstract class Subsystem {
      * @param e exception to handle
      */
     public void HandleException(Exception e) {
-        LoggerFactory.getLogger(Subsystem.class).error("Subsystem error (" + name + "): " + e.getMessage());
+        LoggerFactory.getLogger(this.getClass()).error("Subsystem error (" + name + "): " + e.getMessage());
 
         failCount++;
 
         if (failCount >= 5) {
             suspended = true;
-            LoggerFactory.getLogger(Subsystem.class).error("Subsystem suspended (" + name + ") for throwing too many errors.");
+            LoggerFactory.getLogger(this.getClass()).error("Subsystem suspended (" + name + ") for throwing too many errors.");
         }
+    }
+
+    /**
+     * This function will be called when the SubsystemManager is shutting down.
+     * Some subsystems might implement custom logic to clean up before fully shutting down.
+     * Subsystems should utilize "super.Shutdown();" when using custom shutdown logic.
+     */
+    public void Shutdown() {
+        LoggerFactory.getLogger(this.getClass()).info(this.name + " subsystem shutdown");
     }
 }

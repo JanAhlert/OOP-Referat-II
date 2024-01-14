@@ -24,6 +24,8 @@ public class SubsystemManager {
      * Subsystems get registered here.
      */
     public SubsystemManager() {
+        LoggerFactory.getLogger(SubsystemManager.class).info("Initializing subsystems");
+
         // Register Subsystems
         RegisterSubsystem(new BackupSubsystem());
         RegisterSubsystem(new EventReminderSubsystem());
@@ -36,8 +38,11 @@ public class SubsystemManager {
         LoggerFactory.getLogger(SubsystemManager.class).info("Shutting down subsystems");
 
         for (Subsystem subsystem : subsystems) {
+            subsystem.Shutdown();
             subsystem.timer.cancel();
         }
+
+        LoggerFactory.getLogger(SubsystemManager.class).info("Subsystems shutdown complete");
     }
 
     /**

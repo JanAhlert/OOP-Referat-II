@@ -2,10 +2,13 @@ package com.jkfd.oopii.Controller;
 
 import com.jkfd.oopii.Database.Models.Element;
 import com.jkfd.oopii.Database.Models.Event;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +24,8 @@ public class PopUpController {
 
     private static FXMLLoader fxmlLoader_edit = new FXMLLoader(PopUpController.class.getResource("/com/jkfd/oopii/PopUpEdit.fxml"));    //FXMLLoader for the pop-upView
     private static FXMLLoader fxmlLoader_check = new FXMLLoader(PopUpController.class.getResource(("/com/jkfd/oopii/PopUpCheck.fxml")));
-    private static FXMLLoader fxmlLoader_warningmessage = new FXMLLoader(PopUpController.class.getResource("/com/jkfd/oopii/PopUpWarningMessage.fxml"));
 
+    private boolean unsavedChanges = false;
 
     //The Elements are from the File PopUpEdit.fxml --> The following Elements are from the Tab ToDo
     @FXML
@@ -98,6 +101,10 @@ public class PopUpController {
         stage.setTitle("Termin bearbeiten");
     }
 
+    /**
+     * Initialization logic of the PopUpController.
+     * If an already existing event was selected, it's data will be filled here.
+     */
     public void initialize()
     {
         // Fill the priority choice box with all priority possibilities.
@@ -113,8 +120,48 @@ public class PopUpController {
         } else {
             PopUpEdit_Event_PriorityChoiceBox.setValue(Element.Priority.NORMAL);
         }
+
+        // Keep track if fields have been typed in or changed
+        PopUpEdit_Event_TitleTextField.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                unsavedChanges = true;
+            }
+        });
+
+        PopUpEdit_Event_DescriptionTextArea.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                unsavedChanges = true;
+            }
+        });
+
+        PopUpEdit_Event_StartDatePicker.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                unsavedChanges = true;
+            }
+        });
+
+        PopUpEdit_Event_EndDatePicker.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                unsavedChanges = true;
+            }
+        });
+
+        PopUpEdit_Event_PriorityChoiceBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                unsavedChanges = true;
+            }
+        });
     }
 
+    /**
+     * Fired when the user presses the save button.
+     * The edited/new event should be persisted into the database and the user informed that changes have been saved.
+     */
     @FXML
     private void onPopUpEditEventSaveClicked(){
         try {
@@ -144,6 +191,8 @@ public class PopUpController {
             info.setContentText("Ihre änderungen wurden gespeichert!");
             info.showAndWait();
         } catch (Exception e) {
+            logger.atError().setMessage("Error while trying to save event: {}").addArgument(e.getMessage()).log();
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Ein Fehler ist aufgetreten");
@@ -152,8 +201,19 @@ public class PopUpController {
         }
     }
 
+    /**
+     * Fired when the user presses the close button.
+     * Warning should be displayed if there were changes. Otherwise, just close the window.
+     */
     @FXML
     private void onCloseButtonPressed() {
-
+        if (unsavedChanges)
+        {
+            Alert warning = new Alert(Alert.AlertType.CONFIRMATION);
+            warning.setTitle("Warnung");
+            warning.setHeaderText("Ungespeicherte änderungen");
+            warning.setContentText("Wollen sie wirklich die änderungen verwerfen?");
+            warning.showAndWait();
+        }
     }
 }

@@ -7,6 +7,8 @@ import com.calendarfx.view.page.YearPage;
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
 import com.jkfd.oopii.Date;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -163,18 +166,27 @@ public class MonthViewController implements Initializable {
         monthViewController.TodosVBox.getChildren().clear();
 
         ArrayList<Event> events = databaseManager.GetEvents(3);
-        ArrayList<Todo> todos = databaseManager.GetTodos(3);
+        ArrayList<Todo> todos = databaseManager.GetUnfinishedTodos(3);
 
         for (Event tmp : events) {
-            CheckBox tmpCheckbox = new CheckBox();
-            tmpCheckbox.setText(tmp.title);
+            Label tmpLabel = new Label();
+            tmpLabel.setText(tmp.title);
 
-            monthViewController.EventsVBox.getChildren().add(tmpCheckbox);
+            monthViewController.EventsVBox.getChildren().add(tmpLabel);
         }
 
         for (Todo tmp : todos) {
             CheckBox tmpCheckbox = new CheckBox();
             tmpCheckbox.setText(tmp.title);
+            tmpCheckbox.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    tmp.SetCompletedDate((java.sql.Date) new java.util.Date());
+                    databaseManager.UpdateTodo(tmp);
+                    tmpCheckbox.setSelected(true);
+                    tmpCheckbox.setDisable(true);
+                }
+            });
 
             monthViewController.TodosVBox.getChildren().add(tmpCheckbox);
         }

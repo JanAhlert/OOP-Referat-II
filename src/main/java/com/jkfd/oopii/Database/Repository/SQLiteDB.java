@@ -93,7 +93,9 @@ public class SQLiteDB implements IDBRepository {
                     stmt.executeLargeUpdate(sql);
 
                     currentMigrateVersion++;
-                    logger.atInfo().setMessage("[sqlite] Migrated sql file version: {}").addArgument(currentMigrateVersion).log();
+                    String migrateName = result.get(currentMigrateVersion).getName();
+                    migrateName = migrateName.substring(migrateName.indexOf("_") + 1);
+                    logger.atInfo().setMessage("[sqlite] Migrated sql file version {} ({})").addArgument(currentMigrateVersion).addArgument(migrateName).log();
                 } catch (Exception e) {
                     logger.atInfo().setMessage("[sqlite] Error while migrating sql file version {}: {}")
                             .addArgument(currentMigrateVersion + 1)
