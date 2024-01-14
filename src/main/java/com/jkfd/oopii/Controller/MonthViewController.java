@@ -1,9 +1,11 @@
 package com.jkfd.oopii.Controller;
 
+import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.page.MonthPage;
 import com.calendarfx.view.page.WeekPage;
 import com.calendarfx.view.page.YearPage;
+import com.jkfd.oopii.Database.Models.Element;
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
 import com.jkfd.oopii.Date;
@@ -12,14 +14,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -126,6 +125,11 @@ public class MonthViewController implements Initializable {
                     observedEventAction = 1;
                 } catch (NumberFormatException e) {
                     logger.atInfo().setMessage("Event ID invalid ({}); might have been a newly created event.").addArgument(id).log();
+                    Event tmp = new Event();
+                    tmp.title = param.getEntry().getTitle();
+                    tmp.priority = Element.Priority.NORMAL;
+                    tmp.SetDateRange(param.getEntry().getStartAsLocalDateTime(), param.getEntry().getEndAsLocalDateTime());
+                    observedEvent = tmp;
                     observedEventAction = 0;
                 }
 
@@ -172,8 +176,9 @@ public class MonthViewController implements Initializable {
      * Updates the entries in the calendar and sidebar.
      */
     public static void UpdateEntries() {
-        List entries = monthPage.getMonthView().getCalendarSources().get(0).getCalendars().get(0).findEntries("");
-        monthPage.getMonthView().getCalendarSources().get(0).getCalendars().get(0).removeEntries(entries);
+        Calendar defaultCalendar = monthPage.getMonthView().getCalendarSources().get(0).getCalendars().get(0);
+        List entries = defaultCalendar.findEntries("");
+        defaultCalendar.removeEntries(entries);
 
         // Load the right sidebar
         monthViewController.EventsVBox.getChildren().clear();
