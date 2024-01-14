@@ -326,7 +326,11 @@ public class SQLiteDB implements IDBRepository {
                 result.title = rs.getString("title");
                 result.description = rs.getString("description");
                 result.priority = Element.Priority.values()[rs.getInt("priority")];
-                result.SetCompletedDate(LocalDateTime.parse(rs.getString("completed_date")));
+
+                String completedDate = rs.getString("completed_date");
+                if (!completedDate.isEmpty()) {
+                    result.SetCompletedDate(LocalDateTime.parse(completedDate));
+                }
             }
 
         } catch (SQLException e) {
@@ -357,7 +361,11 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.priority = Element.Priority.values()[rs.getInt("priority")];
-                tmp.SetCompletedDate(LocalDateTime.parse(rs.getString("completed_date")));
+
+                String completedDate = rs.getString("completed_date");
+                if (!completedDate.isEmpty()) {
+                    tmp.SetCompletedDate(LocalDateTime.parse(completedDate));
+                }
 
                 result.add(tmp);
             }
@@ -387,7 +395,11 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.priority = Element.Priority.values()[rs.getInt("priority")];
-                tmp.SetCompletedDate(LocalDateTime.parse(rs.getString("completed_date")));
+
+                String completedDate = rs.getString("completed_date");
+                if (!completedDate.isEmpty()) {
+                    tmp.SetCompletedDate(LocalDateTime.parse(completedDate));
+                }
 
                 result.add(tmp);
             }
@@ -416,7 +428,6 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.priority = Element.Priority.values()[rs.getInt("priority")];
-                tmp.SetCompletedDate(LocalDateTime.parse(rs.getString("completed_date")));
 
                 result.add(tmp);
             }
@@ -446,7 +457,6 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.priority = Element.Priority.values()[rs.getInt("priority")];
-                tmp.SetCompletedDate(LocalDateTime.parse(rs.getString("completed_date")));
 
                 result.add(tmp);
             }
@@ -468,8 +478,10 @@ public class SQLiteDB implements IDBRepository {
             pstmt.setString(1, todo.title);
             pstmt.setString(2, todo.description);
             pstmt.setInt(3, todo.priority.ordinal());
-            pstmt.setInt(4, todo.GetID());
-            pstmt.setString(5, todo.GetCompletedDate().toString());
+            if (todo.GetCompletedDate() != null) {
+                pstmt.setString(4, todo.GetCompletedDate().toString());
+            }
+            pstmt.setInt(5, todo.GetID());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
