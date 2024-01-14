@@ -2,6 +2,8 @@ package com.jkfd.oopii.Subsystem.Subsystems;
 
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Subsystem.Subsystem;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,9 +33,30 @@ public class EventReminderSubsystem extends Subsystem {
             for (Event event : events)
             {
                 if (event.GetStartDate().toLocalDate().isEqual(now) && !notified.contains(event)) {
-                    // TODO: Implement actual visuals for user
+                    ArrayList<Event> tmp = new ArrayList<>();
+                    tmp.add(event);
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            notified.addAll(tmp);
+
+                            StringBuilder sb = new StringBuilder();
+                            sb.append("Events die heute anstehen:\n");
+
+                            for (Event event : tmp) {
+                                sb.append("\t- ").append(event.title).append("\n");
+                            }
+
+                            Alert notification = new Alert(Alert.AlertType.INFORMATION);
+                            notification.setTitle("Information");
+                            notification.setHeaderText("Event Erinnerung");
+                            notification.setContentText(sb.toString());
+                            notification.showAndWait();
+                        }
+                    });
+
                     logger.atInfo().setMessage("Event notification: {}").addArgument(event.title).log();
-                    notified.add(event);
                 }
             }
         } catch(Exception e) {
