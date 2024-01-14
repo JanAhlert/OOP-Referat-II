@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -143,15 +144,16 @@ public class SQLiteDB implements IDBRepository {
 
     @Override
     public void CreateEvent(Event event) {
-        String query = "INSERT INTO events(title,description,priority,full_day,start_date,end_date) VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO events(title,description,priority,full_day,start_date,end_date,created_at) VALUES (?,?,?,?,?,?,?)";
 
         try (Connection conn = connect(); PreparedStatement pstmt = Objects.requireNonNull(conn, "SQLite connection must not be null").prepareStatement(query)) {
             pstmt.setString(1, event.title);
             pstmt.setString(2, event.description);
             pstmt.setInt(3, event.priority.ordinal());
             pstmt.setBoolean(4, event.fullDay);
-            pstmt.setDate(5, new java.sql.Date(event.GetStartDate().getTime()));
-            pstmt.setDate(6, new java.sql.Date(event.GetEndDate().getTime()));
+            pstmt.setString(5, event.GetStartDate().toString());
+            pstmt.setString(6, event.GetEndDate().toString());
+            pstmt.setString(7, LocalDateTime.now().toString());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -174,12 +176,16 @@ public class SQLiteDB implements IDBRepository {
                 result.description = rs.getString("description");
                 result.priority = Element.Priority.values()[rs.getInt("priority")];
                 result.fullDay = rs.getBoolean("full_day");
-                result.SetDateRange(rs.getDate("start_date"), rs.getDate("end_date"));
+
+                LocalDateTime startDate = LocalDateTime.parse(rs.getString("start_date"));
+                LocalDateTime endDate = LocalDateTime.parse(rs.getString("end_date"));
+                result.SetDateRange(startDate, endDate);
             }
 
         } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving event: " + e.getMessage());
+            logger.atError().setMessage("[sqlite] SQL Error while retrieving event: {}").addArgument(e.getMessage()).log();
         } catch (Exception e) {
+            logger.atError().setMessage("[sqlite] Error while retrieving event: {}").addArgument(e.getMessage()).log();
             throw new RuntimeException(e);
         }
 
@@ -206,14 +212,17 @@ public class SQLiteDB implements IDBRepository {
                 tmp.description = rs.getString("description");
                 tmp.priority = Element.Priority.values()[rs.getInt("priority")];
                 tmp.fullDay = rs.getBoolean("full_day");
-                tmp.SetDateRange(rs.getDate("start_date"), rs.getDate("end_date"));
+                LocalDateTime startDate = LocalDateTime.parse(rs.getString("start_date"));
+                LocalDateTime endDate = LocalDateTime.parse(rs.getString("end_date"));
+                tmp.SetDateRange(startDate, endDate);
 
                 result.add(tmp);
             }
 
         } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving events (all): " + e.getMessage());
+            logger.atError().setMessage("[sqlite] SQL Error while retrieving events (all): {}").addArgument(e.getMessage()).log();
         } catch (Exception e) {
+            logger.atError().setMessage("[sqlite] Error while retrieving events (all): {}").addArgument(e.getMessage()).log();
             throw new RuntimeException(e);
         }
 
@@ -237,14 +246,17 @@ public class SQLiteDB implements IDBRepository {
                 tmp.description = rs.getString("description");
                 tmp.priority = Element.Priority.values()[rs.getInt("priority")];
                 tmp.fullDay = rs.getBoolean("full_day");
-                tmp.SetDateRange(rs.getDate("start_date"), rs.getDate("end_date"));
+                LocalDateTime startDate = LocalDateTime.parse(rs.getString("start_date"));
+                LocalDateTime endDate = LocalDateTime.parse(rs.getString("end_date"));
+                tmp.SetDateRange(startDate, endDate);
 
                 result.add(tmp);
             }
 
         } catch (SQLException e) {
-            System.out.println("[sqlite] Error while retrieving events (ranged): " + e.getMessage());
+            logger.atError().setMessage("[sqlite] SQL Error while retrieving events (ranged): {}").addArgument(e.getMessage()).log();
         } catch (Exception e) {
+            logger.atError().setMessage("[sqlite] Error while retrieving events (ranged): {}").addArgument(e.getMessage()).log();
             throw new RuntimeException(e);
         }
 
@@ -260,8 +272,8 @@ public class SQLiteDB implements IDBRepository {
             pstmt.setString(2, event.description);
             pstmt.setBoolean(3, event.fullDay);
             pstmt.setInt(4, event.priority.ordinal());
-            pstmt.setDate(5, new java.sql.Date(event.GetStartDate().getTime()));
-            pstmt.setDate(6, new java.sql.Date(event.GetEndDate().getTime()));
+            pstmt.setString(5, event.GetStartDate().toString());
+            pstmt.setString(6, event.GetEndDate().toString());
             pstmt.setInt(7, event.GetID());
 
             pstmt.executeUpdate();
@@ -314,7 +326,7 @@ public class SQLiteDB implements IDBRepository {
                 result.title = rs.getString("title");
                 result.description = rs.getString("description");
                 result.priority = Element.Priority.values()[rs.getInt("priority")];
-                result.SetCompletedDate(rs.getDate("completed_date"));
+                result.SetCompletedDate(LocalDateTime.parse(rs.getString("completed_date")));
             }
 
         } catch (SQLException e) {
@@ -345,7 +357,7 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.priority = Element.Priority.values()[rs.getInt("priority")];
-                tmp.SetCompletedDate(rs.getDate("completed_date"));
+                tmp.SetCompletedDate(LocalDateTime.parse(rs.getString("completed_date")));
 
                 result.add(tmp);
             }
@@ -375,7 +387,7 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.priority = Element.Priority.values()[rs.getInt("priority")];
-                tmp.SetCompletedDate(rs.getDate("completed_date"));
+                tmp.SetCompletedDate(LocalDateTime.parse(rs.getString("completed_date")));
 
                 result.add(tmp);
             }
@@ -404,7 +416,7 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.priority = Element.Priority.values()[rs.getInt("priority")];
-                tmp.SetCompletedDate(rs.getDate("completed_date"));
+                tmp.SetCompletedDate(LocalDateTime.parse(rs.getString("completed_date")));
 
                 result.add(tmp);
             }
@@ -434,7 +446,7 @@ public class SQLiteDB implements IDBRepository {
                 tmp.title = rs.getString("title");
                 tmp.description = rs.getString("description");
                 tmp.priority = Element.Priority.values()[rs.getInt("priority")];
-                tmp.SetCompletedDate(rs.getDate("completed_date"));
+                tmp.SetCompletedDate(LocalDateTime.parse(rs.getString("completed_date")));
 
                 result.add(tmp);
             }
@@ -457,7 +469,7 @@ public class SQLiteDB implements IDBRepository {
             pstmt.setString(2, todo.description);
             pstmt.setInt(3, todo.priority.ordinal());
             pstmt.setInt(4, todo.GetID());
-            pstmt.setDate(5, new java.sql.Date(todo.GetCompletedDate().getTime()));
+            pstmt.setString(5, todo.GetCompletedDate().toString());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

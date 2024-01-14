@@ -7,8 +7,6 @@ import com.calendarfx.view.page.YearPage;
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
 import com.jkfd.oopii.Date;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,7 +20,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -160,13 +157,12 @@ public class MonthViewController implements Initializable {
             }
         });
 
-
         // Load the right sidebar
         monthViewController.EventsVBox.getChildren().clear();
         monthViewController.TodosVBox.getChildren().clear();
 
         ArrayList<Event> events = databaseManager.GetEvents(3);
-        ArrayList<Todo> todos = databaseManager.GetUnfinishedTodos(3);
+        //ArrayList<Todo> todos = databaseManager.GetUnfinishedTodos(3); FIXME => TODO Dates cannot be null. Boolean might be better
 
         for (Event tmp : events) {
             Label tmpLabel = new Label();
@@ -175,13 +171,14 @@ public class MonthViewController implements Initializable {
             monthViewController.EventsVBox.getChildren().add(tmpLabel);
         }
 
+        /* FIXME: See above comment
         for (Todo tmp : todos) {
             CheckBox tmpCheckbox = new CheckBox();
             tmpCheckbox.setText(tmp.title);
             tmpCheckbox.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    tmp.SetCompletedDate((java.sql.Date) new java.util.Date());
+                    tmp.SetCompletedDate(LocalDateTime.now());
                     databaseManager.UpdateTodo(tmp);
                     tmpCheckbox.setSelected(true);
                     tmpCheckbox.setDisable(true);
@@ -190,11 +187,12 @@ public class MonthViewController implements Initializable {
 
             monthViewController.TodosVBox.getChildren().add(tmpCheckbox);
         }
+        */
 
         // Load the Calendar itself
         events = databaseManager.GetEvents();
         for (Event tmp : events) {
-            ZonedDateTime tmpTime = tmp.GetStartDate().toLocalDate().atStartOfDay(ZoneId.systemDefault());
+            ZonedDateTime tmpTime = tmp.GetStartDate().atZone(ZoneId.systemDefault());
 
             // Create entries
             Entry<?> tmpEntryMonth = monthPage.createEntryAt(tmpTime);
@@ -231,7 +229,7 @@ public class MonthViewController implements Initializable {
             tmpEntryMonth.setFullDay(tmp.fullDay);
             tmpEntryWeek.setFullDay(tmp.fullDay);
             tmpEntryYear.setFullDay(tmp.fullDay);
-        }
+       }
     }
 
     @FXML

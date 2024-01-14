@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS events (
     description TEXT,
     priority INTEGER NOT NULL,
     full_day BOOLEAN NOT NULL,
-    start_date DATETIME,
-    end_date DATETIME,
-    created_at DATETIME
+    start_date TEXT,
+    end_date TEXT,
+    created_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS todos (
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS todos (
     description TEXT,
     priority INTEGER NOT NULL,
     list INTEGER,
-    completed_date DATETIME,
+    completed_date TEXT,
     time_required INTEGER
 );
 
