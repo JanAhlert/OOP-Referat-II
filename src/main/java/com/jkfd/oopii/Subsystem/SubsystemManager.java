@@ -17,7 +17,7 @@ public class SubsystemManager {
     /**
      * Logger instance of the subsystem manager.
      */
-    protected final Logger logger = LoggerFactory.getLogger(SubsystemManager.class);
+    private final Logger logger = LoggerFactory.getLogger(SubsystemManager.class);
 
     /**
      * Variable to keep track of currently registered subsystems.
