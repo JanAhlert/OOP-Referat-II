@@ -7,6 +7,8 @@ import com.calendarfx.view.page.YearPage;
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
 import com.jkfd.oopii.Date;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -162,7 +165,7 @@ public class MonthViewController implements Initializable {
         monthViewController.TodosVBox.getChildren().clear();
 
         ArrayList<Event> events = databaseManager.GetEvents(3);
-        //ArrayList<Todo> todos = databaseManager.GetUnfinishedTodos(3); FIXME => TODO Dates cannot be null. Boolean might be better
+        ArrayList<Todo> todos = databaseManager.GetUnfinishedTodos(3);
 
         for (Event tmp : events) {
             Label tmpLabel = new Label();
@@ -171,7 +174,6 @@ public class MonthViewController implements Initializable {
             monthViewController.EventsVBox.getChildren().add(tmpLabel);
         }
 
-        /* FIXME: See above comment
         for (Todo tmp : todos) {
             CheckBox tmpCheckbox = new CheckBox();
             tmpCheckbox.setText(tmp.title);
@@ -187,7 +189,6 @@ public class MonthViewController implements Initializable {
 
             monthViewController.TodosVBox.getChildren().add(tmpCheckbox);
         }
-        */
 
         // Load the Calendar itself
         events = databaseManager.GetEvents();

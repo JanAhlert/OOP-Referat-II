@@ -13,6 +13,9 @@ import static com.jkfd.oopii.HelloApplication.databaseManager;
  * The event reminder subsystem periodically checks if there is an upcoming event, and notifies the user accordingly.
  */
 public class EventReminderSubsystem extends Subsystem {
+    /**
+     * This variable keeps track of which events the user was already notified of.
+     */
     private final HashSet<Event> notified = new HashSet<>();
 
     public EventReminderSubsystem() {
