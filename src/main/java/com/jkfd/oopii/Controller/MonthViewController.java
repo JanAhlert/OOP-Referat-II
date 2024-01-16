@@ -9,15 +9,21 @@ import com.jkfd.oopii.Database.Models.Element;
 import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
 import com.jkfd.oopii.Date;
+import com.jkfd.oopii.HelloApplication;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,11 +48,13 @@ public class MonthViewController implements Initializable {
     static final Logger logger = LoggerFactory.getLogger(MonthViewController.class);
 
     public static Event observedEvent = null;
+    public static Todo observedTodo = null;
     /**
      * 0 - New
      * 1 - Edit
      */
     public static int observedEventAction = 0;
+    public static int observedTodoAction = 0;
 
     @FXML
     Pane MonthViewPane;
@@ -66,6 +74,10 @@ public class MonthViewController implements Initializable {
     VBox EventsVBox;
     @FXML
     VBox TodosVBox;
+    @FXML
+    Button createTodoButton;
+    @FXML
+    Button createEventButton;
 
 
     private static boolean isInitialized = false; //Variable to check if the View is initialized
@@ -117,7 +129,7 @@ public class MonthViewController implements Initializable {
         //Sets the pop-up window
         monthPage.setEntryDetailsPopOverContentCallback(param -> {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jkfd/oopii/PopUpEdit.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jkfd/oopii/EventPopUpEdit.fxml"));
 
                 String id = param.getEntry().getId();
                 try {
@@ -161,7 +173,7 @@ public class MonthViewController implements Initializable {
         //Sets the pop-up window
         weekPage.setEntryDetailsPopOverContentCallback(param -> {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jkfd/oopii/PopUpEdit.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jkfd/oopii/EventPopUpEdit.fxml"));
                 return loader.load();
             } catch (IOException e) {
                 logger.atError().setMessage("Error while loading PopUpEdit content: {}").addArgument(e.getMessage()).log();
@@ -170,6 +182,42 @@ public class MonthViewController implements Initializable {
         });
 
         UpdateEntries();
+
+        createTodoButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    observedTodo = null;
+                    observedTodoAction = 0;
+
+                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("/com/jkfd/oopii/TodoPopUpEdit.fxml"));
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException e) {
+                    logger.atError().setMessage("Error while trying to open TodoPopUpEdit.fxml (IOException): {}\n{}").addArgument(e.getMessage()).addArgument(e.getStackTrace()).log();
+                } catch (Exception e) {
+                    logger.atError().setMessage("Error while trying to open TodoPopUpEdit.fxml (Exception): {}\n{}").addArgument(e.getMessage()).addArgument(e.getStackTrace()).log();
+                }
+            }
+        });
+
+        createEventButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    observedEvent = null;
+                    observedEventAction = 0;
+
+                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("/com/jkfd/oopii/EventPopUpEdit.fxml"));
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException e) {
+                    logger.atError().setMessage("Error while trying to open EventPopUpEdit.fxml: {}").addArgument(e.getMessage()).log();
+                }
+            }
+        });
     }
 
     /**
@@ -195,6 +243,8 @@ public class MonthViewController implements Initializable {
         }
 
         for (Todo tmp : todos) {
+            HBox tmpHBox = new HBox();
+
             CheckBox tmpCheckbox = new CheckBox();
             tmpCheckbox.setText(tmp.title);
             tmpCheckbox.setOnAction(new EventHandler<ActionEvent>() {
@@ -206,8 +256,46 @@ public class MonthViewController implements Initializable {
                     tmpCheckbox.setDisable(true);
                 }
             });
+            tmpHBox.getChildren().add(tmpCheckbox);
 
-            monthViewController.TodosVBox.getChildren().add(tmpCheckbox);
+            Label tmpEditLabel = new Label();
+            tmpEditLabel.setText("[Edit]");
+            tmpEditLabel.setPadding(new Insets(0, 0, 0, 5));
+            tmpEditLabel.setTextFill(Color.color(0, 0.3, 0.7));
+            tmpEditLabel.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    try {
+                        observedTodo = tmp;
+                        observedTodoAction = 1;
+
+                        Parent root = FXMLLoader.load(HelloApplication.class.getResource("/com/jkfd/oopii/TodoPopUpEdit.fxml"));
+                        Stage stage = new Stage();
+                        stage.setScene(new Scene(root));
+                        stage.show();
+                    } catch (IOException e) {
+                        logger.atError().setMessage("Error while trying to open TodoPopUpEdit.fxml (IOException): {}\n{}").addArgument(e.getMessage()).addArgument(e.getStackTrace()).log();
+                    } catch (Exception e) {
+                        logger.atError().setMessage("Error while trying to open TodoPopUpEdit.fxml (Exception): {}\n{}").addArgument(e.getMessage()).addArgument(e.getStackTrace()).log();
+                    }
+                }
+            });
+            tmpHBox.getChildren().add(tmpEditLabel);
+
+            Label tmpDeleteLabel = new Label();
+            tmpDeleteLabel.setText("[Del]");
+            tmpDeleteLabel.setPadding(new Insets(0, 0, 0, 5));
+            tmpDeleteLabel.setTextFill(Color.color(0.7, 0.2, 0));
+            tmpDeleteLabel.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    databaseManager.DeleteTodo(tmp.GetID());
+                    UpdateEntries();
+                }
+            });
+            tmpHBox.getChildren().add(tmpDeleteLabel);
+
+            monthViewController.TodosVBox.getChildren().add(tmpHBox);
         }
 
         // Load the Calendar itself
@@ -252,20 +340,6 @@ public class MonthViewController implements Initializable {
             tmpEntryYear.setFullDay(tmp.fullDay);
         }
     }
-
-    @FXML
-    private void onCreateTodoButtonPressed() {
-
-    }
-
-    @FXML
-    private void onCreateEventButtonPressed() {
-        observedEvent = null;
-        observedEventAction = 0;
-
-        // TODO: Actually show new event dialog
-    }
-
 
 //---------------------------------------------------Functions for Changing the View by selcting the Tab---------------------------------------------------//
 

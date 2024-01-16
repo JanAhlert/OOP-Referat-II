@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jkfd.oopii.Controller.PopUpController">
+<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jkfd.oopii.Controller.EventPopUpController">
    <children>
       <TabPane layoutX="-2.0" prefHeight="523.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -271,121 +271,6 @@
                                                             </Pane>
                                                          </children>
                                                       </VBox>
-                                                   </children>
-                                                </Pane>
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </Pane>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="ToDo hinzufügen">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Pane layoutX="13.0" layoutY="-1.0" prefHeight="340.0" prefWidth="469.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                           <children>
-                              <VBox layoutX="14.0" layoutY="14.0" prefHeight="437.0" prefWidth="611.0">
-                                 <children>
-                                    <Pane prefHeight="74.0" prefWidth="601.0">
-                                       <VBox.margin>
-                                          <Insets left="5.0" right="5.0" top="5.0" />
-                                       </VBox.margin>
-                                       <children>
-                                          <VBox layoutY="-2.0" prefHeight="69.0" prefWidth="606.0" spacing="5.0">
-                                             <children>
-                                                <Pane prefHeight="200.0" prefWidth="601.0">
-                                                   <children>
-                                                      <Label layoutX="-2.0" prefHeight="34.0" prefWidth="608.0" text="Titel eingeben:" underline="true" />
-                                                   </children>
-                                                </Pane>
-                                                <Pane prefHeight="200.0" prefWidth="200.0">
-                                                   <children>
-                                                      <TextField id="PopUpEdit_ToDo_TextField" fx:id="PopUpEdit_ToDo_TextField" layoutX="-2.0" layoutY="4.0" prefHeight="25.0" prefWidth="606.0" />
-                                                   </children>
-                                                </Pane>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </Pane>
-                                    <Pane prefHeight="239.0" prefWidth="611.0">
-                                       <children>
-                                          <VBox prefHeight="226.0" prefWidth="609.0">
-                                             <children>
-                                                <Pane prefHeight="54.0" prefWidth="606.0">
-                                                   <children>
-                                                      <Label layoutX="4.0" layoutY="1.0" prefHeight="45.0" prefWidth="603.0" text="Beschreibung eingeben:" underline="true" />
-                                                   </children>
-                                                </Pane>
-                                                <Pane prefHeight="189.0" prefWidth="611.0">
-                                                   <children>
-                                                      <TextArea id="PopUpEdit_ToDo_TextArea" fx:id="PopUpEdit_ToDo_TextArea" layoutX="4.0" prefHeight="180.0" prefWidth="606.0">
-                                                         <padding>
-                                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                                         </padding>
-                                                      </TextArea>
-                                                   </children>
-                                                </Pane>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </Pane>
-                                    <Pane prefHeight="88.0" prefWidth="444.0">
-                                       <VBox.margin>
-                                          <Insets left="5.0" right="5.0" />
-                                       </VBox.margin>
-                                       <children>
-                                          <HBox prefHeight="85.0" prefWidth="606.0" spacing="5.0">
-                                             <children>
-                                                <Pane prefHeight="75.0" prefWidth="320.0">
-                                                   <HBox.margin>
-                                                      <Insets bottom="5.0" right="2.5" top="5.0" />
-                                                   </HBox.margin>
-                                                   <children>
-                                                      <ChoiceBox id="PopUpEdit_ToDo_PriorityChoiceBox" fx:id="PopUpEdit_ToDo_PriorityChoiceBox" layoutY="38.0" prefHeight="35.0" prefWidth="180.0" />
-                                                      <Label layoutY="14.0" text="Priorität wählen:" underline="true" />
-                                                   </children>
-                                                </Pane>
-                                                <Pane prefHeight="75.0" prefWidth="343.0">
-                                                   <children>
-                                                      <DatePicker id="PopUpEdit_ToDo_DatePicker" fx:id="PopUpEdit_ToDo_DatePicker" layoutX="164.0" layoutY="38.0" prefHeight="35.0" prefWidth="144.0" />
-                                                      <Label layoutX="164.0" layoutY="14.0" text="Fälligkeitsadtum:" underline="true" />
-                                                   </children>
-                                                   <HBox.margin>
-                                                      <Insets bottom="5.0" left="5.0" top="5.0" />
-                                                   </HBox.margin>
-                                                </Pane>
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </Pane>
-                                    <Pane prefHeight="47.0" prefWidth="601.0">
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" />
-                                       </VBox.margin>
-                                       <children>
-                                          <HBox layoutX="1.0" prefHeight="42.0" prefWidth="604.0">
-                                             <children>
-                                                <Pane prefHeight="32.0" prefWidth="304.0">
-                                                   <HBox.margin>
-                                                      <Insets bottom="5.0" right="2.5" top="5.0" />
-                                                   </HBox.margin>
-                                                   <children>
-                                                      <Button id="PopUpEdit_ToDo_SaveButton" fx:id="PopUpEdit_ToDo_SaveButton" layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Speichern" />
-                                                   </children>
-                                                </Pane>
-                                                <Pane prefHeight="32.0" prefWidth="305.0">
-                                                   <HBox.margin>
-                                                      <Insets bottom="5.0" left="2.5" top="5.0" />
-                                                   </HBox.margin>
-                                                   <children>
-                                                      <Button id="PopUpEdit_ToDo_CloseButton" fx:id="PopUpEdit_ToDo_CloseButton" layoutX="201.0" layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Schließen" />
                                                    </children>
                                                 </Pane>
                                              </children>
