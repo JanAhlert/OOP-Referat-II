@@ -14,6 +14,10 @@ import org.slf4j.LoggerFactory;
 import static com.jkfd.oopii.Controller.MonthViewController.*;
 import static com.jkfd.oopii.HelloApplication.databaseManager;
 
+/**
+ * This class is responsible for handling all the logic in the todos pop up controller.
+ * The UI will usually be loaded when creating new todos or editing already existing ones.
+ */
 public class TodoPopUpController {
     final Logger logger = LoggerFactory.getLogger(MonthViewController.class);
     private boolean unsavedChanges = false;
@@ -45,6 +49,8 @@ public class TodoPopUpController {
             PopUpEdit_ToDo_DescriptionArea.setText(observedTodo.description);
 
             PopUpEdit_ToDo_PriorityChoiceBox.setValue(observedTodo.priority);
+
+            PopUpEdit_ToDo_DueDatePicker.setValue(observedTodo.dueDate);
         } else {
             PopUpEdit_ToDo_PriorityChoiceBox.setValue(Element.Priority.NORMAL);
         }
@@ -70,6 +76,13 @@ public class TodoPopUpController {
                 unsavedChanges = true;
             }
         });
+
+        PopUpEdit_ToDo_DueDatePicker.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                unsavedChanges = true;
+            }
+        });
     }
 
     /**
@@ -84,6 +97,7 @@ public class TodoPopUpController {
             tmp.title = PopUpEdit_ToDo_TitleField.getText();
             tmp.description = PopUpEdit_ToDo_DescriptionArea.getText();
             tmp.priority = (Element.Priority) PopUpEdit_ToDo_PriorityChoiceBox.getValue();
+            tmp.dueDate = PopUpEdit_ToDo_DueDatePicker.getValue();
 
             // Logic to determine if event is new or edited
             if (observedTodoAction == 0) {
