@@ -1,6 +1,7 @@
 package com.jkfd.oopii.Controller;
 
 import com.calendarfx.model.Calendar;
+import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.page.MonthPage;
 import com.calendarfx.view.page.WeekPage;
@@ -10,8 +11,6 @@ import com.jkfd.oopii.Database.Models.Event;
 import com.jkfd.oopii.Database.Models.Todo;
 import com.jkfd.oopii.Date;
 import com.jkfd.oopii.HelloApplication;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,7 +18,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -34,28 +32,53 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static com.jkfd.oopii.HelloApplication.databaseManager;
 
 /**
- * Controller for the month-view
+ * Controller for the month-view.
+ * This is the main view that the user will see.
  */
 public class MonthViewController implements Initializable {
-    static final Logger logger = LoggerFactory.getLogger(MonthViewController.class);
-
-    public static Event observedEvent = null;
-    public static Todo observedTodo = null;
     /**
+     * This variable keeps track for the calendar event handler of entries being currently refreshed.
+     * Otherwise, it will think that all entries should be deleted.
+     */
+    private static boolean updatingEntries = false;
+
+    /**
+     * Logger instance for the month view controller.
+     */
+    private static final Logger logger = LoggerFactory.getLogger(MonthViewController.class);
+
+    /**
+     * The observed event is passed to the popup controllers.
+     */
+    public static Event observedEvent = null;
+
+    /**
+     * The observed todo is passed to the popup controllers.
+     */
+    public static Todo observedTodo = null;
+
+    /**
+     * Action to do with the observed event.
      * 0 - New
      * 1 - Edit
      */
     public static int observedEventAction = 0;
+
+    /**
+     * Action to do with the observed todo.
+     * 0 - New
+     * 1 - Edit
+     */
     public static int observedTodoAction = 0;
 
+    /**
+     * FXML definitions
+     */
     @FXML
     Pane MonthViewPane;
     @FXML
@@ -88,7 +111,7 @@ public class MonthViewController implements Initializable {
     private static WeekPage weekPage = new WeekPage(); //Variable for the WeekView um die View zu ändern
 
 
-   private static FXMLLoader fxmlLoader = new FXMLLoader(MonthViewController.class.getResource("/com/jkfd/oopii/month-view.fxml"));    //FXMLLoader for the month-view
+    private static FXMLLoader fxmlLoader = new FXMLLoader(MonthViewController.class.getResource("/com/jkfd/oopii/month-view.fxml"));    //FXMLLoader for the month-view
 
     /**
      * Method to load the month-view file and set the scene in the stage
@@ -151,8 +174,29 @@ public class MonthViewController implements Initializable {
                 return new Label("Fehler beim Laden des Inhalts"); // Throws an Error Lable for the User
             }
         });
-        isInitialized = true;
+        monthPage.getCalendarSources().getFirst().getCalendars().getFirst().addEventHandler(param -> {
+            if (updatingEntries) {
+                return;
+            }
 
+            if (param.getEventType() == CalendarEvent.ENTRY_CALENDAR_CHANGED) {
+                CalendarEvent tmp = (CalendarEvent) param;
+                if (tmp.getCalendar() == null && Objects.equals(tmp.getOldCalendar().getName(), "Default")) {
+                    Entry<?> tmpEntry = tmp.getEntry();
+
+                    try {
+                        databaseManager.DeleteEvent(Integer.parseInt(tmpEntry.getId()));
+                        logger.atInfo().setMessage("event '{}' ({}) deleted").addArgument(tmpEntry.getTitle()).addArgument(tmpEntry.getId()).log();
+                    } catch (NumberFormatException e) {
+                        logger.atWarn().setMessage("error while deleting event {} ({}), might have been newly created (not persisted)")
+                                .addArgument(tmpEntry.getTitle())
+                                .addArgument(tmpEntry.getId())
+                                .log();
+                    }
+                }
+            }
+        });
+        isInitialized = true;
 
         //Loads the YearView
         yearPage = new YearPage();
@@ -183,12 +227,116 @@ public class MonthViewController implements Initializable {
 
         UpdateEntries();
 
-        createTodoButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
+        createTodoButton.setOnAction(actionEvent -> {
+            try {
+                observedTodo = null;
+                observedTodoAction = 0;
+
+                Parent root = FXMLLoader.load(HelloApplication.class.getResource("/com/jkfd/oopii/TodoPopUpEdit.fxml"));
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                logger.atError().setMessage("Error while trying to open TodoPopUpEdit.fxml (IOException): {}\n{}").addArgument(e.getMessage()).addArgument(e.getStackTrace()).log();
+            } catch (Exception e) {
+                logger.atError().setMessage("Error while trying to open TodoPopUpEdit.fxml (Exception): {}\n{}").addArgument(e.getMessage()).addArgument(e.getStackTrace()).log();
+            }
+        });
+
+        createEventButton.setOnAction(actionEvent -> {
+            try {
+                observedEvent = null;
+                observedEventAction = 0;
+
+                Parent root = FXMLLoader.load(HelloApplication.class.getResource("/com/jkfd/oopii/EventPopUpEdit.fxml"));
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                logger.atError().setMessage("Error while trying to open EventPopUpEdit.fxml: {}").addArgument(e.getMessage()).log();
+            }
+        });
+    }
+
+    /**
+     * Updates the entries in the calendar and sidebar.
+     */
+    public static void UpdateEntries() {
+        updatingEntries = true;
+
+        Calendar defaultCalendar = monthPage.getMonthView().getCalendarSources().get(0).getCalendars().get(0);
+        List entries = defaultCalendar.findEntries("");
+        defaultCalendar.removeEntries(entries);
+
+        // Load the right sidebar
+        monthViewController.EventsVBox.getChildren().clear();
+        monthViewController.TodosVBox.getChildren().clear();
+
+        ArrayList<Event> events = databaseManager.GetEvents(10);
+        ArrayList<Todo> todos = databaseManager.GetUnfinishedTodos(10);
+
+        for (Event tmp : events) {
+            HBox tmpHBox = new HBox();
+
+            Label tmpLabel = new Label();
+            tmpLabel.setText(String.format("%s (%s)", tmp.title, tmp.GetStartDate().toLocalDate()));
+            tmpHBox.getChildren().add(tmpLabel);
+
+            Label tmpEditLabel = new Label();
+            tmpEditLabel.setText("[Edit]");
+            tmpEditLabel.setPadding(new Insets(0, 0, 0, 5));
+            tmpEditLabel.setTextFill(Color.color(0, 0.3, 0.7));
+            tmpEditLabel.setOnMousePressed(mouseEvent -> {
                 try {
-                    observedTodo = null;
-                    observedTodoAction = 0;
+                    observedEvent = tmp;
+                    observedEventAction = 1;
+
+                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("/com/jkfd/oopii/EventPopUpEdit.fxml"));
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException e) {
+                    logger.atError().setMessage("Error while trying to open EventPopUpEdit.fxml (IOException): {}\n{}").addArgument(e.getMessage()).addArgument(e.getStackTrace()).log();
+                } catch (Exception e) {
+                    logger.atError().setMessage("Error while trying to open EventPopUpEdit.fxml (Exception): {}\n{}").addArgument(e.getMessage()).addArgument(e.getStackTrace()).log();
+                }
+            });
+            tmpHBox.getChildren().add(tmpEditLabel);
+
+            Label tmpDeleteLabel = new Label();
+            tmpDeleteLabel.setText("[Del]");
+            tmpDeleteLabel.setPadding(new Insets(0, 0, 0, 5));
+            tmpDeleteLabel.setTextFill(Color.color(0.7, 0.2, 0));
+            tmpDeleteLabel.setOnMousePressed(mouseEvent -> {
+                databaseManager.DeleteEvent(tmp.GetID());
+                UpdateEntries();
+            });
+            tmpHBox.getChildren().add(tmpDeleteLabel);
+
+            monthViewController.EventsVBox.getChildren().add(tmpHBox);
+        }
+
+        for (Todo tmp : todos) {
+            HBox tmpHBox = new HBox();
+
+            CheckBox tmpCheckbox = new CheckBox();
+            tmpCheckbox.setText(tmp.title);
+            tmpCheckbox.setOnAction(actionEvent -> {
+                tmp.SetCompletedDate(LocalDateTime.now());
+                databaseManager.UpdateTodo(tmp);
+                tmpCheckbox.setSelected(true);
+                tmpCheckbox.setDisable(true);
+            });
+            tmpHBox.getChildren().add(tmpCheckbox);
+
+            Label tmpEditLabel = new Label();
+            tmpEditLabel.setText("[Edit]");
+            tmpEditLabel.setPadding(new Insets(0, 0, 0, 5));
+            tmpEditLabel.setTextFill(Color.color(0, 0.3, 0.7));
+            tmpEditLabel.setOnMousePressed(mouseEvent -> {
+                try {
+                    observedTodo = tmp;
+                    observedTodoAction = 1;
 
                     Parent root = FXMLLoader.load(HelloApplication.class.getResource("/com/jkfd/oopii/TodoPopUpEdit.fxml"));
                     Stage stage = new Stage();
@@ -199,86 +347,6 @@ public class MonthViewController implements Initializable {
                 } catch (Exception e) {
                     logger.atError().setMessage("Error while trying to open TodoPopUpEdit.fxml (Exception): {}\n{}").addArgument(e.getMessage()).addArgument(e.getStackTrace()).log();
                 }
-            }
-        });
-
-        createEventButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                try {
-                    observedEvent = null;
-                    observedEventAction = 0;
-
-                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("/com/jkfd/oopii/EventPopUpEdit.fxml"));
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(root));
-                    stage.show();
-                } catch (IOException e) {
-                    logger.atError().setMessage("Error while trying to open EventPopUpEdit.fxml: {}").addArgument(e.getMessage()).log();
-                }
-            }
-        });
-    }
-
-    /**
-     * Updates the entries in the calendar and sidebar.
-     */
-    public static void UpdateEntries() {
-        Calendar defaultCalendar = monthPage.getMonthView().getCalendarSources().get(0).getCalendars().get(0);
-        List entries = defaultCalendar.findEntries("");
-        defaultCalendar.removeEntries(entries);
-
-        // Load the right sidebar
-        monthViewController.EventsVBox.getChildren().clear();
-        monthViewController.TodosVBox.getChildren().clear();
-
-        ArrayList<Event> events = databaseManager.GetEvents(3);
-        ArrayList<Todo> todos = databaseManager.GetUnfinishedTodos(3);
-
-        for (Event tmp : events) {
-            Label tmpLabel = new Label();
-            tmpLabel.setText(tmp.title);
-
-            monthViewController.EventsVBox.getChildren().add(tmpLabel);
-        }
-
-        for (Todo tmp : todos) {
-            HBox tmpHBox = new HBox();
-
-            CheckBox tmpCheckbox = new CheckBox();
-            tmpCheckbox.setText(tmp.title);
-            tmpCheckbox.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    tmp.SetCompletedDate(LocalDateTime.now());
-                    databaseManager.UpdateTodo(tmp);
-                    tmpCheckbox.setSelected(true);
-                    tmpCheckbox.setDisable(true);
-                }
-            });
-            tmpHBox.getChildren().add(tmpCheckbox);
-
-            Label tmpEditLabel = new Label();
-            tmpEditLabel.setText("[Edit]");
-            tmpEditLabel.setPadding(new Insets(0, 0, 0, 5));
-            tmpEditLabel.setTextFill(Color.color(0, 0.3, 0.7));
-            tmpEditLabel.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    try {
-                        observedTodo = tmp;
-                        observedTodoAction = 1;
-
-                        Parent root = FXMLLoader.load(HelloApplication.class.getResource("/com/jkfd/oopii/TodoPopUpEdit.fxml"));
-                        Stage stage = new Stage();
-                        stage.setScene(new Scene(root));
-                        stage.show();
-                    } catch (IOException e) {
-                        logger.atError().setMessage("Error while trying to open TodoPopUpEdit.fxml (IOException): {}\n{}").addArgument(e.getMessage()).addArgument(e.getStackTrace()).log();
-                    } catch (Exception e) {
-                        logger.atError().setMessage("Error while trying to open TodoPopUpEdit.fxml (Exception): {}\n{}").addArgument(e.getMessage()).addArgument(e.getStackTrace()).log();
-                    }
-                }
             });
             tmpHBox.getChildren().add(tmpEditLabel);
 
@@ -286,12 +354,9 @@ public class MonthViewController implements Initializable {
             tmpDeleteLabel.setText("[Del]");
             tmpDeleteLabel.setPadding(new Insets(0, 0, 0, 5));
             tmpDeleteLabel.setTextFill(Color.color(0.7, 0.2, 0));
-            tmpDeleteLabel.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    databaseManager.DeleteTodo(tmp.GetID());
-                    UpdateEntries();
-                }
+            tmpDeleteLabel.setOnMousePressed(mouseEvent -> {
+                databaseManager.DeleteTodo(tmp.GetID());
+                UpdateEntries();
             });
             tmpHBox.getChildren().add(tmpDeleteLabel);
 
@@ -339,6 +404,8 @@ public class MonthViewController implements Initializable {
             tmpEntryWeek.setFullDay(tmp.fullDay);
             tmpEntryYear.setFullDay(tmp.fullDay);
         }
+
+        updatingEntries = false;
     }
 
 //---------------------------------------------------Functions for Changing the View by selcting the Tab---------------------------------------------------//
@@ -422,7 +489,7 @@ public class MonthViewController implements Initializable {
     //---------------------------------------------------Functions for Changing the Date over the Buttons---------------------------------------------------//
 
     /**
-     *Mehtode for the NextMonth Button //TODO: Rename the Function
+     * Method for the NextMonth Button //TODO: Rename the Function
      */
     @FXML
     private void setNextMonth()
@@ -437,7 +504,7 @@ public class MonthViewController implements Initializable {
     }
 
     /**
-     *Mehtode for the PreviousMonth Button //TODO: Rename the Function
+     * Method for the PreviousMonth Button //TODO: Rename the Function
      */
     @FXML
     private void setPreviousMonth(){
@@ -454,7 +521,7 @@ public class MonthViewController implements Initializable {
 
     /**
      * Changes the month view by the given value
-     * @param month
+     * @param month month to change to
      */
     private void changeMonth(int month) {
         currentDate.setPlusMonth(month);
@@ -464,7 +531,7 @@ public class MonthViewController implements Initializable {
 
     /**
      * Changes the week view by the given value
-     * @param week
+     * @param week week to change to
      */
     private void changeWeek(int week) {
         currentDate.setPlusWeek(week);
@@ -474,7 +541,7 @@ public class MonthViewController implements Initializable {
 
     /**
      * Changes the year view by the given value
-     * @param year
+     * @param year year to change to
      */
     private void changeYear(int year) {
         currentDate.setPlusYear(year);

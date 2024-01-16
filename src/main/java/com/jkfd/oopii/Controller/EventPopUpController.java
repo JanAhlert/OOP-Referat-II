@@ -20,6 +20,10 @@ import java.time.LocalTime;
 import static com.jkfd.oopii.Controller.MonthViewController.*;
 import static com.jkfd.oopii.HelloApplication.databaseManager;
 
+/**
+ * This class is responsible for handling all the logic in the events pop up controller.
+ * The UI will usually be loaded when creating new events or editing already existing ones.
+ */
 public class EventPopUpController {
     final Logger logger = LoggerFactory.getLogger(MonthViewController.class);
 

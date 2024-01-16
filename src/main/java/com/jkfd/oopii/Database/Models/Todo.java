@@ -1,8 +1,14 @@
 package com.jkfd.oopii.Database.Models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Todo extends Element {
+    /**
+     * The date when the todo is due for completion.
+     */
+    public LocalDate dueDate;
+
     /**
      * The date(time) when the todo was completed.
      */
