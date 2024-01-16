@@ -20,27 +20,15 @@ import java.time.LocalTime;
 import static com.jkfd.oopii.Controller.MonthViewController.*;
 import static com.jkfd.oopii.HelloApplication.databaseManager;
 
-public class PopUpController {
+public class EventPopUpController {
     final Logger logger = LoggerFactory.getLogger(MonthViewController.class);
 
-    private static FXMLLoader fxmlLoader_edit = new FXMLLoader(PopUpController.class.getResource("/com/jkfd/oopii/PopUpEdit.fxml"));    //FXMLLoader for the pop-upView
-    private static FXMLLoader fxmlLoader_check = new FXMLLoader(PopUpController.class.getResource(("/com/jkfd/oopii/PopUpCheck.fxml")));
+    private static FXMLLoader fxmlLoader_edit = new FXMLLoader(EventPopUpController.class.getResource("/com/jkfd/oopii/EventPopUpEdit.fxml"));    //FXMLLoader for the pop-upView
 
     private boolean unsavedChanges = false;
 
-    //The Elements are from the File PopUpEdit.fxml --> The following Elements are from the Tab ToDo
-    @FXML
-    TextField PopUpEdit_ToDo_TextField;
-    @FXML
-    TextArea PopUpEdit_ToDo_TextArea;
-    @FXML
-    ChoiceBox PopUpEdit_ToDo_PriorityChoiceBox;
-    @FXML
-    DatePicker PopUpEdit_ToDo_DatePicker;
-    @FXML
-    Button PopUpEdit_ToDo_SaveButton;
 
-    //The Elements are from the File PopUpEdit.fxml --> The following Elements are from the Tab Events
+    //The Elements are from the File EventPopUpEdit.fxml --> The following Elements are from the Tab Events
     @FXML
     TextField PopUpEdit_Event_TitleTextField;
     @FXML
@@ -59,42 +47,6 @@ public class PopUpController {
     ChoiceBox PopUpEdit_Event_PriorityChoiceBox;
     @FXML
     Button PopUpEdit_Event_SaveButton;
-
-    //The Elements are from the File PopUpCheck --> The following Elements are from the Tab "Aktuelle Aufgaben und Events".
-    @FXML
-    Button PopUpCheck_activToD_editButton;
-    @FXML
-    Button PopUpCheck_activToD_deleteButton;
-    @FXML
-    Button PopUpCheck_activEvent_editButton;
-    @FXML
-    Button PopUpCheck_activEvent_deleteButton;
-    @FXML
-    Label  PopUpCheck_ActiveEventsToDos_LabelMessage;
-    @FXML
-    Button PopUpCheck_ActiveEventsToDos_SaveButton;
-    @FXML
-    Button PopUpCheck_ActiveEventsToDos_CancelButton;
-    @FXML
-    Button PopUpCheck_ActiveEventsToDos_CloseButton;
-
-    //The Elements are from the File PopUpCheck --> The following Elements are from the Tab "Erledigte Aufgaben und Events".
-    @FXML
-    Button PopUpCheck_finished_delTodos_RecoveryButton;
-    @FXML
-    Button PopUpCheck_finished_delTodos_FinallydelButton;
-    @FXML
-    Button PopUpCheck_finished_delEvents_RecoveryButton;
-    @FXML
-    Button PopUpCheck_finished_delEvents_FinallydelButton;
-    @FXML
-    Label PopUpCheck_finished_delEvents_LabelMessage;
-    @FXML
-    Button PopUpCheck_finished_SaveButton;
-    @FXML
-    Button PopUpCheck_finished_CancelButton;
-    @FXML
-    Button PopUpCheck_finished_CloseButton;
 
     /**
      * Method to load the pop-upView file and set the scene in the stage
@@ -228,6 +180,8 @@ public class PopUpController {
             info.setHeaderText("Hinweis!");
             info.setContentText("Ihre änderungen wurden gespeichert!");
             info.showAndWait();
+
+            TryCloseStage();
         } catch (Exception e) {
             logger.atError().setMessage("Error while trying to save event: {}").addArgument(e.getMessage()).log();
 
@@ -252,6 +206,27 @@ public class PopUpController {
             warning.setHeaderText("Ungespeicherte änderungen");
             warning.setContentText("Wollen sie wirklich die änderungen verwerfen?");
             warning.showAndWait();
+
+            if (warning.getResult() == ButtonType.OK) {
+                TryCloseStage();
+            }
+        } else {
+            TryCloseStage();
+        }
+    }
+
+    /**
+     * This private function will try to close the window, which is only successful when it is standalone.
+     * The code throwing an exception is "normal" when it is a popup in the calendar.
+     */
+    private void TryCloseStage() {
+        try {
+            Stage stage = (Stage) PopUpEdit_Event_SaveButton.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            // We only debug log here because the code above only works when the stage has been set up by the create button.
+            // It cannot be closed like this if it was a calendar popup.
+            logger.atDebug().setMessage("Note: Error while casting stage from save button: {}").addArgument(e.getMessage()).log();
         }
     }
 }
