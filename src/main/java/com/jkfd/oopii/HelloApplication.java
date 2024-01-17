@@ -18,12 +18,21 @@ public class HelloApplication extends Application {
     public static DatabaseManager databaseManager;
   
     static final Logger logger = LoggerFactory.getLogger(HelloApplication.class);
- 
+
+    /**
+     * The start function is called when the application is started.
+     * @param stage stage instance
+     */
     @Override
     public void start(Stage stage) {
         MonthViewController.loadView(stage);
     }
 
+    /**
+     * The main function is the entry point of the application.
+     * @param args command line arguments
+     * @throws Exception exception
+     */
     public static void main(String[] args) throws Exception {
         // Delete the data directory for development purposes
         if (Arrays.stream(args).toList().contains("deletedb")) {
@@ -38,7 +47,6 @@ public class HelloApplication extends Application {
         SubsystemManager subsystemManager = new SubsystemManager();
 
         launch();
-
         subsystemManager.Shutdown();
     }
 }

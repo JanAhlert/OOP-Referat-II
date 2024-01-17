@@ -204,7 +204,7 @@ public class MonthViewController implements Initializable {
         yearPage.setMinWidth(1486);
         yearPage.setShowNavigation(false);
         yearPage.setShowDate(false);
-        //Sets the pop-up window ToDo man kann keine eintrage eintragen, gibt es die Funktion für die Jahres ansicht nicht oder kann mann dieses noch Implementieren? Per setPopUp setzt sich kein PopUp
+
 
 
         //Loads the WeekView
@@ -489,7 +489,7 @@ public class MonthViewController implements Initializable {
     //---------------------------------------------------Functions for Changing the Date over the Buttons---------------------------------------------------//
 
     /**
-     * Method for the NextMonth Button //TODO: Rename the Function
+     * Method for the NextMonth Button
      */
     @FXML
     private void setNextMonth()
@@ -504,7 +504,7 @@ public class MonthViewController implements Initializable {
     }
 
     /**
-     * Method for the PreviousMonth Button //TODO: Rename the Function
+     * Method for the PreviousMonth Button
      */
     @FXML
     private void setPreviousMonth(){
