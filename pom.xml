@@ -56,7 +56,7 @@
         <dependency>
             <groupId>com.calendarfx</groupId>
             <artifactId>view</artifactId>
-            <version>11.12.6</version>
+            <version>11.12.7</version>
         </dependency>
         <dependency>
             <groupId>org.xerial</groupId>
